@@ -1,3 +1,4 @@
+[![Open in Visual Studio Code](https://classroom.github.com/assets/open-in-vscode-c66648af7eb3fe8bc4f294546bfd86ef473780cde1dea487d3c4ff354943c9ae.svg)](https://classroom.github.com/online_ide?assignment_repo_id=7711910&assignment_repo_type=AssignmentRepo)
 # l3m-PI-serveur : Partie serveur du Projet Intégrateur L3 MIAGE 2020-2021
 
 A stub which can easily be deployed to Heroku.
