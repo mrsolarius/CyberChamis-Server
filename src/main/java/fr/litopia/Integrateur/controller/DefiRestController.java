@@ -6,6 +6,7 @@ import fr.litopia.Integrateur.repository.ChamiRepository;
 import fr.litopia.Integrateur.repository.DefiRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import org.webjars.NotFoundException;
@@ -16,7 +17,8 @@ import javax.transaction.Transactional;
 import java.util.Collection;
 
 @RestController
-@RequestMapping("/api/defis")
+@RequestMapping(value = "/api/defis",produces = MediaType.APPLICATION_JSON_VALUE)
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class DefiRestController {
 
     @PersistenceContext
