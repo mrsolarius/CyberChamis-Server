@@ -9,13 +9,14 @@ import org.webjars.NotFoundException;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Transient;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
+import javax.transaction.Transactional;
 import java.util.Collection;
 
 @RestController //indique qu'il faut injecter cette classe en tant que contrôleur REST. Dans le Framework Spring, un contrôleur permet de répondre à des requêtes HTTP avec des données quelconques (pas nécessairement du HTML).
 @RequestMapping("/api/chamis")
-@CrossOrigin
 public class ChamiRestController {
     @PersistenceContext
     private EntityManager em;
@@ -29,8 +30,9 @@ public class ChamiRestController {
 
     }*/
 
-    @PostMapping(value = "/", consumes = "application/json", produces = "application/json") // avant la création
+    @PostMapping(value = "/") // avant la création
     @ResponseStatus(HttpStatus.CREATED)
+    @Transactional
     public Chami createChami(@RequestBody Chami chami) { //equivalent objet
         return chamiRepository.save(chami);
     }

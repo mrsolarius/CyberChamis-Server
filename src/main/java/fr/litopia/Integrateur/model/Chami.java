@@ -41,17 +41,14 @@ import javax.persistence.OneToMany;
 //import javax.sql.DataSource;
 import java.util.List;
 
-@EnableJpaRepositories("fr.litopia.Integrateur.repository")
 @Entity
-@Getter
-@Setter
 public class Chami {
     @Id
     @Column(name = "login", nullable = false)
-    private String login;
+    public String login;
 
     @Column(name = "age")
-    private Integer age;
+    public Integer age;
 
     //@OneToMany
     //List<Defi> defis;
