@@ -1,4 +1,4 @@
-package fr.litopia.Integrateur.services;
+/*package fr.litopia.Integrateur.services;
 
 import fr.litopia.Integrateur.model.Book;
 import fr.litopia.Integrateur.repository.BookRepository;
@@ -40,3 +40,4 @@ public class BookServiceImp implements BookService {
         entityManager.merge(book);
     }
 }
+*/

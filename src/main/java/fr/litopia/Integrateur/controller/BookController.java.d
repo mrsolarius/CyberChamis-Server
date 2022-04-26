@@ -1,4 +1,4 @@
-package fr.litopia.Integrateur.controller;
+/*package fr.litopia.Integrateur.controller;
 
 import fr.litopia.Integrateur.model.Book;
 import fr.litopia.Integrateur.services.BookService;
@@ -42,4 +42,4 @@ public class BookController {
         service.save(book);
         return book;
     }
-}
+}*/
