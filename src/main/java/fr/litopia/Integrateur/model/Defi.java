@@ -30,7 +30,7 @@ public class Defi {
     @Column(name = "description")
     private String description;
 
-    @ManyToOne
-    @JoinColumn(name = "auteur_login")
-    private Chami auteur;
+    //@ManyToOne
+    //@JoinColumn(name = "auteur_login")
+    //private Chami auteur;
 }
