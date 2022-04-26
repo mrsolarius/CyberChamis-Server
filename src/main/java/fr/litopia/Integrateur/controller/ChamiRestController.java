@@ -5,6 +5,7 @@ import fr.litopia.Integrateur.repository.ChamiRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 import org.webjars.NotFoundException;
 
 import javax.persistence.EntityManager;
@@ -26,14 +27,10 @@ public class ChamiRestController {
         this.chamiRepository = chamiRepository;
     }
 
-    /*Chami create(@PathVariable(value="userId") String id, @4 User u, HttpServletResponse response){
-
-    }*/
-
-    @PostMapping(value = "/") // avant la création
+    @PostMapping(value = "/add") // avant la création
     @ResponseStatus(HttpStatus.CREATED)
     @Transactional
-    public Chami createChami(@RequestBody Chami chami) { //equivalent objet
+    public Chami createChami(@RequestBody final Chami chami) { //equivalent objet
         return chamiRepository.save(chami);
     }
 
@@ -42,35 +39,18 @@ public class ChamiRestController {
         return chamiRepository.findAll();
     }
 
-
-        /*
-    @Autowired //automatiquement generer
-    private BookService service;
-
-    @GetMapping("/{id}")
-    public Book findById(@PathVariable long id) {
-        return (Book) service.findById(id)
-                .orElseThrow(() -> new NotFoundException("Book not found"));
-    }
-
-    @GetMapping("/")
-    public Collection<Book> findBooks() {
-        return service.findAll();
-    }
-
-    @PutMapping("/{id}")
+    @PutMapping("/{login}")
     @ResponseStatus(HttpStatus.OK)
-    public Book updateBook(@PathVariable("id") final String id, @RequestBody final Book book) {
-        Book bookToUpdate = findById(Long.parseLong(id));
-        bookToUpdate.setName(book.getName());
-        service.save(bookToUpdate);
-        return bookToUpdate;
+    @Transactional
+    public Chami putChami(@PathVariable("login") final String login, @RequestBody final Chami chami){
+        Chami oldChami = chamiRepository.getReferenceById(login);
+        if(oldChami == null){
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "entity not found"
+            );
+        }
+        oldChami = chami;
+        chamiRepository.save(oldChami);
+        return oldChami;
     }
-
-    @PostMapping("/") // avant la création
-    @ResponseStatus(HttpStatus.CREATED)
-    public Book createBook(@RequestBody final Book book) {
-        service.save(book);
-        return book;
-    }*/
 }
