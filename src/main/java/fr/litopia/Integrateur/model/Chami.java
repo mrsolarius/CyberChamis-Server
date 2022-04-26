@@ -52,4 +52,28 @@ public class Chami {
 
     @OneToMany
     public List<Defi> defis;
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public Integer getAge() {
+        return age;
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
+    }
+
+    public List<Defi> getDefis() {
+        return defis;
+    }
+
+    public void setDefis(List<Defi> defis) {
+        this.defis = defis;
+    }
 }

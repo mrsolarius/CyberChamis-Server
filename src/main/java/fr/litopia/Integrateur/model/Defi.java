@@ -12,8 +12,6 @@ import java.util.Date;
 
 @EnableJpaRepositories("fr.litopia.Integrateur.repository")
 @Entity
-@Getter
-@Setter
 //@NoArgsConstructor
 //@AllArgsConstructor
 public class Defi {
@@ -33,4 +31,45 @@ public class Defi {
     @ManyToOne
     @JoinColumn(name = "auteur_login")
     public Chami auteur;
+
+    public void setId(String id) {
+        this.id = id;
+    }
+    public String getId() {
+        return id;
+    }
+
+    public void setTitre(String titre) {
+        this.titre = titre;
+    }
+
+    public String getTitre() {
+        return titre;
+    }
+
+    public void setDateDeCreation(Date dateDeCreation) {
+        this.dateDeCreation = dateDeCreation;
+    }
+
+    public Date getDateDeCreation() {
+        return dateDeCreation;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setAuteur(Chami auteur) {
+        this.auteur = auteur;
+    }
+
+    public Chami getAuteur() {
+        return auteur;
+    }
+
+
 }
