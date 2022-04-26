@@ -50,6 +50,6 @@ public class Chami {
     @Column(name = "age")
     public Integer age;
 
-    //@OneToMany
-    //List<Defi> defis;
+    @OneToMany
+    public List<Defi> defis;
 }

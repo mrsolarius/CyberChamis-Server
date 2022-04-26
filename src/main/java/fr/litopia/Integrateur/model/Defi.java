@@ -19,18 +19,18 @@ import java.util.Date;
 public class Defi {
     @Id
     @Column(name = "id", nullable = false)
-    private String id;
+    public String id;
 
     @Column(name = "name")
-    private String titre;
+    public String titre;
 
     @Column(name = "dateDeCreation")
-    private Date dateDeCreation;
+    public Date dateDeCreation;
 
     @Column(name = "description")
-    private String description;
+    public String description;
 
-    //@ManyToOne
-    //@JoinColumn(name = "auteur_login")
-    //private Chami auteur;
+    @ManyToOne
+    @JoinColumn(name = "auteur_login")
+    public Chami auteur;
 }
