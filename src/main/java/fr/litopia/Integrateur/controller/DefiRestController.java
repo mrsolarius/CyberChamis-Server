@@ -7,6 +7,8 @@ import fr.litopia.Integrateur.repository.DefiRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
+import org.webjars.NotFoundException;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -36,5 +38,26 @@ public class DefiRestController {
     @GetMapping("/")
     public Collection<Defi> getDefis(){
         return defiRepository.findAll();
+    }
+
+    @GetMapping("/{id}")
+    public Defi findById(@PathVariable("id") String id) {
+        return defiRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Defi not found"));
+    }
+
+    @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    @Transactional
+    public Defi putChami(@PathVariable("id") final String id, @RequestBody final Defi defi){
+        Defi oldDefi = defiRepository.getReferenceById(id);
+        if(oldDefi == null){
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "entity not found"
+            );
+        }
+        oldDefi = defi;
+        defiRepository.save(oldDefi);
+        return oldDefi;
     }
 }

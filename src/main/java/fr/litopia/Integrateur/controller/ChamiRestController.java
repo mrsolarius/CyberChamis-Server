@@ -39,6 +39,12 @@ public class ChamiRestController {
         return chamiRepository.findAll();
     }
 
+    @GetMapping("/{login}")
+    public Chami findById(@PathVariable("login") String login) {
+        return chamiRepository.findById(login)
+                .orElseThrow(() -> new NotFoundException("Chami not found"));
+    }
+
     @PutMapping("/{login}")
     @ResponseStatus(HttpStatus.OK)
     @Transactional
