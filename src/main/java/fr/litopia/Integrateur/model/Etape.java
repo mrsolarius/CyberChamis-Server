@@ -19,6 +19,6 @@ public class Etape {
     public Integer numero;
 
     @Column(name = "statut", nullable = false)
-    public StatutEtape satut;
+    public StatutEtape statut;
 
 }

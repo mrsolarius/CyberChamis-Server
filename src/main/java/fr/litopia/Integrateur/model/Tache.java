@@ -29,4 +29,81 @@ public class Tache extends Etape {
     @Column(name = "indices", nullable = false)
     public List<Indice> indices;
 
+    public String getQuestion() {
+        return question;
+    }
+
+    public void setQuestion(String question) {
+        this.question = question;
+    }
+
+    public String getReponse() {
+        return reponse;
+    }
+
+    public void setReponse(String reponse) {
+        this.reponse = reponse;
+    }
+
+    public String getSecret() {
+        return secret;
+    }
+
+    public void setSecret(String secret) {
+        this.secret = secret;
+    }
+
+    public Integer getPoint() {
+        return point;
+    }
+
+    public void setPoint(Integer point) {
+        this.point = point;
+    }
+
+    public List<Indice> getIndices() {
+        return indices;
+    }
+
+    public void setIndices(List<Indice> indices) {
+        this.indices = indices;
+    }
+
+    /* renvoie true si la reponse est juste, false sinon */
+    public boolean estJuste() {
+        return reponse.compareToIgnoreCase(question) == 0;
+    }
+
+    /* renvoie le nb de points remporté par le joueur
+    * Si la réponse est juste et qu'aucun indice n'a été utilisé, on renvoie les points de la question
+    * Si la réponse est juste et qu'un ou plusieurs indices ont été utilisés, on renvoie les points de la question décrémentés des points des indices
+    * Si la réponse est fausse, on renvoie 0.*/
+    public int calculerPoint() {
+        int pointJoueur = point;
+        if (!estJuste()) {
+            return 0;
+        } else {
+            for (Indice indice : indices
+                 ) {
+                if (indice.statut == StatutIndice.USED) {
+                    pointJoueur -= indice.pointsPerdus;
+                }
+            }
+        }
+        return pointJoueur;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
