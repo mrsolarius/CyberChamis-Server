@@ -67,6 +67,10 @@ public class Defi {
     @Column(name = "arret")
     public Arret arret;
 
+    @OneToMany
+    @Column(name = "etapes")
+    public List<Etape> etapes;
+
 
 /*
     public void setId(String id) {

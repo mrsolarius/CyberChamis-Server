@@ -1,5 +1,8 @@
 package fr.litopia.Integrateur.model;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -7,7 +10,8 @@ import javax.persistence.ManyToOne;
 
 @Entity
 public class Commentaire {
-
+    @Getter
+    @Setter
     @Id
     @Column(name = "idCom", nullable = false)
     Integer id;
