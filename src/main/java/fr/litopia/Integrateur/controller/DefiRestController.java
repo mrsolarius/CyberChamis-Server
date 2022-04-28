@@ -4,6 +4,7 @@ import fr.litopia.Integrateur.model.Chami;
 import fr.litopia.Integrateur.model.Defi;
 import fr.litopia.Integrateur.repository.ChamiRepository;
 import fr.litopia.Integrateur.repository.DefiRepository;
+import fr.litopia.Integrateur.services.DefiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -11,55 +12,65 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import org.webjars.NotFoundException;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import java.util.Collection;
 
-@RestController
+@RestController //indique qu'il faut injecter cette classe en tant que contrôleur REST. Dans le Framework Spring, un contrôleur permet de répondre à des requêtes HTTP avec des données quelconques (pas nécessairement du HTML).
 @RequestMapping(value = "/api/defis",produces = MediaType.APPLICATION_JSON_VALUE)
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class DefiRestController {
-
-    @PersistenceContext
-    private EntityManager em;
     @Autowired
-    private DefiRepository defiRepository;
-
-    DefiRestController(DefiRepository defiRepository) {
-        this.defiRepository = defiRepository;
-    }
+    private DefiService defiService;
 
     @PostMapping(value = "/") // avant la création
     @ResponseStatus(HttpStatus.CREATED)
     @Transactional
     public Defi createDefi(@RequestBody Defi defi) { //equivalent objet
-        return defiRepository.save(defi);
+        defiService.save(defi);
+        return defi;
     }
 
     @GetMapping("/")
     public Collection<Defi> getDefis(){
-        return defiRepository.findAll();
+        return defiService.findAll();
     }
 
     @GetMapping("/{id}")
-    public Defi findById(@PathVariable("id") String id) {
-        return defiRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Defi not found"));
+    public Defi getById(@PathVariable("id") String id) {
+        Defi defi = defiService.findById(id);
+        if(defi == null){
+            throw new NotFoundException("Defi not found");
+        }
+        return defi;
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     @Transactional
-    public Defi putChami(@PathVariable("id") final String id, @RequestBody final Defi defi){
-        Defi oldDefi = defiRepository.getReferenceById(id);
-        if(oldDefi == null){
+    public Defi updateDefi(@PathVariable("id") final String id, @RequestBody final Defi defi){
+        Defi defiToUpdate = defiService.findById(id);
+        if(defiToUpdate == null){
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND, "entity not found"
             );
         }
-        oldDefi = defi;
-        defiRepository.save(oldDefi);
-        return oldDefi;
+        defiToUpdate.setTitre(defi.getTitre());
+        defiToUpdate.setDescription(defi.getDescription());
+        defiService.save(defiToUpdate);
+        return defiToUpdate;
     }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    @Transactional
+    public void deleteChami(@PathVariable("id") final String id){
+        Defi defiToDelete = defiService.findById(id);
+        if(defiToDelete == null){
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "entity not found"
+            );
+        }
+        defiService.delete(defiToDelete);
+    }
+
 }
