@@ -7,6 +7,7 @@ import fr.litopia.Integrateur.repository.ChamiRepository;
 import fr.litopia.Integrateur.services.ChamiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import org.webjars.NotFoundException;
@@ -14,8 +15,9 @@ import org.webjars.NotFoundException;
 import javax.transaction.Transactional;
 import java.util.Collection;
 
-@RestController
-@RequestMapping("/api/chamis")
+@RestController //indique qu'il faut injecter cette classe en tant que contrôleur REST. Dans le Framework Spring, un contrôleur permet de répondre à des requêtes HTTP avec des données quelconques (pas nécessairement du HTML).
+@RequestMapping(value = "/api/chamis",produces = MediaType.APPLICATION_JSON_VALUE)
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class ChamiRestController {
     @Autowired
     private ChamiService chamiService;
