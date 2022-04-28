@@ -7,31 +7,68 @@ import lombok.Setter;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import javax.persistence.*;
+import java.lang.reflect.Array;
 import java.util.Date;
+import java.util.List;
 
 
+@Getter
+@Setter
 @EnableJpaRepositories("fr.litopia.Integrateur.repository")
 @Entity
 //@NoArgsConstructor
 //@AllArgsConstructor
 public class Defi {
     @Id
-    @Column(name = "id", nullable = false)
+    @Column(name = "idDefi", nullable = false)
     public String id;
 
-    @Column(name = "name")
+    @Column(name = "titre")
     public String titre;
 
-    @Column(name = "dateDeCreation")
-    public Date dateDeCreation;
-
-    @Column(name = "description")
-    public String description;
+    @Column(name = "typeDefi")
+    public String type ;
 
     @ManyToOne
     @JoinColumn(name = "auteur_login")
     public Chami auteur;
 
+    @Column(name = "dateDeCreation")
+    public Date dateDeCreation;
+
+    @Column(name = "dateDeModification")
+    public Date dateDeModification;
+
+    @Column(name = "description")
+    public String description;
+
+    @Column(name = "version")
+    public Integer version;
+
+    @Column(name = "point")
+    public Integer point;
+
+    @Column(name = "duree")
+    public String duree;
+
+    @OneToMany
+    @Column(name = "notes")
+    public List<Note> notes;
+
+    @OneToMany
+    @Column(name = "commentaires")
+    public List<Commentaire> commentaires;
+
+    @ManyToMany
+    @Column(name = "tags")
+    public List<Tag> tags;
+
+    @OneToOne
+    @Column(name = "arret")
+    public Arret arret;
+
+
+/*
     public void setId(String id) {
         this.id = id;
     }
@@ -70,6 +107,6 @@ public class Defi {
     public Chami getAuteur() {
         return auteur;
     }
-
+*/
 
 }
