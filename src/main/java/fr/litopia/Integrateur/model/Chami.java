@@ -42,20 +42,24 @@ import javax.persistence.OneToMany;
 import java.util.List;
 
 @Entity
-public class Chami {
-    @Id
+public class Chami extends Utilisateur {
+    @Getter
+    @Setter
     @Column(name = "login", nullable = false)
     public String login;
 
     @Column(name = "age")
     public Integer age;
 
-    @OneToMany
-    public List<Defi> defis;
+    @Column(name = "description")
+    public String description;
 
-    public String getLogin() {
-        return login;
-    }
+
+
+
+    //public String getLogin() {
+      //  return login;
+    //}
 
     public void setLogin(String login) {
         this.login = login;
@@ -69,11 +73,5 @@ public class Chami {
         this.age = age;
     }
 
-    public List<Defi> getDefis() {
-        return defis;
-    }
 
-    public void setDefis(List<Defi> defis) {
-        this.defis = defis;
-    }
 }

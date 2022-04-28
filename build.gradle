@@ -22,9 +22,6 @@ dependencies {
 	// https://mvnrepository.com/artifact/org.apache.tomcat/tomcat-jdbc
 	implementation group: 'org.apache.tomcat', name: 'tomcat-jdbc', version: '10.0.20'
     implementation 'org.projectlombok:lombok:1.18.20'
-    implementation 'org.projectlombok:lombok:1.18.20'
-    implementation 'org.projectlombok:lombok:1.18.20'
-	implementation 'org.projectlombok:lombok:1.18.20'
 
 	runtimeOnly group: 'org.postgresql', name: 'postgresql', version: '42.3.4'
 
