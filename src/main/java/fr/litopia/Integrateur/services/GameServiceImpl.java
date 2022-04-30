@@ -8,28 +8,33 @@ import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 
 @Service
-public class GameServiceImpl{
+public class GameServiceImpl implements GameService{
     @PersistenceContext
     private EntityManager entityManager;
 
+    @Override
     public Visite commencerVisite(Defi defi, Utilisateur utilisateur) {
         return null;
 
     }
 
 
+
+    @Override
     @Transactional
     public Etape visiteSuivante(Visite visite) {
         return visite.etapeSuivante();
     }
-    
 
+
+    @Override
     @Transactional
     public Etape visitePrecedente(Visite visite) {
         return visite.etapePrecedente();
     }
 
 
+    @Override
     @Transactional
     public Visite changeStatusVisite(Visite visite, StatutVisite visiteStatus){
         try {
@@ -41,13 +46,14 @@ public class GameServiceImpl{
     }
 
 
+    @Override
     @Transactional
     public Indice revealIndice(Visite visite) {
         Indice indice = visite.revelerIndiceCourant();
         return indice;
     }
 
-
+    @Override
     public boolean checkResponse(String response, Visite visite) {
 
         return visite.verificationReponse(response);

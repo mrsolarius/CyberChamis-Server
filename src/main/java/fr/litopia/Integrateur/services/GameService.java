@@ -3,7 +3,6 @@ package fr.litopia.Integrateur.services;
 import fr.litopia.Integrateur.model.entity.*;
 
 public interface GameService {
-
     Visite commencerVisite(Defi defi, Utilisateur utilisateur);
 
     Etape visiteSuivante(Visite visite);
@@ -20,5 +19,4 @@ public interface GameService {
     Indice revealIndice(Visite visite);
 
     boolean checkResponse(String response, Visite visite);
-
 }
