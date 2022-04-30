@@ -1,86 +1,85 @@
 package fr.litopia.Integrateur.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
-import java.lang.reflect.Array;
-import java.util.Date;
-import java.util.List;
+import javax.validation.constraints.Min;
+import java.util.*;
 
 
-@Getter
-@Setter
-@EnableJpaRepositories("fr.litopia.Integrateur.repository")
 @Entity
-//@NoArgsConstructor
-//@AllArgsConstructor
 public class Defi {
     @Id
     @Column(name = "idDefi", nullable = false)
     public String id;
 
-    @Column(name = "titre")
+    @Column(name = "titre", nullable = false, length = 45)
     public String titre;
 
-    @Column(name = "typeDefi")
-    public String type ;
-
-    @ManyToOne
-    @JoinColumn(name = "auteur_login")
-    public Chami auteur;
-
-    @Column(name = "dateDeCreation")
+    @CreationTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "dateDeCreation", nullable = false)
     public Date dateDeCreation;
 
-    @Column(name = "dateDeModification")
+    @UpdateTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "dateDeModification", nullable = false)
     public Date dateDeModification;
 
-    @Column(name = "description")
+    @Column(name = "description", nullable = false, length = 128)
     public String description;
 
+    @Version
     @Column(name = "version")
-    public Integer version;
+    @Min(value = 1)
+    public Long version;
 
-    @Column(name = "point")
-    public Integer point;
+    @Column(name = "pointTotaux")
+    public Integer pointTotaux;
 
     @Column(name = "duree")
     public String duree;
 
+    @ManyToOne(optional = false)
+    public Chami auteur;
+
     @OneToMany
     @Column(name = "notes")
-    public List<Note> notes;
+    public Set<Note> notes;
 
     @OneToMany
     @Column(name = "commentaires")
-    public List<Commentaire> commentaires;
+    public Set<Commentaire> commentaires;
 
     @ManyToMany
     @Column(name = "tags")
-    public List<Tag> tags;
+    public Set<Tag> tags;
 
     @OneToOne
-    @Column(name = "arret")
     public Arret arret;
 
-    @OneToMany
-    @Column(name = "etapes")
-    public List<Etape> etapes;
+    @OneToMany(orphanRemoval = true)
+    public Set<Etape> etapes;
 
-
-
-    public void setId(String id) {
-        this.id = id;
+    public Defi(){
+        this.id = UUID.randomUUID().toString();
+        this.notes = new HashSet<>();
+        this.commentaires = new HashSet<>();
+        this.tags = new HashSet<>();
+        this.etapes = new HashSet<>();
     }
     public String getId() {
         return id;
     }
 
     public void setTitre(String titre) {
+        if (titre == null || titre.isEmpty()) {
+            throw new IllegalArgumentException("Titre cannot be null or empty");
+        }
+        if (titre.length() > 45) {
+            throw new IllegalArgumentException("Titre cannot be longer than 45 characters");
+        }
         this.titre = titre;
     }
 
@@ -88,15 +87,17 @@ public class Defi {
         return titre;
     }
 
-    public void setDateDeCreation(Date dateDeCreation) {
-        this.dateDeCreation = dateDeCreation;
-    }
-
     public Date getDateDeCreation() {
         return dateDeCreation;
     }
 
     public void setDescription(String description) {
+        if(description == null || description.isEmpty()) {
+            throw new IllegalArgumentException("Description cannot be null or empty");
+        }
+        if(description.length() > 128) {
+            throw new IllegalArgumentException("Description cannot be longer than 128 characters");
+        }
         this.description = description;
     }
 
@@ -105,6 +106,12 @@ public class Defi {
     }
 
     public void setAuteur(Chami auteur) {
+        if(this.auteur != null) {
+            throw new IllegalArgumentException("Auteur cannot be changed");
+        }
+        if (auteur == null) {
+            throw new IllegalArgumentException("Auteur cannot be null");
+        }
         this.auteur = auteur;
     }
 
@@ -112,4 +119,126 @@ public class Defi {
         return auteur;
     }
 
+    public String getDuree() {
+        return duree;
+    }
+
+    public void setDuree(String duree) {
+        this.duree = duree;
+    }
+
+    public void ajouterOuModifierNote(Note note) {
+        if (note == null) {
+            throw new IllegalArgumentException("Note cannot be null");
+        }
+        this.notes.removeIf(n -> n.getId().equals(note.getId()));
+        this.notes.add(note);
+    }
+
+    public void ajouterOuModifierCommentaire(Commentaire commentaire) {
+        if (commentaire == null) {
+            throw new IllegalArgumentException("Commentaire cannot be null");
+        }
+        this.commentaires.removeIf(c -> c.getId().equals(commentaire.getId()));
+        this.commentaires.add(commentaire);
+    }
+
+    public void supprimerUnCommentaire(Commentaire commentaire) {
+        if (commentaire == null) {
+            throw new IllegalArgumentException("Commentaire cannot be null");
+        }
+        this.commentaires.removeIf(c -> c.getId().equals(commentaire.getId()));
+    }
+
+    public void addTag(Tag tag){
+        this.tags.add(tag);
+        if (!tag.defis.contains(this)) {
+            tag.addDefi(this);
+        }
+    }
+
+    public void removeTag(Tag tag) {
+        this.tags.remove(tag);
+        if(tag.defis.contains(this)) {
+            tag.removeDefi(this);
+        }
+    }
+
+    public Set<Tag> getTags() {
+        return tags;
+    }
+
+    public double getMoyenne(){
+        double moyenne = 0;
+        for (Note note : notes) {
+            moyenne += note.getNote();
+        }
+        return moyenne / notes.size();
+    }
+
+    public void addEtape(Etape etape){
+        if (!etapes.contains(etape)) {
+            int index = etapes.size();
+            etape.setNumero(index);
+            this.etapes.add(etape);
+        }
+    }
+
+    public void removeEtape(Etape etape){
+        if (etapes.contains(etape)) {
+            int index = etape.getNumero();
+            for ( Etape e : etapes) {
+                if (e.getNumero() > index) {
+                    e.setNumero(e.getNumero() - 1);
+                }
+            }
+            this.etapes.remove(etape);
+        }
+    }
+
+    public void moveEtape(Etape etape, int index){
+        if(!etapes.contains(etape)){
+            throw new IllegalArgumentException("Etape not found");
+        }
+        if (index < 0 || index >= etapes.size()) {
+            throw new IllegalArgumentException("Index out of bounds");
+        }
+        for (Etape e : etapes) {
+            if (e.getNumero().equals(index)) {
+                e.setNumero(etape.getNumero());
+                etape.setNumero(index);
+            }
+        }
+    }
+
+    public List<Etape> getSortEtapes(){
+        List<Etape> sortEtapes = new ArrayList<>(etapes);
+        sortEtapes.sort(Comparator.comparing(Etape::getNumero));
+        return sortEtapes;
+    }
+
+
+    @PrePersist
+    protected void onCreate() {
+        this.pointTotaux = totalPoints();
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        this.pointTotaux = totalPoints();
+    }
+
+    public int totalPoints(){
+        int total = 0;
+        for (Etape etape : etapes) {
+            if (etape instanceof Tache){
+                total += ((Tache) etape).getPoint();
+            }
+        }
+        return total;
+    }
+
+    public Set<Etape> getEtapes() {
+        return etapes;
+    }
 }

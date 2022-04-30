@@ -30,4 +30,8 @@ public class Commentaire {
     public String getText() {
         return text;
     }
+
+    public Integer getId() {
+        return id;
+    }
 }
