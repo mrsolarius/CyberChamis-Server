@@ -1,5 +1,6 @@
 package fr.litopia.Integrateur.model.entity;
 
+import fr.litopia.Integrateur.model.dto.ChamiDTO;
 import lombok.Builder;
 
 import javax.persistence.Column;
@@ -60,5 +61,15 @@ public class Chami extends Utilisateur {
 
     public String getBio() {
         return this.bio;
+    }
+
+    public ChamiDTO toDTO() {
+        ChamiDTO dto = new ChamiDTO();
+        dto.id= this.id;
+        dto.age=this.age;
+        dto.bio=this.bio;
+        dto.username=this.username;
+        return dto;
+
     }
 }

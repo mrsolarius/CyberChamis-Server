@@ -7,8 +7,9 @@ import java.util.List;
 @Inheritance(strategy= InheritanceType.JOINED) //@Inheritance(strategy= InheritanceType.SINGLE_TABLE)
 public class Utilisateur {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idUtilisateur", nullable = false)
-    public Integer id;
+    public Long id;
     @OneToMany
     @Column(name = "visites", nullable = false)
     public List<Visite> vistes;

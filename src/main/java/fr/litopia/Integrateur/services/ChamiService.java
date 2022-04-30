@@ -6,7 +6,7 @@ import java.util.Collection;
 
 public interface ChamiService {
 
-    Chami findById(String id);
+    Chami findById(long id);
 
     Collection<Chami> findAll();
 

@@ -1,5 +1,6 @@
 package fr.litopia.Integrateur.controller;
 
+import fr.litopia.Integrateur.model.dto.DefiDTO;
 import fr.litopia.Integrateur.model.entity.Defi;
 import fr.litopia.Integrateur.services.DefiService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,8 +29,8 @@ public class DefiRestController {
     }
 
     @GetMapping("/")
-    public Collection<Defi> getDefis(){
-        return defiService.findAll();
+    public Collection<DefiDTO> getDefis(){
+        return defiService.findAll().stream().map(Defi::toDTO).toList();
     }
 
     @GetMapping("/{id}")

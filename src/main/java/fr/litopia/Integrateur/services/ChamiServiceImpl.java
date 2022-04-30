@@ -18,7 +18,7 @@ public class ChamiServiceImpl implements ChamiService {
     private ChamiRepository chamiRepository;
 
     @Override
-    public Chami findById(String id) {
+    public Chami findById(long id) {
         return entityManager.find(Chami.class, id);
     }
 

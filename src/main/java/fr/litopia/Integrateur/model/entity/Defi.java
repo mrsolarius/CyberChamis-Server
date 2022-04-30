@@ -1,5 +1,7 @@
 package fr.litopia.Integrateur.model.entity;
 
+import fr.litopia.Integrateur.model.dto.DefiDTO;
+import lombok.Builder;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -9,6 +11,7 @@ import java.util.*;
 
 
 @Entity
+@Builder
 public class Defi {
     @Id
     @GeneratedValue

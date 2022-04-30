@@ -2,14 +2,13 @@ package fr.litopia.Integrateur.model.entity;
 
 import lombok.Builder;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.Min;
 
 @Entity
 public class Indice {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idIndice", nullable = false)
     public long id;
 
