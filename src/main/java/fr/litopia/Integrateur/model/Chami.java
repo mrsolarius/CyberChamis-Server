@@ -1,77 +1,64 @@
 package fr.litopia.Integrateur.model;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
 
-import java.util.ArrayList;
-
-import javax.servlet.http.HttpServletResponse;
-
-import javax.sql.DataSource;
-
-import org.springframework.beans.factory.annotation.Autowired;
-
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.web.bind.annotation.CrossOrigin;
-
-import org.springframework.web.bind.annotation.DeleteMapping;
-
-import org.springframework.web.bind.annotation.GetMapping;
-
-import org.springframework.web.bind.annotation.PathVariable;
-
-import org.springframework.web.bind.annotation.PostMapping;
-
-import org.springframework.web.bind.annotation.PutMapping;
-
-import org.springframework.web.bind.annotation.RequestBody;
-
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.web.bind.annotation.RestController;
-
-import lombok.Getter;
-import lombok.Setter;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.Builder;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-//import javax.sql.DataSource;
-import java.util.List;
+import javax.validation.constraints.Min;
+
 
 @Entity
+@Builder
 public class Chami extends Utilisateur {
-    @Getter
-    @Setter
-    @Column(name = "login", nullable = false)
-    public String login;
+    @Column(name = "username", nullable = false, unique = true, length = 20)
+    public String username;
 
     @Column(name = "age")
+    @Min(value = 13, message = "You must be at least 13 years old")
     public Integer age;
 
-    @Column(name = "description")
-    public String description;
+    @Column(name = "description", length = 255)
+    public String bio;
 
-
-
-
-    //public String getLogin() {
-      //  return login;
-    //}
-
-    public void setLogin(String login) {
-        this.login = login;
+    Chami(String username) {
+        super();
+        this.setUsername(username);
     }
 
-    public Integer getAge() {
-        return age;
+    public Chami() {
+        super();
+    }
+
+    public void setUsername(String login) {
+        if(login.length() > 20) {
+            throw new IllegalArgumentException("Login must be 20 characters long");
+        }
+        this.username = login;
     }
 
     public void setAge(Integer age) {
+        if(age < 13) {
+            throw new IllegalArgumentException("You must be at least 13 years old");
+        }
         this.age = age;
     }
 
+    public void setBio(String bio) {
+        if(bio.length() > 255) {
+            throw new IllegalArgumentException("Bio must be 255 characters long");
+        }
+        this.bio = bio;
+    }
 
+    public String getUsername() {
+        return this.username;
+    }
+
+    public Integer getAge() {
+        return this.age;
+    }
+
+    public String getBio() {
+        return this.bio;
+    }
 }
