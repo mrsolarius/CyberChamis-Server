@@ -32,7 +32,7 @@ public class ChamiTest {
     @Test
     public void setAgeShouldThrowExceptionIfAgeIsLessThan13(){
         IllegalArgumentException e = assertThrows(IllegalArgumentException.class, () -> c.setAge(12));
-        assertEquals("Age must be at least 13", e.getMessage());
+        assertEquals("You must be at least 13 years old", e.getMessage());
     }
 
     @Test

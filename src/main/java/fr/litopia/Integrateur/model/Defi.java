@@ -72,7 +72,7 @@ public class Defi {
     public List<Etape> etapes;
 
 
-/*
+
     public void setId(String id) {
         this.id = id;
     }
@@ -111,6 +111,5 @@ public class Defi {
     public Chami getAuteur() {
         return auteur;
     }
-*/
 
 }
