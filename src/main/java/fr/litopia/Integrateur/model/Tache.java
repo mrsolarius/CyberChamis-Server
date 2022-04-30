@@ -78,6 +78,7 @@ public class Tache extends Etape {
     * Si la réponse est juste et qu'aucun indice n'a été utilisé, on renvoie les points de la question
     * Si la réponse est juste et qu'un ou plusieurs indices ont été utilisés, on renvoie les points de la question décrémentés des points des indices
     * Si la réponse est fausse, on renvoie 0.*/
+    /*
     public int calculerPoint() {
         int pointJoueur = point;
         if (!estJuste()) {
@@ -91,7 +92,7 @@ public class Tache extends Etape {
             }
         }
         return pointJoueur;
-    }
+    }*/
 
 
 

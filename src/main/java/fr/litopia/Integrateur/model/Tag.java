@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -15,10 +16,12 @@ import java.util.List;
 public class Tag {
     @Id
     @Column(name = "tag", nullable = false)
-    public String text;
+    public String tag;
 
     @ManyToMany
     @Column(name = "defis", nullable = false)
-    public List<Defi> defis;
+    public Set<Defi> defis;
+
+
 
 }
