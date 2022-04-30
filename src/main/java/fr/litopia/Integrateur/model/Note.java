@@ -15,7 +15,7 @@ public class Note {
     public String id;
 
     @Column(name = "note", nullable = false)
-    @Min(value = 0)
+    @Min(value = 1)
     @Max(value = 5)
     public Integer note;
 
@@ -28,11 +28,14 @@ public class Note {
 
     public Note(Integer valeur, Chami chami) {
         this();
-        this.note = valeur;
+        this.setNote(valeur);
         this.chami = chami;
     }
 
     public void setNote(Integer note) {
+        if (note < 1 || note > 5) {
+            throw new IllegalArgumentException("Note must be between 1 and 5");
+        }
         this.note = note;
     }
 
@@ -43,6 +46,4 @@ public class Note {
     public String getId() {
         return this.id;
     }
-
-
 }
