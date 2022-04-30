@@ -6,6 +6,7 @@ import java.util.Set;
 @Entity
 public class Visite {
     @Id
+    @GeneratedValue
     @Column(name = "id", nullable = false)
     public Long id;
 

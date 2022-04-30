@@ -7,6 +7,7 @@ import javax.validation.constraints.Min;
 @Inheritance(strategy= InheritanceType.JOINED)
 public abstract class Etape {
     @Id
+    @GeneratedValue
     @Column(name = "id", nullable = false)
     public Long id;
 

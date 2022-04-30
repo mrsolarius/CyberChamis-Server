@@ -1,9 +1,6 @@
 package fr.litopia.Integrateur.model.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import java.util.UUID;
@@ -11,6 +8,7 @@ import java.util.UUID;
 @Entity
 public class Note {
     @Id
+    @GeneratedValue
     @Column(name = "idNote", nullable = false)
     public String id;
 

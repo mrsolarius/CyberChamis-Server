@@ -2,11 +2,13 @@ package fr.litopia.Integrateur.model.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
 public class Arret {
     @Id
+    @GeneratedValue
     @Column(name = "codeArret", nullable = false, length = 12)
     public String codeArret;
 

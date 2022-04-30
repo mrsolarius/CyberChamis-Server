@@ -11,6 +11,7 @@ import java.util.*;
 @Entity
 public class Defi {
     @Id
+    @GeneratedValue
     @Column(name = "idDefi", nullable = false)
     public String id;
 
@@ -242,5 +243,12 @@ public class Defi {
         return etapes;
     }
 
+    public DefiDTO toDTO() {
+        DefiDTO dto = new DefiDTO();
+        dto.id=id;
+        dto.titre=titre;
+        dto.description=description;
+        return dto;
+    }
 
 }

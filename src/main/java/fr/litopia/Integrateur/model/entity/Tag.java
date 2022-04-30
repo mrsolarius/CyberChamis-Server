@@ -1,15 +1,13 @@
 package fr.litopia.Integrateur.model.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 public class Tag {
     @Id
+    @GeneratedValue
     @Column(name = "tag", nullable = false)
     public String tag;
 
