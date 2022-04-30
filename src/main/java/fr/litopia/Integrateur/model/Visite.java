@@ -32,6 +32,7 @@ public class Visite {
         return etapes.get(etapeCourante);
     }
 
+    /*
     public void etapeSuivante() {
         getEtapeCourante().statut = StatutEtape.FINISHED;
         etapeCourante += 1;
@@ -63,5 +64,5 @@ public class Visite {
              etapes) {
             //trouver un moyen de compter les points des taches
         }
-    }
+    }*/
 }
