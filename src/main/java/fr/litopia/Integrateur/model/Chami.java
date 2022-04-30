@@ -17,7 +17,7 @@ public class Chami extends Utilisateur {
     @Min(value = 13, message = "You must be at least 13 years old")
     public Integer age;
 
-    @Column(name = "description", length = 255)
+    @Column(name = "bio", length = 255)
     public String bio;
 
     Chami(String username) {
