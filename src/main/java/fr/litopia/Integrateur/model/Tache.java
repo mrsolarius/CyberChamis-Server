@@ -1,110 +1,88 @@
 package fr.litopia.Integrateur.model;
 
-import lombok.Getter;
-import lombok.Setter;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import java.util.List;
+import javax.validation.constraints.Min;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Tache extends Etape {
-    @Getter
-    @Setter
-    @Column(name = "question", nullable = false)
+    @Column(name = "question", nullable = false, length = 360)
     public String question;
 
-    @Column(name = "reponse", nullable = false)
-    public String reponse;
-
-    @Column(name = "secret", nullable = false)
+    @Column(name = "secret", nullable = false, length = 50)
     public String secret;
 
     @Column(name = "point", nullable = false)
+    @Min(0)
     public Integer point;
 
-    @OneToMany
-    @Column(name = "indices", nullable = false)
-    public List<Indice> indices;
+    @OneToMany(orphanRemoval = true)
+    public Set<Indice> indices;
+
+    public Tache() {
+        super();
+        this.indices = new HashSet<>();
+    }
 
     public String getQuestion() {
         return question;
     }
 
     public void setQuestion(String question) {
+        if (question == null || question.isEmpty()) {
+            throw new IllegalArgumentException("Question cannot be null or empty");
+        }
+        if (question.length() > 360) {
+            throw new IllegalArgumentException("Question cannot be longer than 360 characters");
+        }
         this.question = question;
     }
 
-    public String getReponse() {
-        return reponse;
-    }
-
-    public void setReponse(String reponse) {
-        this.reponse = reponse;
-    }
-
-    public String getSecret() {
-        return secret;
-    }
-
     public void setSecret(String secret) {
+        if (secret == null || secret.isEmpty()) {
+            throw new IllegalArgumentException("Secret cannot be null or empty");
+        }
+        if (secret.length() > 50) {
+            throw new IllegalArgumentException("Secret cannot be longer than 50 characters");
+        }
         this.secret = secret;
+    }
+
+    /**
+     * Verifie si la tache est valide
+     * @param reponse la reponse de l'utilisateur
+     * @return true si la reponse est correcte, false sinon
+     */
+    public boolean isSecret(String reponse) {
+        return this.secret.equals(reponse);
     }
 
     public Integer getPoint() {
         return point;
     }
 
+
     public void setPoint(Integer point) {
+        if (point == null) {
+            throw new IllegalArgumentException("Point cannot be null");
+        }
+        if (point < 0) {
+            throw new IllegalArgumentException("Point cannot be negative");
+        }
         this.point = point;
     }
 
-    public List<Indice> getIndices() {
+    public Set<Indice> getIndices() {
         return indices;
     }
 
-    public void setIndices(List<Indice> indices) {
-        this.indices = indices;
-    }
-
-    /* renvoie true si la reponse est juste, false sinon */
-    public boolean estJuste() {
-        return reponse.compareToIgnoreCase(question) == 0;
-    }
-
-    /* renvoie le nb de points remporté par le joueur
-    * Si la réponse est juste et qu'aucun indice n'a été utilisé, on renvoie les points de la question
-    * Si la réponse est juste et qu'un ou plusieurs indices ont été utilisés, on renvoie les points de la question décrémentés des points des indices
-    * Si la réponse est fausse, on renvoie 0.*/
-    /*
-    public int calculerPoint() {
-        int pointJoueur = point;
-        if (!estJuste()) {
-            return 0;
-        } else {
-            for (Indice indice : indices
-                 ) {
-                if (indice.statut == StatutIndice.USED) {
-                    pointJoueur -= indice.pointsPerdus;
-                }
-            }
+    public void addIndice(Indice indice) {
+        if (indice == null) {
+            throw new IllegalArgumentException("Indice cannot be null");
         }
-        return pointJoueur;
-    }*/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        this.indices.add(indice);
+    }
 }
