@@ -1,4 +1,4 @@
-package fr.litopia.Integrateur.model;
+package fr.litopia.Integrateur.model.entity;
 
 import lombok.Builder;
 

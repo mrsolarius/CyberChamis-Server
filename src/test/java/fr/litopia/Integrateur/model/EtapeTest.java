@@ -1,5 +1,6 @@
 package fr.litopia.Integrateur.model;
 
+import fr.litopia.Integrateur.model.entity.Tache;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

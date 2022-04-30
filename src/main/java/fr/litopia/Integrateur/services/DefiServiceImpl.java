@@ -1,6 +1,6 @@
 package fr.litopia.Integrateur.services;
 
-import fr.litopia.Integrateur.model.Defi;
+import fr.litopia.Integrateur.model.entity.Defi;
 import fr.litopia.Integrateur.repository.DefiRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,7 +9,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import java.util.Collection;
-import java.util.Optional;
 
 @Service
 public class DefiServiceImpl implements DefiService {

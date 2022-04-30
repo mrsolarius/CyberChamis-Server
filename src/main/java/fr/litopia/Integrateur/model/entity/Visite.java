@@ -1,10 +1,6 @@
-package fr.litopia.Integrateur.model;
-
-import lombok.Getter;
-import lombok.Setter;
+package fr.litopia.Integrateur.model.entity;
 
 import javax.persistence.*;
-import java.util.List;
 import java.util.Set;
 
 @Entity

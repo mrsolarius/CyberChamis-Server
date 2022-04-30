@@ -1,9 +1,8 @@
 package fr.litopia.Integrateur.services;
 
-import fr.litopia.Integrateur.model.Defi;
+import fr.litopia.Integrateur.model.entity.Defi;
 
 import java.util.Collection;
-import java.util.Optional;
 
 public interface DefiService {
 

@@ -1,6 +1,6 @@
 package fr.litopia.Integrateur.model;
 
-import org.junit.jupiter.api.BeforeAll;
+import fr.litopia.Integrateur.model.entity.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

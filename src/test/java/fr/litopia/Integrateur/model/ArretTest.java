@@ -1,5 +1,6 @@
 package fr.litopia.Integrateur.model;
 
+import fr.litopia.Integrateur.model.entity.Arret;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 

@@ -1,9 +1,8 @@
 package fr.litopia.Integrateur.services;
 
-import fr.litopia.Integrateur.model.Chami;
+import fr.litopia.Integrateur.model.entity.Chami;
 
 import java.util.Collection;
-import java.util.Optional;
 
 public interface ChamiService {
 

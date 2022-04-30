@@ -1,9 +1,6 @@
 package fr.litopia.Integrateur.controller;
 
-import fr.litopia.Integrateur.model.Chami;
-import fr.litopia.Integrateur.model.Defi;
-import fr.litopia.Integrateur.repository.ChamiRepository;
-import fr.litopia.Integrateur.repository.DefiRepository;
+import fr.litopia.Integrateur.model.entity.Defi;
 import fr.litopia.Integrateur.services.DefiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

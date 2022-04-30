@@ -1,5 +1,7 @@
 package fr.litopia.Integrateur.model;
 
+import fr.litopia.Integrateur.model.entity.Indice;
+import fr.litopia.Integrateur.model.entity.Tache;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
