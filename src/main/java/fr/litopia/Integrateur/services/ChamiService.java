@@ -14,6 +14,6 @@ public interface ChamiService {
 
     void update(Chami chami);
 
-    void delete(Chami chami);
+    void delete(Chami chami;
 
 }
