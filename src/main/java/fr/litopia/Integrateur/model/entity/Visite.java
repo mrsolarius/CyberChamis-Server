@@ -1,5 +1,7 @@
 package fr.litopia.Integrateur.model.entity;
 
+import org.apache.coyote.Response;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -24,7 +26,7 @@ public class Visite {
 
     @OneToMany
     public Set<Reponse> reponses;
-
+// repo
     private Reponse getReponse(int numero) {
         if(numero < 0 || numero > reponses.size()){
             throw new IndexOutOfBoundsException("Index out of bounds");
@@ -43,6 +45,10 @@ public class Visite {
      */
     public Etape getEtapeCourante(){
         return defi.getSortEtapes().get(etapeCourante);
+    }
+
+    public Reponse getReponseCourante(){
+        return getReponse(etapeCourante);
     }
 
     /**
@@ -110,5 +116,34 @@ public class Visite {
             }
         }
         this.points = tempPoints;
+    }
+
+    public Indice revelerIndiceCourant(){
+
+        Etape e = this.getEtapeCourante();
+        if(e instanceof Tache){
+            Tache tache = (Tache) e;
+            Reponse response = this.getReponseCourante();
+            if (response!=null){
+                Indice indice = tache.getSortedIndices().get(response.nbIndicesUtilises+1);
+                if(indice!=null){
+                    response.addIndiceUtilise();
+                    return indice;
+                }
+            }
+        }
+        return null;
+    }
+
+    public boolean verificationReponse(String reponse){
+        Reponse r = getReponseCourante();
+        if (r == null) return false;
+        if (!(getEtapeCourante() instanceof Tache)) return false;
+        r.setReponseUtilisateur(reponse);
+        Tache tache = (Tache) getEtapeCourante();
+        return tache.isSecret(reponse);
+    }
+
+    public void getCurrentReponse() {
     }
 }
