@@ -5,9 +5,9 @@ import fr.litopia.Integrateur.model.entity.*;
 public interface GameService {
     Visite commencerVisite(Defi defi, Utilisateur utilisateur);
 
-    Etape visiteSuivante(Visite visite);
+    Etape etapeSuivante(Visite visite);
 
-    Etape visitePrecedente(Visite visite);
+    Etape etapePrecedente(Visite visite);
 
     /**
      * Termine la visite par un abandon si le joueur n'a pas réussi à la finir

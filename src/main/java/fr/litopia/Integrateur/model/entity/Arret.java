@@ -8,7 +8,6 @@ import javax.persistence.Id;
 @Entity
 public class Arret {
     @Id
-    @GeneratedValue
     @Column(name = "codeArret", nullable = false, length = 12)
     public String codeArret;
 

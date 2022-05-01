@@ -1,5 +1,6 @@
 package fr.litopia.Integrateur.model.entity;
 
+import fr.litopia.Integrateur.model.dto.VisiteDTO;
 import org.apache.coyote.Response;
 
 import javax.persistence.*;
@@ -146,4 +147,10 @@ public class Visite {
 
     public void getCurrentReponse() {
     }
+
+    public VisiteDTO toDTO() {
+        return new VisiteDTO();
+    }
+
+
 }

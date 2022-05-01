@@ -2,6 +2,7 @@ package fr.litopia.Integrateur.model.entity;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Inheritance(strategy= InheritanceType.JOINED) //@Inheritance(strategy= InheritanceType.SINGLE_TABLE)
@@ -12,7 +13,9 @@ public class Utilisateur {
     public Long id;
     @OneToMany
     @Column(name = "visites", nullable = false)
-    public List<Visite> vistes;
+    public Set<Visite> vistes;
 
-
+    public void addVisite(Visite visite) {
+        vistes.add(visite);
+    }
 }

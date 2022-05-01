@@ -1,6 +1,7 @@
 package fr.litopia.Integrateur.model.entity;
 
 import javax.persistence.Entity;
+import javax.persistence.Id;
 
 @Entity
 public class Indication extends Etape{

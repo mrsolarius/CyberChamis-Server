@@ -21,7 +21,7 @@ public class Chami extends Utilisateur {
     @Column(name = "bio", length = 255)
     public String bio;
 
-    Chami(String username) {
+    public Chami(String username) {
         super();
         this.setUsername(username);
     }

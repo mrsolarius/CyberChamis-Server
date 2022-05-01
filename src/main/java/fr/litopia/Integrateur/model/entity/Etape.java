@@ -1,5 +1,7 @@
 package fr.litopia.Integrateur.model.entity;
 
+import fr.litopia.Integrateur.model.dto.EtapeDTO;
+
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 
@@ -7,7 +9,7 @@ import javax.validation.constraints.Min;
 @Inheritance(strategy= InheritanceType.JOINED)
 public abstract class Etape {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     public Long id;
 
@@ -17,6 +19,9 @@ public abstract class Etape {
 
     @Column(name = "titre", nullable = false, length = 32)
     public String titre;
+
+    @Column(name = "description")
+    private String description;
 
     public Integer getNumero() {
         return numero;
@@ -45,4 +50,20 @@ public abstract class Etape {
         }
         this.titre = titre;
     }
+
+    public void setDescription(String description) {
+        if (description == null || description.isEmpty()) {
+            throw new IllegalArgumentException("Description cannot be null or empty");
+        }
+        if (description.length() > 255) {
+            throw new IllegalArgumentException("Description cannot be longer than 255 characters");
+        }
+        this.description = description;
+    }
+
+    public EtapeDTO toDTO() {
+        EtapeDTO dto = new EtapeDTO();
+        return dto;
+    }
 }
+

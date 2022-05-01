@@ -1,6 +1,8 @@
 package fr.litopia.Integrateur.services;
 
 import fr.litopia.Integrateur.model.entity.*;
+import fr.litopia.Integrateur.repository.VisiteRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
@@ -12,18 +14,24 @@ public class GameServiceImpl implements GameService{
     @PersistenceContext
     private EntityManager entityManager;
 
+    @Autowired
+    private VisiteRepository visiteRepository;
+
     @Override
     public Visite commencerVisite(Defi defi, Utilisateur utilisateur) {
-        return null;
-
+        Visite visite = new Visite(defi,utilisateur);
+        visiteRepository.save(visite);
+        return visite;
     }
 
 
 
     @Override
     @Transactional
-    public Etape visiteSuivante(Visite visite) {
-        return visite.etapeSuivante();
+    public Etape etapeSuivante(Visite visite) {
+        Etape etape = visite.etapeSuivante();
+        visiteRepository.save(visite);
+        return etape;
     }
 
 
@@ -42,20 +50,20 @@ public class GameServiceImpl implements GameService{
         }catch (Exception e){
             e.printStackTrace();
         }
+        visiteRepository.save(visite);
         return visite;
     }
 
 
     @Override
-    @Transactional
     public Indice revealIndice(Visite visite) {
-        Indice indice = visite.revelerIndiceCourant();
-        return indice;
+        return visite.revelerIndiceCourant();
     }
 
     @Override
     public boolean checkResponse(String response, Visite visite) {
-
-        return visite.verificationReponse(response);
+        boolean isCorrect = visite.verificationReponse(response);
+        visiteRepository.save(visite);
+        return isCorrect;
     }
 }

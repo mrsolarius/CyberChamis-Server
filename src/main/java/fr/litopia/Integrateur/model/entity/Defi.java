@@ -3,6 +3,7 @@ package fr.litopia.Integrateur.model.entity;
 import fr.litopia.Integrateur.model.dto.DefiDTO;
 import lombok.Builder;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
@@ -14,7 +15,8 @@ import java.util.*;
 @Builder
 public class Defi {
     @Id
-    @GeneratedValue
+    @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name="system-uuid", strategy = "uuid")
     @Column(name = "idDefi", nullable = false)
     public String id;
 
