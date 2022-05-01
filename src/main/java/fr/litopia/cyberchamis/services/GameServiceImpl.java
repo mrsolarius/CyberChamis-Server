@@ -20,6 +20,10 @@ public class GameServiceImpl implements GameService{
 
     @Override
     public Visite commencerVisite(Defi defi, Utilisateur utilisateur) {
+        long checkNbVisiteEnCour = visiteRepository.countVisitesByStatus(defi,StatutVisite.ENCOURS,utilisateur);
+        if(checkNbVisiteEnCour > 0){
+            throw new IllegalStateException("You need to finish first your previous visit");
+        }
         Visite visite = new Visite(defi,utilisateur);
         visiteRepository.save(visite);
         return visite;
