@@ -47,12 +47,8 @@ public class GameServiceImpl implements GameService{
 
     @Override
     @Transactional
-    public Visite changeStatusVisite(Visite visite, StatutVisite visiteStatus){
-        try {
-            visite.setStatut(visiteStatus);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
+    public Visite changeStatusVisite(Visite visite, StatutVisite visiteStatus) throws Exception {
+        visite.setStatut(visiteStatus);
         visiteRepository.save(visite);
         return visite;
     }

@@ -5,7 +5,6 @@ import fr.litopia.Integrateur.model.dto.IndiceDTO;
 import fr.litopia.Integrateur.model.dto.VisiteDTO;
 import fr.litopia.Integrateur.model.entity.*;
 import fr.litopia.Integrateur.repository.*;
-import org.aspectj.lang.annotation.DeclareError;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import fr.litopia.Integrateur.services.GameService;
 import org.springframework.web.server.ResponseStatusException;
 
-import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -139,6 +137,20 @@ public class GameRestController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No indice found");
         }
         return i.toDTO();
+    }
+
+    @PostMapping("edit-status")
+    @ResponseStatus(HttpStatus.OK)
+    public Visite editStatus(@RequestParam Long visiteId, @RequestParam StatutVisite status) {
+        if (visiteRepository.findById(visiteId).isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Visite not found");
+        }
+        Visite v = visiteRepository.findById(visiteId).get();
+        try{
+            return gameService.changeStatusVisite(v, status);
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Cannot change to the given status");
+        }
     }
 
 

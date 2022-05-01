@@ -13,10 +13,10 @@ public interface GameService {
 
     /**
      * Termine la visite par un abandon si le joueur n'a pas réussi à la finir
-     * @param visite
-     * @param visiteStatus
+     * @param visite la visite à terminer
+     * @param visiteStatus le statut de la visite
      */
-    Visite changeStatusVisite(Visite visite, StatutVisite visiteStatus);
+    Visite changeStatusVisite(Visite visite, StatutVisite visiteStatus) throws Exception;
 
     Indice revealIndice(Visite visite);
 
