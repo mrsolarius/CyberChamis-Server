@@ -34,9 +34,6 @@ public class GameRestController {
     private ChamiRepository chamiRepository;
 
     @Autowired
-    private EtapeRepository etapeRepository;
-
-    @Autowired
     private VisiteRepository visiteRepository;
 
     @Autowired
