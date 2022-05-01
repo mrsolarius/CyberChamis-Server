@@ -1,5 +1,6 @@
 package fr.litopia.Integrateur.model.entity;
 
+import fr.litopia.Integrateur.model.dto.IndiceDTO;
 import lombok.Builder;
 
 import javax.persistence.*;
@@ -60,5 +61,14 @@ public class Indice {
             throw new IllegalArgumentException("pointsPerdus must be positive");
         }
         this.pointsPerdus = pointsPerdus;
+    }
+
+    public IndiceDTO toDTO() {
+        IndiceDTO dto = new IndiceDTO();
+        dto.id = this.id;
+        dto.numIndice = this.numIndice;
+        dto.indice = this.indice;
+        dto.pointsPerdus = this.pointsPerdus;
+        return dto;
     }
 }

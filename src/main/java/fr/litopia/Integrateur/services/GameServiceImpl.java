@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Service
 public class GameServiceImpl implements GameService{
@@ -59,7 +60,14 @@ public class GameServiceImpl implements GameService{
 
     @Override
     public Indice revealIndice(Visite visite) {
-        return visite.revelerIndiceCourant();
+        Indice i = visite.revelerIndiceCourant();
+        visiteRepository.save(visite);
+        return i;
+    }
+
+    @Override
+    public List<Indice> getIndices(Visite visite) {
+        return visite.getIndices();
     }
 
     @Override

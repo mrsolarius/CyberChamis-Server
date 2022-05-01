@@ -1,6 +1,10 @@
 package fr.litopia.Integrateur.model.dto;
 
 public class IndiceDTO {
-    String text;
-    Integer pertePoint;
+
+    public long id;
+
+    public String indice;
+    public Integer pointsPerdus;
+    public int numIndice;
 }

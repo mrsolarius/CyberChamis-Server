@@ -1,6 +1,7 @@
 package fr.litopia.Integrateur.controller;
 
 import fr.litopia.Integrateur.model.dto.EtapeDTO;
+import fr.litopia.Integrateur.model.dto.IndiceDTO;
 import fr.litopia.Integrateur.model.dto.VisiteDTO;
 import fr.litopia.Integrateur.model.entity.*;
 import fr.litopia.Integrateur.repository.*;
@@ -15,6 +16,8 @@ import org.springframework.web.server.ResponseStatusException;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/api/game", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -106,6 +109,36 @@ public class GameRestController {
         return gameService.checkResponse(response, v);
     }
 
+    @GetMapping("/response-indice")
+    @ResponseStatus(HttpStatus.OK)
+    public List<IndiceDTO> getResponseIndices(@RequestParam Long visiteId) {
+        if (visiteRepository.findById(visiteId).isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Visite not found");
+        }
+        Visite v = visiteRepository.findById(visiteId).get();
+        List<Indice> indiceList = gameService.getIndices(v);
+        if(indiceList.isEmpty()){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No indice found");
+        }
+        return indiceList.stream().map(Indice::toDTO).collect(Collectors.toList());
+    }
+
+    @PostMapping("/reveal-indice")
+    @ResponseStatus(HttpStatus.OK)
+    public IndiceDTO revealIndice(@RequestParam Long visiteId) {
+        if (visiteRepository.findById(visiteId).isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Visite not found");
+        }
+        Visite v = visiteRepository.findById(visiteId).get();
+        Indice i = gameService.revealIndice(v);
+        if(i == null){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No indice found");
+        }
+        return i.toDTO();
+    }
+
+
+
 
     @PostMapping("/create-default-defi")
     @ResponseStatus(HttpStatus.CREATED)
@@ -149,7 +182,13 @@ public class GameRestController {
         indiceE21.setPointsPerdus(1);
         indiceRepository.save(indiceE21);
 
+        Indice indiceE22 = new Indice();
+        indiceE22.setIndice("Thomas est dans la salle 11x");
+        indiceE22.setPointsPerdus(1);
+        indiceRepository.save(indiceE22);
+
         etape2.addIndice(indiceE21);
+        etape2.addIndice(indiceE22);
         defi.addEtape(etape2);
         tacheRepository.save(etape2);
         //etape3

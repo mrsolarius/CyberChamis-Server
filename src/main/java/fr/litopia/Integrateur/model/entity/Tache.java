@@ -84,7 +84,7 @@ public class Tache extends Etape {
 
     public List<Indice> getSortedIndices() {
         List<Indice> sortEtapes = new ArrayList<>(indices);
-        sortEtapes.sort(Comparator.comparing(Indice::getNumIndice));
+        sortEtapes.sort(Comparator.comparing(Indice::getNumIndice).reversed());
         return sortEtapes;
     }
 

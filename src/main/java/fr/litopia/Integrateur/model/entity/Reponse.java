@@ -16,7 +16,7 @@ public class Reponse {
     @Column(name = "numero", nullable = false)
     public Integer numero;
 
-    @Min(0)
+    @Min(-1)
     @Column(name = "score", nullable = false)
     public Integer nbIndicesUtilises;
 
@@ -24,7 +24,7 @@ public class Reponse {
     public String reponseUtilisateur;
 
     public Reponse(){
-        this.nbIndicesUtilises = 0;
+        this.nbIndicesUtilises = -1;
     }
 
     public Reponse(Integer numero){

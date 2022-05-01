@@ -2,6 +2,8 @@ package fr.litopia.Integrateur.services;
 
 import fr.litopia.Integrateur.model.entity.*;
 
+import java.util.List;
+
 public interface GameService {
     Visite commencerVisite(Defi defi, Utilisateur utilisateur);
 
@@ -17,6 +19,8 @@ public interface GameService {
     Visite changeStatusVisite(Visite visite, StatutVisite visiteStatus);
 
     Indice revealIndice(Visite visite);
+
+    List<Indice> getIndices(Visite visite);
 
     boolean checkResponse(String response, Visite visite);
 }

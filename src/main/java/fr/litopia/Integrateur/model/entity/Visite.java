@@ -4,10 +4,7 @@ import fr.litopia.Integrateur.model.dto.VisiteDTO;
 import org.apache.coyote.Response;
 
 import javax.persistence.*;
-import java.util.Comparator;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Entity
@@ -178,4 +175,18 @@ public class Visite {
     }
 
 
+    public List<Indice> getIndices() {
+        Etape e = this.getEtapeCourante();
+        List<Indice> indices = new ArrayList<>();
+        if(e instanceof Tache) {
+            Tache tache = (Tache) e;
+            Reponse response = this.getReponseCourante();
+            if (response != null) {
+                for (int i = 0; i < response.getNbIndicesUtilises()+1; i++) {
+                    indices.add(tache.getSortedIndices().get(i));
+                }
+            }
+        }
+        return indices;
+    }
 }
