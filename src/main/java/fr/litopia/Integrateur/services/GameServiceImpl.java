@@ -72,7 +72,7 @@ public class GameServiceImpl implements GameService{
 
     @Override
     @Transactional
-    public boolean checkResponse(String response, Visite visite) {
+    public boolean checkResponse(String response, Visite visite) throws Exception {
         boolean isCorrect = visite.verificationReponse(response);
         visiteRepository.save(visite);
         return isCorrect;

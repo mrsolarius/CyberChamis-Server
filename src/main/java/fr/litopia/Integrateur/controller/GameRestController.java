@@ -106,7 +106,11 @@ public class GameRestController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Visite not found");
         }
         Visite v = visiteRepository.findById(visiteId).get();
-        return gameService.checkResponse(response, v);
+        try {
+            return gameService.checkResponse(response,v);
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Bad response");
+        }
     }
 
     @GetMapping("/response-indice")

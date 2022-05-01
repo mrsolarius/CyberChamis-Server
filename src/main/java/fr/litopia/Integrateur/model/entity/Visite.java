@@ -55,6 +55,9 @@ public class Visite {
     }
 
     private List<Reponse> getSortReponses() {
+        if (this.statut!= StatutVisite.ENCOURS) {
+            throw new RuntimeException("Visite not in progress");
+        }
         return this.reponses.stream().sorted(Comparator.comparingInt(Reponse::getNumero)).collect(Collectors.toList());
     }
 
@@ -63,10 +66,16 @@ public class Visite {
      * @return Etape l'etape courante
      */
     public Etape getEtapeCourante(){
+        if (this.statut!= StatutVisite.ENCOURS) {
+            throw new RuntimeException("Visite not in progress");
+        }
         return defi.getSortEtapes().get(etapeCourante);
     }
 
     public Reponse getReponseCourante(){
+        if (this.statut!= StatutVisite.ENCOURS) {
+            throw new RuntimeException("Visite not in progress");
+        }
         return getReponse(etapeCourante);
     }
 
@@ -138,7 +147,9 @@ public class Visite {
     }
 
     public Indice revelerIndiceCourant(){
-
+        if (this.statut!= StatutVisite.ENCOURS) {
+            throw new RuntimeException("Visite not in progress");
+        }
         Etape e = this.getEtapeCourante();
         if(e instanceof Tache){
             Tache tache = (Tache) e;
@@ -154,10 +165,16 @@ public class Visite {
         return null;
     }
 
-    public boolean verificationReponse(String reponse){
+    public boolean verificationReponse(String reponse) throws Exception {
+        if (this.statut!= StatutVisite.ENCOURS) {
+            throw new RuntimeException("Visite not in progress");
+        }
         Reponse r = getReponseCourante();
         if (r == null) return false;
         if (!(getEtapeCourante() instanceof Tache)) return false;
+        if(this.etapeCourante == this.defi.getSortEtapes().size() - 1){
+            this.setStatut(StatutVisite.FINISHED);
+        }
         r.setReponseUtilisateur(reponse);
         Tache tache = (Tache) getEtapeCourante();
         return tache.isSecret(reponse);
@@ -176,6 +193,9 @@ public class Visite {
 
 
     public List<Indice> getIndices() {
+        if (this.statut!= StatutVisite.ENCOURS) {
+            throw new RuntimeException("Visite not in progress");
+        }
         Etape e = this.getEtapeCourante();
         List<Indice> indices = new ArrayList<>();
         if(e instanceof Tache) {

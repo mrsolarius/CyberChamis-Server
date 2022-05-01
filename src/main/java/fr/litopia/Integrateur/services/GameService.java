@@ -22,5 +22,5 @@ public interface GameService {
 
     List<Indice> getIndices(Visite visite);
 
-    boolean checkResponse(String response, Visite visite);
+    boolean checkResponse(String response, Visite visite) throws Exception;
 }
