@@ -25,7 +25,11 @@ public class Tache extends Etape {
         super();
         this.indices = new HashSet<>();
     }
+    public Tache(String question, Integer point){
+        this.question=question;
+        this.point=point;
 
+    }
     public String getQuestion() {
         return question;
     }

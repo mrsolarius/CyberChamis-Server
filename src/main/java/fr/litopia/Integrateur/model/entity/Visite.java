@@ -27,7 +27,17 @@ public class Visite {
 
     @OneToMany
     public Set<Reponse> reponses;
-// repo
+
+    public Visite(Defi defi, Utilisateur utilisateur){
+        this.defi=defi;
+        utilisateur.addVisite(this);
+    }
+
+    public Visite() {
+
+    }
+
+    // repo
     private Reponse getReponse(int numero) {
         if(numero < 0 || numero > reponses.size()){
             throw new IndexOutOfBoundsException("Index out of bounds");

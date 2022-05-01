@@ -37,8 +37,10 @@ public class GameServiceImpl implements GameService{
 
     @Override
     @Transactional
-    public Etape visitePrecedente(Visite visite) {
-        return visite.etapePrecedente();
+    public Etape etapePrecedente(Visite visite){
+        Etape etape = visite.etapePrecedente();
+        visiteRepository.save(visite);
+        return etape;
     }
 
 
@@ -61,6 +63,7 @@ public class GameServiceImpl implements GameService{
     }
 
     @Override
+    @Transactional
     public boolean checkResponse(String response, Visite visite) {
         boolean isCorrect = visite.verificationReponse(response);
         visiteRepository.save(visite);

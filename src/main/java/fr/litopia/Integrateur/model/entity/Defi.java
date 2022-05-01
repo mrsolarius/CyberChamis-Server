@@ -79,6 +79,10 @@ public class Defi {
         return id;
     }
 
+    public void setArret(Arret arret) {
+        this.arret = arret;
+    }
+
     public void setTitre(String titre) {
         if (titre == null || titre.isEmpty()) {
             throw new IllegalArgumentException("Titre cannot be null or empty");
