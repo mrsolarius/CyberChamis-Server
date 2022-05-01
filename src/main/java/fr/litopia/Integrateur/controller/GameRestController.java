@@ -62,21 +62,16 @@ public class GameRestController {
         }
         Defi defi = defiRepository.findById(defiId).get();
         Utilisateur user = userRepository.findById(userId).get();
-        Visite v = gameService.commencerVisite(defi, user);
-        return v.toDTO();
+        return gameService.commencerVisite(defi, user).toDTO();
     }
 
 
     @PostMapping("/next-etape")
     @ResponseStatus(HttpStatus.OK)
     public EtapeDTO etapeSuivante(@RequestParam Long visiteId) {
-        if (visiteRepository.findById(visiteId).isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Visite not found");
-        }
-        Visite v = visiteRepository.findById(visiteId).get();
+        Visite v = checkAndGetVisite(visiteId);
         try {
-            Etape e = gameService.etapeSuivante(v);
-            return e.toDTO();
+            return gameService.etapeSuivante(v).toDTO();
         } catch (RuntimeException e) {
             throw new ResponseStatusException(HttpStatus.GONE, "No more etape");
         }
@@ -85,13 +80,9 @@ public class GameRestController {
     @PostMapping("/previsous-etape")
     @ResponseStatus(HttpStatus.OK)
     public EtapeDTO etapePrecedente(@RequestParam Long visiteId) {
-        if (visiteRepository.findById(visiteId).isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Visite not found");
-        }
-        Visite v = visiteRepository.findById(visiteId).get();
+        Visite v = checkAndGetVisite(visiteId);
         try {
-            Etape e = gameService.etapePrecedente(v);
-            return e.toDTO();
+            return gameService.etapePrecedente(v).toDTO();
         } catch (RuntimeException e) {
             throw new ResponseStatusException(HttpStatus.GONE, "No more etape");
         }
@@ -100,10 +91,7 @@ public class GameRestController {
     @PostMapping("/check-response")
     @ResponseStatus(HttpStatus.OK)
     public boolean checkResponse(@RequestParam Long visiteId, @RequestParam String response) {
-        if (visiteRepository.findById(visiteId).isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Visite not found");
-        }
-        Visite v = visiteRepository.findById(visiteId).get();
+        Visite v = checkAndGetVisite(visiteId);
         try {
             return gameService.checkResponse(response,v);
         } catch (Exception e) {
@@ -114,10 +102,7 @@ public class GameRestController {
     @GetMapping("/response-indice")
     @ResponseStatus(HttpStatus.OK)
     public List<IndiceDTO> getResponseIndices(@RequestParam Long visiteId) {
-        if (visiteRepository.findById(visiteId).isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Visite not found");
-        }
-        Visite v = visiteRepository.findById(visiteId).get();
+        Visite v = checkAndGetVisite(visiteId);
         List<Indice> indiceList = gameService.getIndices(v);
         if(indiceList.isEmpty()){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No indice found");
@@ -128,10 +113,7 @@ public class GameRestController {
     @PostMapping("/reveal-indice")
     @ResponseStatus(HttpStatus.OK)
     public IndiceDTO revealIndice(@RequestParam Long visiteId) {
-        if (visiteRepository.findById(visiteId).isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Visite not found");
-        }
-        Visite v = visiteRepository.findById(visiteId).get();
+        Visite v = checkAndGetVisite(visiteId);
         Indice i = gameService.revealIndice(v);
         if(i == null){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No indice found");
@@ -225,6 +207,13 @@ public class GameRestController {
         defi.addEtape(etape4);
         tacheRepository.save(etape4);
         defiRepository.save(defi);
+    }
+
+    private Visite checkAndGetVisite(Long visiteId) {
+        if (visiteRepository.findById(visiteId).isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Visite not found");
+        }
+        return visiteRepository.findById(visiteId).get();
     }
 
 }
