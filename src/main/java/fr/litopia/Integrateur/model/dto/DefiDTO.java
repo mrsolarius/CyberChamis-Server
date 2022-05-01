@@ -1,12 +1,9 @@
 package fr.litopia.Integrateur.model.dto;
 
-import fr.litopia.Integrateur.model.dto.interfaces.DTO;
-import fr.litopia.Integrateur.model.entity.Defi;
-
 import java.util.Date;
 import java.util.List;
 
-public class DefiDTO implements DTO<Defi> {
+public class DefiDTO {
     public String id;
     public String titre;
     public String description;
@@ -43,13 +40,4 @@ public class DefiDTO implements DTO<Defi> {
       //  return null;
 
     //}
-
-    @Override
-    public Defi toEntity() {
-        Defi d = new Defi();
-        d.id=this.id;
-        d.titre=this.titre;
-        d.description=this.description;
-        return d;
-    }
 }

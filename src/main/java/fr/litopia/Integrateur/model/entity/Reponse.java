@@ -20,7 +20,7 @@ public class Reponse {
     @Column(name = "score", nullable = false)
     public Integer nbIndicesUtilises;
 
-    @Column(name = "texte", nullable = false)
+    @Column(name = "reponseUtilisateur")
     public String reponseUtilisateur;
 
     public Reponse(){

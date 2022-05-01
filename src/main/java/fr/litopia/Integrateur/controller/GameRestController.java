@@ -4,6 +4,7 @@ import fr.litopia.Integrateur.model.dto.EtapeDTO;
 import fr.litopia.Integrateur.model.dto.VisiteDTO;
 import fr.litopia.Integrateur.model.entity.*;
 import fr.litopia.Integrateur.repository.*;
+import org.aspectj.lang.annotation.DeclareError;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import fr.litopia.Integrateur.services.GameService;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
 
 @RestController
@@ -50,7 +52,7 @@ public class GameRestController {
     @PostMapping("/start-game")
     @ResponseStatus(HttpStatus.CREATED)
     @Transactional
-    public VisiteDTO startGame(@RequestBody String defiId, @RequestBody Long userId) {
+    public VisiteDTO startGame(@RequestParam String defiId, @RequestParam Long userId) {
         if (defiRepository.findById(defiId).isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Defi not found");
         }
@@ -66,24 +68,32 @@ public class GameRestController {
 
     @PostMapping("/next-etape")
     @ResponseStatus(HttpStatus.OK)
-    public EtapeDTO etapeSuivante(@RequestBody Long visiteId) {
+    public EtapeDTO etapeSuivante(@RequestParam Long visiteId) {
         if (visiteRepository.findById(visiteId).isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Visite not found");
         }
         Visite v = visiteRepository.findById(visiteId).get();
-        Etape e = gameService.etapeSuivante(v);
-        return e.toDTO();
+        try {
+            Etape e = gameService.etapeSuivante(v);
+            return e.toDTO();
+        } catch (RuntimeException e) {
+            throw new ResponseStatusException(HttpStatus.GONE, "No more etape");
+        }
     }
 
     @PostMapping("/previsous-etape")
     @ResponseStatus(HttpStatus.OK)
-    public EtapeDTO etapePrecedente(@RequestBody Long visiteId) {
+    public EtapeDTO etapePrecedente(@RequestParam Long visiteId) {
         if (visiteRepository.findById(visiteId).isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Visite not found");
         }
         Visite v = visiteRepository.findById(visiteId).get();
-        Etape e = gameService.etapePrecedente(v);
-        return e.toDTO();
+        try {
+            Etape e = gameService.etapePrecedente(v);
+            return e.toDTO();
+        } catch (RuntimeException e) {
+            throw new ResponseStatusException(HttpStatus.GONE, "No more etape");
+        }
     }
 
     @PostMapping("/check-response")
@@ -123,7 +133,7 @@ public class GameRestController {
         //etape1
         Indication etape1 = new Indication();
         etape1.setTitre("A la découverte des miagistes");
-        etape1.text="Bienvenu à l’UFR IM2AG, le bâtiment, des geeks. Pour commencer, rentrez dans le bâtiment et passez à l’étape suivant dans la flèche de droite.";
+        etape1.text = "Bienvenu à l’UFR IM2AG, le bâtiment, des geeks. Pour commencer, rentrez dans le bâtiment et passez à l’étape suivant dans la flèche de droite.";
         defi.addEtape(etape1);
         indicationRepository.save(etape1);
         //etape2
@@ -145,7 +155,7 @@ public class GameRestController {
         //etape3
         Indication etape3 = new Indication();
         etape3.setTitre("Parler à Thomas");
-        etape3.text="Salut, j’ai perdu mon magnifique bonnet miage, aide-moi à le retrouver. La dernière fois que je l’avais, j’étais dans la salle 218.";
+        etape3.text = "Salut, j’ai perdu mon magnifique bonnet miage, aide-moi à le retrouver. La dernière fois que je l’avais, j’étais dans la salle 218.";
 
         defi.addEtape(etape3);
         indicationRepository.save(etape3);

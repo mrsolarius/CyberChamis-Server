@@ -5,6 +5,7 @@ import org.apache.coyote.Response;
 
 import javax.persistence.*;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -25,20 +26,23 @@ public class Visite {
     @Column(name = "etapeCourante", nullable = false)
     public int etapeCourante;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     public Defi defi;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER,orphanRemoval = true,cascade = CascadeType.ALL)
+    @Column(nullable = false)
     public Set<Reponse> reponses;
 
     public Visite(Defi defi, Utilisateur utilisateur){
         this.defi=defi;
         utilisateur.addVisite(this);
+        statut = StatutVisite.ENCOURS;
+        points = 0;
+        etapeCourante = 0;
+        this.reponses = new HashSet<>();
     }
 
-    public Visite() {
-
-    }
+    public Visite() {}
 
     // repo
     private Reponse getReponse(int numero) {
@@ -54,7 +58,6 @@ public class Visite {
     }
 
     private List<Reponse> getSortReponses() {
-        //sort reponses by numeros
         return this.reponses.stream().sorted(Comparator.comparingInt(Reponse::getNumero)).collect(Collectors.toList());
     }
 
@@ -75,7 +78,7 @@ public class Visite {
      * si c'est une tache : création d'une réponse
      * throw une erreur si il n'y a pas d'étape suivante
      */
-    public Etape etapeSuivante() {
+    public Etape etapeSuivante() throws RuntimeException {
         if(statut != StatutVisite.ENCOURS){
             throw new RuntimeException("Visite not in progress");
         }
@@ -91,7 +94,7 @@ public class Visite {
         return currentEtape;
     }
 
-    public Etape etapePrecedente() {
+    public Etape etapePrecedente() throws RuntimeException {
         if(statut != StatutVisite.ENCOURS){
             throw new RuntimeException("Visite not in progress");
         }

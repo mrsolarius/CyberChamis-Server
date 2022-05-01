@@ -48,22 +48,22 @@ public class Defi {
     @Column(name = "duree")
     public String duree;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false,fetch = FetchType.EAGER)
     public Chami auteur;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY)
     @Column(name = "notes")
     public Set<Note> notes;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY)
     @Column(name = "commentaires")
     public Set<Commentaire> commentaires;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     @Column(name = "tags")
     public Set<Tag> tags;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     public Arret arret;
 
     @OneToMany(orphanRemoval = true)
