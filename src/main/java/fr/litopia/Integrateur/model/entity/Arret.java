@@ -1,5 +1,7 @@
 package fr.litopia.Integrateur.model.entity;
 
+import fr.litopia.Integrateur.model.dto.ArretDTO;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -56,5 +58,13 @@ public class Arret {
 
     public String getStreetMap() {
         return streetMap;
+    }
+
+    public ArretDTO toDTO() {
+        ArretDTO dto = new ArretDTO();
+        dto.codeArret = this.codeArret;
+        dto.nomArret = this.nomArret;
+        dto.streetMap = this.streetMap;
+        return dto;
     }
 }

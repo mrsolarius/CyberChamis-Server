@@ -1,8 +1,11 @@
 package fr.litopia.Integrateur.model.entity;
 
+import fr.litopia.Integrateur.model.dto.TagDTO;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 public class Tag {
@@ -50,5 +53,12 @@ public class Tag {
         if (o == null || getClass() != o.getClass()) return false;
         Tag tag = (Tag) o;
         return tag.getTag().equals(this.tag);
+    }
+
+    public TagDTO toDTO(){
+        TagDTO tagDTO =  new TagDTO();
+        tagDTO.tag = this.tag;
+        tagDTO.defiIds = this.defis.stream().map(Defi::getId).collect(Collectors.toList());
+        return tagDTO;
     }
 }

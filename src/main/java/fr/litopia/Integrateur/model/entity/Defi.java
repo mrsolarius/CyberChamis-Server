@@ -9,6 +9,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import java.util.*;
+import java.util.stream.Collectors;
 
 
 @Entity
@@ -257,6 +258,16 @@ public class Defi {
         dto.id=id;
         dto.titre=titre;
         dto.description=description;
+        dto.dateCreation=dateDeCreation;
+        dto.dateDeModification= dateDeModification;
+        dto.version=version;
+        dto.duree=duree;
+        dto.pointTotaux=pointTotaux;
+        dto.auteur=auteur.toDTO();
+        dto.tags=tags.stream().map(Tag::toDTO).collect(Collectors.toList());
+        dto.arretDTO=arret.toDTO();
+        dto.noteMoyenne=getMoyenne();
+        dto.etapes=etapes.stream().map(Etape::toDTO).collect(Collectors.toList());
         return dto;
     }
 

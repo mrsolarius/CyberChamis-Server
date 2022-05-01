@@ -3,6 +3,7 @@ package fr.litopia.Integrateur.model.dto;
 import fr.litopia.Integrateur.model.dto.interfaces.DTO;
 import fr.litopia.Integrateur.model.entity.Defi;
 
+import java.util.Date;
 import java.util.List;
 
 public class DefiDTO implements DTO<Defi> {
@@ -13,9 +14,12 @@ public class DefiDTO implements DTO<Defi> {
     public String duree;
     public ChamiDTO auteur;
     public double noteMoyenne;
-    public List<String> tags;
+    public List<TagDTO> tags;
     public ArretDTO arretDTO;
     public List<EtapeDTO> etapes;
+    public Date dateCreation;
+    public Date dateDeModification;
+    public Integer pointTotaux;
 
     /*
     public static Defi defiToDTO(DefiDTO defiDTO) {

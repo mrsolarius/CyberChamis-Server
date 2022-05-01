@@ -1,5 +1,7 @@
 package fr.litopia.Integrateur.model.entity;
 
+import fr.litopia.Integrateur.model.dto.ReponseDTO;
+
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 
@@ -58,5 +60,14 @@ public class Reponse {
             throw new IllegalArgumentException("Reponse could not be changed");
         }
         this.reponseUtilisateur = reponseUtilisateur;
+    }
+
+    public ReponseDTO toDTO() {
+        ReponseDTO reponseDTO = new ReponseDTO();
+        reponseDTO.id = this.id;
+        reponseDTO.numero = this.numero;
+        reponseDTO.nbIndicesUtilises = this.nbIndicesUtilises;
+        reponseDTO.reponseUtilisateur = this.reponseUtilisateur;
+        return reponseDTO;
     }
 }

@@ -1,6 +1,7 @@
 package fr.litopia.Integrateur.model.entity;
 
 import fr.litopia.Integrateur.model.dto.EtapeDTO;
+import fr.litopia.Integrateur.model.dto.TypeEtapeDTO;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
@@ -63,6 +64,20 @@ public abstract class Etape {
 
     public EtapeDTO toDTO() {
         EtapeDTO dto = new EtapeDTO();
+        dto.id = id;
+        dto.numero = numero;
+        dto.titre = titre;
+        dto.description = description;
+        if (this instanceof Tache){
+            dto.type = TypeEtapeDTO.TacheDTO;
+            dto.question = ((Tache)this).getQuestion();
+            dto.point = ((Tache)this).getPoint();
+        } else if (this instanceof Indication){
+            dto.type = TypeEtapeDTO.IndicationDTO;
+            dto.text = ((Indication)this).getText();
+            dto.image = ((Indication)this).getImage();
+            dto.video = ((Indication)this).getVideo();
+        }
         return dto;
     }
 }

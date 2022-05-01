@@ -5,17 +5,18 @@ import fr.litopia.Integrateur.model.entity.Indication;
 import fr.litopia.Integrateur.model.entity.Tache;
 
 public class EtapeDTO {
-    Long id;
-    String titre;
-    Integer numero;
-    TypeEtapeDTO type;
+    public Long id;
+    public String titre;
+    public Integer numero;
+    public String description;
+    public TypeEtapeDTO type;
     //dans indication
-    String text;
-    String video;
-    String image;
+    public String text;
+    public String video;
+    public String image;
     //Tache
-    String question;
-    Integer point;
+    public String question;
+    public Integer point;
 
     public Etape toEntity() {
         Etape entity = null;

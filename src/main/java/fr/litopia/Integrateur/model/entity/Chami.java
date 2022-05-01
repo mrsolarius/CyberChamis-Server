@@ -70,6 +70,5 @@ public class Chami extends Utilisateur {
         dto.bio=this.bio;
         dto.username=this.username;
         return dto;
-
     }
 }
