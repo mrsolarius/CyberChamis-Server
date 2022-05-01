@@ -98,7 +98,7 @@ public class GameRestController {
 
     @PostMapping("/check-response")
     @ResponseStatus(HttpStatus.OK)
-    public boolean checkResponse(@RequestBody Long visiteId, @RequestBody String response) {
+    public boolean checkResponse(@RequestParam Long visiteId, @RequestParam String response) {
         if (visiteRepository.findById(visiteId).isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Visite not found");
         }
