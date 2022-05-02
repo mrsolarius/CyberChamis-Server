@@ -3,8 +3,7 @@ package fr.litopia.cyberchamis.model.entity;
 import fr.litopia.cyberchamis.model.dto.ChamiDTO;
 import lombok.Builder;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
+import javax.persistence.*;
 import javax.validation.constraints.Min;
 
 
@@ -13,6 +12,9 @@ import javax.validation.constraints.Min;
 public class Chami extends Utilisateur {
     @Column(name = "username", nullable = false, unique = true, length = 20)
     public String username;
+
+    @Column(name = "idGoogle", nullable = false, unique = true)
+    public String idGoogle;
 
     @Column(name = "age")
     @Min(value = 13, message = "You must be at least 13 years old")
@@ -66,6 +68,7 @@ public class Chami extends Utilisateur {
     public ChamiDTO toDTO() {
         ChamiDTO dto = new ChamiDTO();
         dto.id= this.id;
+        dto.idGoogle=this.idGoogle;
         dto.age=this.age;
         dto.bio=this.bio;
         dto.username=this.username;

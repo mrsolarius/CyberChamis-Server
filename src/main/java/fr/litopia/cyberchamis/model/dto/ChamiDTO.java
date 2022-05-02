@@ -4,6 +4,7 @@ import fr.litopia.cyberchamis.model.entity.Chami;
 
 public class ChamiDTO {
     public long id;
+    public String idGoogle;
     public Integer age;
     public String bio;
     public String username;
@@ -12,6 +13,8 @@ public class ChamiDTO {
         Chami c = new Chami();
         if (id != 0)
             c.id = this.id;
+        if (idGoogle != null)
+            c.idGoogle=this.idGoogle;
         if (age != null)
             c.age=this.age;
         if (bio != null)
