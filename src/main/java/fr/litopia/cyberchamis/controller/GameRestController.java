@@ -59,7 +59,11 @@ public class GameRestController {
         }
         Defi defi = defiRepository.findById(defiId).get();
         Utilisateur user = userRepository.findById(userId).get();
-        return gameService.commencerVisite(defi, user).toDTO();
+        try {
+            return gameService.commencerVisite(defi, user).toDTO();
+        } catch (RuntimeException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "You need to finish this defi before starting a new one");
+        }
     }
 
     @GetMapping("/get-visite")
