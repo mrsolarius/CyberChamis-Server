@@ -9,10 +9,16 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collection;
+
 @Repository
 public interface VisiteRepository extends JpaRepository<Visite,Long> {
 
     @Transactional
-    @Query("select count(v) from Utilisateur u join u.vistes v where v.defi = :defi and v.statut = :statut and u = :utilisateur")
-    long countVisitesByStatus(@Param("defi") Defi defi, @Param("statut") StatutVisite statutVisite, @Param("utilisateur") Utilisateur utilisateur);
+    @Query("select count(v) from Utilisateur u join u.vistes v where v.defi = :defi and v.statut in :statut and u = :utilisateur")
+    long countVisitesByStatus(@Param("defi") Defi defi, @Param("statut") Collection<StatutVisite> statutVisite, @Param("utilisateur") Utilisateur utilisateur);
+
+    @Transactional
+    @Query("select v from Utilisateur u join u.vistes v where v.statut in :status and u = :utilisateur and v.defi = :defi")
+    Visite findUserVisiteThatHaveStatus(@Param("defi") Defi defi, @Param("status") Collection<StatutVisite> status, @Param("utilisateur") Utilisateur utilisateur);
 }

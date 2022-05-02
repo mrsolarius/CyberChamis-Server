@@ -131,15 +131,19 @@ public class Visite {
         for (Etape etape : defi.getSortEtapes()) {
             if (etape instanceof Tache) {
                 Tache tache = (Tache) etape;
-                Reponse reponse = getReponse(etape.getNumero());
-                if(tache.isSecret(this.getReponse(etape.getNumero()).getReponseUtilisateur())){
-                    tempPoints += tache.getPoint();
-                    if(reponse.getNbIndicesUtilises()>0){
-                        for(int i = 0; i < reponse.getNbIndicesUtilises(); i++){
-                            tempPoints -= tache.getSortedIndices().get(i).getPointsPerdus();
+                try {
+                    Reponse reponse = getReponse(etape.getNumero());
+                    if (reponse != null) {
+                        if (tache.isSecret(this.getReponse(etape.getNumero()).getReponseUtilisateur())) {
+                            tempPoints += tache.getPoint();
+                            if (reponse.getNbIndicesUtilises() > 0) {
+                                for (int i = 0; i < reponse.getNbIndicesUtilises(); i++) {
+                                    tempPoints -= tache.getSortedIndices().get(i).getPointsPerdus();
+                                }
+                            }
                         }
                     }
-                };
+                } catch (Exception ignored) {}
             }
         }
         this.points = tempPoints;
@@ -207,5 +211,9 @@ public class Visite {
             }
         }
         return indices;
+    }
+
+    public StatutVisite getStatus() {
+        return this.statut;
     }
 }

@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -20,7 +22,7 @@ public class GameServiceImpl implements GameService{
 
     @Override
     public Visite commencerVisite(Defi defi, Utilisateur utilisateur) {
-        long checkNbVisiteEnCour = visiteRepository.countVisitesByStatus(defi,StatutVisite.ENCOURS,utilisateur);
+        long checkNbVisiteEnCour = visiteRepository.countVisitesByStatus(defi,Arrays.asList(StatutVisite.ENCOURS,StatutVisite.PAUSE),utilisateur);
         if(checkNbVisiteEnCour > 0){
             throw new IllegalStateException("You need to finish first your previous visit");
         }
@@ -52,8 +54,12 @@ public class GameServiceImpl implements GameService{
     @Override
     @Transactional
     public Visite changeStatusVisite(Visite visite, StatutVisite visiteStatus) throws Exception {
-        visite.setStatut(visiteStatus);
-        visiteRepository.save(visite);
+        try {
+            visite.setStatut(visiteStatus);
+            visiteRepository.save(visite);
+        } catch (Exception e) {
+            throw new IllegalStateException("Visite status can't be changed");
+        }
         return visite;
     }
 
@@ -80,12 +86,16 @@ public class GameServiceImpl implements GameService{
 
     @Override
     @Transactional
-    public Visite continueVisite(Defi defi,Utilisateur utilisateur) {
-        var rest = entityManager.createQuery("select v from Utilisateur u join u.vistes v where v.statut not in (:terminer,:abandone) and u = :utilisateur and v.defi = :defi",Visite.class)
-                .setParameter("terminer",StatutVisite.FINISHED)
-                .setParameter("abandone",StatutVisite.ABONDON)
-                .setParameter("utilisateur",utilisateur)
-                .setParameter("defi", defi);
-        return rest.getSingleResult();
+    public Visite reprendreVisite(Defi defi, Utilisateur utilisateur) {
+        var v = visiteRepository.findUserVisiteThatHaveStatus(defi, Arrays.asList(StatutVisite.ENCOURS,StatutVisite.PAUSE),utilisateur);
+        if(v.getStatus() == StatutVisite.PAUSE){
+            try {
+                v.setStatut(StatutVisite.ENCOURS);
+                visiteRepository.save(v);
+            } catch (Exception e) {
+                throw new IllegalStateException("You need to finish first your previous visit");
+            }
+        }
+        return v;
     }
 }

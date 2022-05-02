@@ -2,7 +2,6 @@ package fr.litopia.cyberchamis.services;
 
 import fr.litopia.cyberchamis.model.entity.*;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
 public interface GameService {
@@ -25,5 +24,5 @@ public interface GameService {
 
     boolean checkResponse(String response, Visite visite) throws Exception;
 
-    Visite continueVisite(Defi defiId,Utilisateur utilisateur);
+    Visite reprendreVisite(Defi defiId, Utilisateur utilisateur);
 }

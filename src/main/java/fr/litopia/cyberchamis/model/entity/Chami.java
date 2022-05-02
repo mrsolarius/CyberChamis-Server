@@ -53,6 +53,15 @@ public class Chami extends Utilisateur {
         this.bio = bio;
     }
 
+    public void setIdGoogle(String idGoogle) {
+        this.idGoogle = idGoogle;
+    }
+
+    public String getIdGoogle() {
+        return idGoogle;
+    }
+
+
     public String getUsername() {
         return this.username;
     }

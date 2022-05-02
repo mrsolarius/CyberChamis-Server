@@ -68,7 +68,7 @@ public class GameRestController {
 
     @GetMapping("/get-visite")
     @ResponseStatus(HttpStatus.OK)
-    public VisiteDTO visiteCourante(@RequestParam String defiId, @RequestParam long userId){
+    public VisiteDTO visiteCourante(@RequestParam String defiId, @RequestParam long userId) {
         if (defiRepository.findById(defiId).isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Defi not found");
         }
@@ -77,7 +77,7 @@ public class GameRestController {
         }
         Defi defi = defiRepository.findById(defiId).get();
         Utilisateur user = userRepository.findById(userId).get();
-        return gameService.commencerVisite(defi,user).toDTO();
+        return gameService.reprendreVisite(defi,user).toDTO();
     }
 
 
@@ -138,13 +138,14 @@ public class GameRestController {
 
     @PostMapping("edit-status")
     @ResponseStatus(HttpStatus.OK)
-    public Visite editStatus(@RequestParam Long visiteId, @RequestParam StatutVisite status) {
+    public StatutVisite editStatus(@RequestParam Long visiteId, @RequestParam StatutVisite status) {
         if (visiteRepository.findById(visiteId).isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Visite not found");
         }
         Visite v = visiteRepository.findById(visiteId).get();
         try{
-            return gameService.changeStatusVisite(v, status);
+            gameService.changeStatusVisite(v, status);
+            return status;
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Cannot change to the given status");
         }
@@ -160,6 +161,7 @@ public class GameRestController {
         Chami ch = new Chami("Suisse");
         ch.setBio("Je suis suisse");
         ch.setAge(158);
+        ch.setIdGoogle("123456789");
         chamiRepository.save(ch);
 
         Arret a = new Arret();

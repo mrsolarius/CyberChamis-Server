@@ -4,6 +4,7 @@ import fr.litopia.cyberchamis.model.dto.ReponseDTO;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
+import java.util.Objects;
 
 @Entity
 public class Reponse {
@@ -48,7 +49,7 @@ public class Reponse {
     }
 
     public String getReponseUtilisateur() {
-        return reponseUtilisateur;
+        return Objects.requireNonNullElse(this.reponseUtilisateur, "");
     }
 
     public void addIndiceUtilise() {
