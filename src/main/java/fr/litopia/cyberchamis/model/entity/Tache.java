@@ -30,6 +30,12 @@ public class Tache extends Etape {
         this.point=point;
 
     }
+    public Tache(String question, point){
+        this.question=question;
+        this.point=point;
+        this
+
+    }
     public String getQuestion() {
         return question;
     }

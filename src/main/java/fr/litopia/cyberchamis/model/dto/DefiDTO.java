@@ -1,7 +1,12 @@
 package fr.litopia.cyberchamis.model.dto;
 
+import fr.litopia.cyberchamis.model.entity.Defi;
+import fr.litopia.cyberchamis.model.entity.Etape;
+import fr.litopia.cyberchamis.model.entity.Tag;
+
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class DefiDTO {
     public String id;
@@ -18,26 +23,22 @@ public class DefiDTO {
     public Date dateDeModification;
     public Integer pointTotaux;
 
-    /*
-    public static Defi defiToDTO(DefiDTO defiDTO) {
-        Defi defi = Defi.builder()
-                .id(defiDTO.id)
-                .titre(defiDTO.titre)
-                .description(defiDTO.description)
-                .dateDeCreation(defiDTO.dateDeCreation)
-                .dateDeModification(defiDTO.dateDeModification)
-                .version(defiDTO.version)
-                .duree(defiDTO.duree)
-                .auteur(defiDTO.auteur.toEntity())
-                .tags(defiDTO.tags)
-                .arret(defiDTO.arretDTO.ToEntity())
-                .etapes(defiDTO.etapes).build();
-        return defi;
-    }*/
 
-   // @Override
-    //public DefiDTO toDTO(Defi defi) {
-      //  return null;
+   /* public Defi toEntity() {
+        Defi entity = new DefiDTO();
+        entity.titre=titre;
+        entity.id=id;
+        entity.description=description;
+        entity.version=version;
+        entity.duree=duree;
+        entity.pointTotaux=pointTotaux;
+        entity.auteur=auteur.toDTO();
+        entity.tags=tags.stream().map(Tag::toDTO).collect(Collectors.toList());
+        entity.arretDTO=arret.toDTO();
+        entity.noteMoyenne=getMoyenne();
+        entity.etapes=etapes.stream().map(Etape::toDTO).collect(Collectors.toList());
+        return entity;
+    }
+*/
 
-    //}
 }

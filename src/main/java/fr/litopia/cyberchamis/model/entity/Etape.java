@@ -24,6 +24,7 @@ public abstract class Etape {
     @Column(name = "description")
     private String description;
 
+
     public Integer getNumero() {
         return numero;
     }

@@ -8,6 +8,11 @@ public class Indication extends Etape{
     public String video;
     public String image;
 
+    public Indication(){
+    }
+    public Indication(String text){
+        this.text=text;
+    }
     public String getText() {
         return text;
     }

@@ -1,8 +1,9 @@
 package fr.litopia.cyberchamis.model.dto;
-
 import fr.litopia.cyberchamis.model.entity.Etape;
 import fr.litopia.cyberchamis.model.entity.Indication;
 import fr.litopia.cyberchamis.model.entity.Tache;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
 
 public class EtapeDTO {
     public Long id;
@@ -25,7 +26,7 @@ public class EtapeDTO {
             entity = new Tache(question,point);
         }
         else if(type == TypeEtapeDTO.IndicationDTO) {
-            entity = new Indication();
+            entity = new Indication(text);
         }
         return entity;
     }
