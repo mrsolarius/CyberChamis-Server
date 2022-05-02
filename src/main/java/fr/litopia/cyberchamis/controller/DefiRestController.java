@@ -34,18 +34,18 @@ public class DefiRestController {
     }
 
     @GetMapping("/{id}")
-    public Defi getById(@PathVariable("id") String id) {
+    public DefiDTO getById(@PathVariable("id") String id) {
         Defi defi = defiService.findById(id);
         if(defi == null){
             throw new NotFoundException("Defi not found");
         }
-        return defi;
+        return defi.toDTO();
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     @Transactional
-    public Defi updateDefi(@PathVariable("id") final String id, @RequestBody final Defi defi){
+    public DefiDTO updateDefi(@PathVariable("id") final String id, @RequestBody final Defi defi){
         Defi defiToUpdate = defiService.findById(id);
         if(defiToUpdate == null){
             throw new ResponseStatusException(
@@ -55,7 +55,7 @@ public class DefiRestController {
         defiToUpdate.setTitre(defi.getTitre());
         defiToUpdate.setDescription(defi.getDescription());
         defiService.save(defiToUpdate);
-        return defiToUpdate;
+        return defiToUpdate.toDTO();
     }
 
     @DeleteMapping("/{id}")

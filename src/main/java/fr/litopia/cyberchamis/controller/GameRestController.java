@@ -77,7 +77,11 @@ public class GameRestController {
         }
         Defi defi = defiRepository.findById(defiId).get();
         Utilisateur user = userRepository.findById(userId).get();
-        return gameService.reprendreVisite(defi,user).toDTO();
+        try {
+            return gameService.reprendreVisite(defi, user).toDTO();
+        } catch (RuntimeException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "You need to start a new game");
+        }
     }
 
 

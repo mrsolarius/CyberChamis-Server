@@ -88,6 +88,9 @@ public class GameServiceImpl implements GameService{
     @Transactional
     public Visite reprendreVisite(Defi defi, Utilisateur utilisateur) {
         var v = visiteRepository.findUserVisiteThatHaveStatus(defi, Arrays.asList(StatutVisite.ENCOURS,StatutVisite.PAUSE),utilisateur);
+        if(v == null){
+            throw new IllegalArgumentException("not found");
+        }
         if(v.getStatus() == StatutVisite.PAUSE){
             try {
                 v.setStatut(StatutVisite.ENCOURS);
