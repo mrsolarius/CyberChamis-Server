@@ -62,6 +62,20 @@ public class GameRestController {
         return gameService.commencerVisite(defi, user).toDTO();
     }
 
+    @GetMapping("/get-visite")
+    @ResponseStatus(HttpStatus.OK)
+    public VisiteDTO visiteCourante(@RequestParam String defiId, @RequestParam long userId){
+        if (defiRepository.findById(defiId).isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Defi not found");
+        }
+        if (userRepository.findById(userId).isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
+        }
+        Defi defi = defiRepository.findById(defiId).get();
+        Utilisateur user = userRepository.findById(userId).get();
+        return gameService.commencerVisite(defi,user).toDTO();
+    }
+
 
     @PostMapping("/next-etape")
     @ResponseStatus(HttpStatus.OK)

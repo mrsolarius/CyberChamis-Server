@@ -73,4 +73,15 @@ public class GameServiceImpl implements GameService{
         visiteRepository.save(visite);
         return isCorrect;
     }
+
+    @Override
+    @Transactional
+    public Visite continueVisite(Defi defi,Utilisateur utilisateur) {
+        var rest = entityManager.createQuery("select v from Utilisateur u join u.vistes v where v.statut not in (:terminer,:abandone) and u = :utilisateur and v.defi = :defi",Visite.class)
+                .setParameter("terminer",StatutVisite.FINISHED)
+                .setParameter("abandone",StatutVisite.ABONDON)
+                .setParameter("utilisateur",utilisateur)
+                .setParameter("defi", defi);
+        return rest.getSingleResult();
+    }
 }
