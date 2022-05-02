@@ -72,6 +72,7 @@ public abstract class Etape {
             dto.type = TypeEtapeDTO.TacheDTO;
             dto.question = ((Tache)this).getQuestion();
             dto.point = ((Tache)this).getPoint();
+            dto.nbIndices = ((Tache)this).getIndices().size();
         } else if (this instanceof Indication){
             dto.type = TypeEtapeDTO.IndicationDTO;
             dto.text = ((Indication)this).getText();

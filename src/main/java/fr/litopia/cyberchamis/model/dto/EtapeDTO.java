@@ -17,6 +17,7 @@ public class EtapeDTO {
     //Tache
     public String question;
     public Integer point;
+    public Integer nbIndices;
 
     public Etape toEntity() {
         Etape entity = null;
