@@ -26,6 +26,8 @@ public class Reponse {
 
     private boolean isCorrect = false;
 
+    private boolean hasResponse = false;
+
     public Reponse(){
         this.nbIndicesUtilises = -1;
     }
@@ -73,6 +75,14 @@ public class Reponse {
         isCorrect = correct;
     }
 
+    public boolean isHasResponse() {
+        return hasResponse;
+    }
+
+    public void setHasResponse(boolean hasResponse) {
+        this.hasResponse = hasResponse;
+    }
+
     public ReponseDTO toDTO() {
         ReponseDTO reponseDTO = new ReponseDTO();
         reponseDTO.id = this.id;
@@ -80,6 +90,7 @@ public class Reponse {
         reponseDTO.nbIndicesUtilises = this.nbIndicesUtilises;
         reponseDTO.reponseUtilisateur = this.reponseUtilisateur;
         reponseDTO.isCorrect = this.isCorrect;
+        reponseDTO.hasResponse = this.hasResponse;
         return reponseDTO;
     }
 }

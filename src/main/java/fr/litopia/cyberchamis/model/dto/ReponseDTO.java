@@ -7,4 +7,6 @@ public class ReponseDTO {
     public String reponseUtilisateur;
 
     public boolean isCorrect;
+
+    public boolean hasResponse;
 }

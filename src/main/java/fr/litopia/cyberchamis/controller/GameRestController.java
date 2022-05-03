@@ -77,17 +77,17 @@ public class GameRestController {
         }
         Defi defi = defiRepository.findById(defiId).get();
         Utilisateur user = userRepository.findById(userId).get();
-        try {
+        //try {
             return gameService.reprendreVisite(defi, user).toDTO();
-        } catch (RuntimeException e) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "You need to start a new game");
-        }
+        //} catch (RuntimeException e) {
+        //    throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "You need to start a new game");
+        //}
     }
 
 
     @PostMapping("/next-etape")
     @ResponseStatus(HttpStatus.OK)
-    public EtapeDTO etapeSuivante(@RequestParam Long visiteId) {
+    public VisiteDTO etapeSuivante(@RequestParam Long visiteId) {
         Visite v = checkAndGetVisite(visiteId);
         try {
             return gameService.etapeSuivante(v).toDTO();
@@ -98,7 +98,7 @@ public class GameRestController {
 
     @PostMapping("/previsous-etape")
     @ResponseStatus(HttpStatus.OK)
-    public EtapeDTO etapePrecedente(@RequestParam Long visiteId) {
+    public VisiteDTO etapePrecedente(@RequestParam Long visiteId) {
         Visite v = checkAndGetVisite(visiteId);
         try {
             return gameService.etapePrecedente(v).toDTO();
@@ -193,7 +193,7 @@ public class GameRestController {
         etape2.setTitre("Trouver Thomas");
         etape2.setDescription("Thomas, du BDE a perdu son bonnet. Pour l’aider, allez le voir dans la salle du BDE");
         etape2.setQuestion("Quel est le numéro de la salle du BDE ?");
-        etape2.setSecret("111");
+        etape2.setSecret("110");
         etape2.setPoint(5);
 
         Indice indiceE21 = new Indice();

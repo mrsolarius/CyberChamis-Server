@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -35,19 +34,19 @@ public class GameServiceImpl implements GameService{
 
     @Override
     @Transactional
-    public Etape etapeSuivante(Visite visite) {
+    public Visite etapeSuivante(Visite visite) {
         Etape etape = visite.etapeSuivante();
         visiteRepository.save(visite);
-        return etape;
+        return visite;
     }
 
 
     @Override
     @Transactional
-    public Etape etapePrecedente(Visite visite){
+    public Visite etapePrecedente(Visite visite){
         Etape etape = visite.etapePrecedente();
         visiteRepository.save(visite);
-        return etape;
+        return visite;
     }
 
 

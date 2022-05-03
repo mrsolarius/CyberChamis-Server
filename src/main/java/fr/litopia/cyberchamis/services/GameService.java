@@ -7,9 +7,9 @@ import java.util.List;
 public interface GameService {
     Visite commencerVisite(Defi defi, Utilisateur utilisateur);
 
-    Etape etapeSuivante(Visite visite);
+    Visite etapeSuivante(Visite visite);
 
-    Etape etapePrecedente(Visite visite);
+    Visite etapePrecedente(Visite visite);
 
     /**
      * Termine la visite par un abandon si le joueur n'a pas réussi à la finir

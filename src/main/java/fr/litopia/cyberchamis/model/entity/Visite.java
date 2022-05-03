@@ -42,9 +42,6 @@ public class Visite {
 
     // repo
     private Reponse getReponse(int numero) {
-        if(numero < 0 || numero > reponses.size()){
-            throw new IndexOutOfBoundsException("Index out of bounds");
-        }
         for (Reponse reponse : reponses) {
             if (reponse.numero == numero) {
                 return reponse;
@@ -65,16 +62,10 @@ public class Visite {
      * @return Etape l'etape courante
      */
     public Etape getEtapeCourante(){
-        if (this.statut!= StatutVisite.ENCOURS) {
-            throw new RuntimeException("Visite not in progress");
-        }
         return defi.getSortEtapes().get(etapeCourante);
     }
 
     public Reponse getReponseCourante(){
-        if (this.statut!= StatutVisite.ENCOURS) {
-            throw new RuntimeException("Visite not in progress");
-        }
         return getReponse(etapeCourante);
     }
 
@@ -93,8 +84,10 @@ public class Visite {
         etapeCourante++;
         Etape currentEtape = getEtapeCourante();
         if(currentEtape instanceof Tache){
-            Reponse reponse = new Reponse(etapeCourante);
-            this.reponses.add(reponse);
+            if(getReponseCourante()==null) {
+                Reponse reponse = new Reponse(etapeCourante);
+                this.reponses.add(reponse);
+            }
         }
         return currentEtape;
     }
@@ -175,13 +168,15 @@ public class Visite {
         Reponse r = getReponseCourante();
         if (r == null) return false;
         if (!(getEtapeCourante() instanceof Tache)) return false;
+        r.setReponseUtilisateur(reponse);
+        Tache tache = (Tache) getEtapeCourante();
+        var isCorrect = tache.isSecret(reponse);
+        r.setCorrect(isCorrect);
+        r.setHasResponse(true);
         if(this.etapeCourante == this.defi.getSortEtapes().size() - 1){
             this.setStatut(StatutVisite.FINISHED);
         }
-        r.setReponseUtilisateur(reponse);
-        r.setCorrect(true);
-        Tache tache = (Tache) getEtapeCourante();
-        return tache.isSecret(reponse);
+        return isCorrect;
     }
 
     public VisiteDTO toDTO() {
