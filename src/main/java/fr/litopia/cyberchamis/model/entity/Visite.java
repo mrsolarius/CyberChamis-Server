@@ -191,7 +191,8 @@ public class Visite {
         dto.points=this.points;
         dto.statut = this.statut;
         dto.defi=this.defi.toDTO();
-        dto.reponseCourante= this.getReponseCourante().toDTO();
+        if(this.getReponseCourante()!=null)
+            dto.reponseCourante= this.getReponseCourante().toDTO();
         return dto;
     }
 
