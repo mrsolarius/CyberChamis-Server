@@ -179,6 +179,7 @@ public class Visite {
             this.setStatut(StatutVisite.FINISHED);
         }
         r.setReponseUtilisateur(reponse);
+        r.setCorrect(true);
         Tache tache = (Tache) getEtapeCourante();
         return tache.isSecret(reponse);
     }
@@ -190,7 +191,7 @@ public class Visite {
         dto.points=this.points;
         dto.statut = this.statut;
         dto.defi=this.defi.toDTO();
-        dto.reponse= this.getSortReponses().stream().map(Reponse::toDTO).collect(Collectors.toList());
+        dto.reponseCourante= this.getReponseCourante().toDTO();
         return dto;
     }
 

@@ -24,6 +24,8 @@ public class Reponse {
     @Column(name = "reponseUtilisateur")
     public String reponseUtilisateur;
 
+    private boolean isCorrect = false;
+
     public Reponse(){
         this.nbIndicesUtilises = -1;
     }
@@ -63,12 +65,21 @@ public class Reponse {
         this.reponseUtilisateur = reponseUtilisateur;
     }
 
+    public boolean isCorrect() {
+        return isCorrect;
+    }
+
+    public void setCorrect(boolean correct) {
+        isCorrect = correct;
+    }
+
     public ReponseDTO toDTO() {
         ReponseDTO reponseDTO = new ReponseDTO();
         reponseDTO.id = this.id;
         reponseDTO.numero = this.numero;
         reponseDTO.nbIndicesUtilises = this.nbIndicesUtilises;
         reponseDTO.reponseUtilisateur = this.reponseUtilisateur;
+        reponseDTO.isCorrect = this.isCorrect;
         return reponseDTO;
     }
 }

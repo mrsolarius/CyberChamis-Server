@@ -5,4 +5,6 @@ public class ReponseDTO {
     public Integer numero;
     public Integer nbIndicesUtilises;
     public String reponseUtilisateur;
+
+    public boolean isCorrect;
 }

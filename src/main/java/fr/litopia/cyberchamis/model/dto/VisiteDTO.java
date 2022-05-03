@@ -10,5 +10,5 @@ public class VisiteDTO {
     public EtapeDTO etapeCourante;
     public Integer points;
     public DefiDTO defi;
-    public List<ReponseDTO> reponse;
+    public ReponseDTO reponseCourante;
 }
