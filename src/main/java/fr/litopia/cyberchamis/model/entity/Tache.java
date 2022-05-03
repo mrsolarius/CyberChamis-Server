@@ -8,6 +8,7 @@ import java.util.*;
 
 @Entity
 public class Tache extends Etape {
+
     @Column(name = "question", nullable = false, length = 360)
     public String question;
 
@@ -28,12 +29,6 @@ public class Tache extends Etape {
     public Tache(String question, Integer point){
         this.question=question;
         this.point=point;
-
-    }
-    public Tache(String question, point){
-        this.question=question;
-        this.point=point;
-        this
 
     }
     public String getQuestion() {

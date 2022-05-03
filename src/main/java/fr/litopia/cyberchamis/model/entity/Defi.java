@@ -8,6 +8,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
+import java.security.Timestamp;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -27,12 +28,12 @@ public class Defi {
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "dateDeCreation", nullable = false)
-    public Date dateDeCreation;
+    public Timestamp dateDeCreation;
 
     @UpdateTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "dateDeModification", nullable = false)
-    public Date dateDeModification;
+    public Timestamp dateDeModification;
 
     @Column(name = "description", nullable = false, length = 128)
     public String description;
@@ -79,7 +80,7 @@ public class Defi {
     public String getId() {
         return id;
     }
-
+    public void setDateDeCreation
     public void setArret(Arret arret) {
         this.arret = arret;
     }
@@ -98,9 +99,9 @@ public class Defi {
         return titre;
     }
 
-    public Date getDateDeCreation() {
-        return dateDeCreation;
-    }
+    //public Date getDateDeCreation() {
+      //  return dateDeCreation;
+    //}
 
     public void setDescription(String description) {
         if(description == null || description.isEmpty()) {
@@ -111,7 +112,9 @@ public class Defi {
         }
         this.description = description;
     }
-
+    public void setDateModification(Timestamp dateModification) {
+        this.dateDeModification = dateModification;
+    }
     public String getDescription() {
         return description;
     }

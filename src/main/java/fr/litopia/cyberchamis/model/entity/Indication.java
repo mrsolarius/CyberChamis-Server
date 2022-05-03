@@ -24,4 +24,16 @@ public class Indication extends Etape{
     public String getImage() {
         return image;
     }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public void setVideo(String video) {
+        this.video = video;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
 }

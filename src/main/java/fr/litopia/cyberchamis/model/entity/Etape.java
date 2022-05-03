@@ -63,6 +63,7 @@ public abstract class Etape {
         this.description = description;
     }
 
+
     public EtapeDTO toDTO() {
         EtapeDTO dto = new EtapeDTO();
         dto.id = id;

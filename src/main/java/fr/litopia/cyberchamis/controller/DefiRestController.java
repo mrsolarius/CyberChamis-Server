@@ -23,8 +23,8 @@ public class DefiRestController {
     @PostMapping(value = "/") // avant la création
     @ResponseStatus(HttpStatus.CREATED)
     @Transactional
-    public Defi createDefi(@RequestBody Defi defi) { //equivalent objet
-        defiService.save(defi);
+    public DefiDTO createDefi(@RequestBody DefiDTO defi) { //equivalent objet
+        defiService.save(defi.toEntity());
         return defi;
     }
 
@@ -45,23 +45,21 @@ public class DefiRestController {
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     @Transactional
-    public Defi updateDefi(@PathVariable("id") final String id, @RequestBody final Defi defi){
+    public DefiDTO updateDefi(@PathVariable("id") final String id, @RequestBody final DefiDTO defi){
         Defi defiToUpdate = defiService.findById(id);
         if(defiToUpdate == null){
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND, "entity not found"
             );
         }
-        defiToUpdate.setTitre(defi.getTitre());
-        defiToUpdate.setDescription(defi.getDescription());
-        defiService.save(defiToUpdate);
-        return defiToUpdate;
+        defiService.save(defi.toEntity());
+        return defi;
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     @Transactional
-    public void deleteChami(@PathVariable("id") final String id){
+    public void deleteDefi(@PathVariable("id") final String id){
         Defi defiToDelete = defiService.findById(id);
         if(defiToDelete == null){
             throw new ResponseStatusException(

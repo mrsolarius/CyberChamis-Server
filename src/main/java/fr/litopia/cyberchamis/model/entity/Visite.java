@@ -184,9 +184,9 @@ public class Visite {
         dto.id=this.id;
         dto.etapeCourante=this.getEtapeCourante().toDTO();
         dto.points=this.points;
-        dto.statut = this.statut;
+        //dto.statut = this.statut;
         dto.defi=this.defi.toDTO();
-        dto.reponse= this.getSortReponses().stream().map(Reponse::toDTO).collect(Collectors.toList());
+        dto.reponses= this.getSortReponses().stream().map(Reponse::toDTO).collect(Collectors.toList());
         return dto;
     }
 

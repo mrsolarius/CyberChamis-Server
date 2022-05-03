@@ -21,13 +21,29 @@ public class EtapeDTO {
     public Integer nbIndices;
 
     public Etape toEntity() {
-        Etape entity = null;
+        Etape entity=null;
         if (type == TypeEtapeDTO.TacheDTO) {
             entity = new Tache(question,point);
+            entity.id = id;
+            entity.numero = numero;
+            entity.titre = titre;
+            entity.setDescription(description);
+
+            ((Tache)entity).question= question;
+            ((Tache)entity).setPoint(this.point);
         }
         else if(type == TypeEtapeDTO.IndicationDTO) {
-            entity = new Indication(text);
+            entity = new Tache(question,point);
+            entity.id = id;
+            entity.numero = numero;
+            entity.titre = titre;
+            entity.setDescription(description);
+
+            ((Indication)entity).setText(this.text);
+            ((Indication)entity).setImage(this.image);
+            ((Indication)entity).setVideo(this.video);
         }
         return entity;
     }
+    
 }
