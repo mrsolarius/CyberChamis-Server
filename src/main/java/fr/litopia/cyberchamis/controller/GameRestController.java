@@ -66,7 +66,7 @@ public class GameRestController {
         }
     }
 
-    @GetMapping("/get-visite")
+    @GetMapping("/continue-visite")
     @ResponseStatus(HttpStatus.OK)
     public VisiteDTO visiteCourante(@RequestParam String defiId, @RequestParam long userId) {
         if (defiRepository.findById(defiId).isEmpty()) {
@@ -77,11 +77,11 @@ public class GameRestController {
         }
         Defi defi = defiRepository.findById(defiId).get();
         Utilisateur user = userRepository.findById(userId).get();
-        //try {
+        try {
             return gameService.reprendreVisite(defi, user).toDTO();
-        //} catch (RuntimeException e) {
-        //    throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "You need to start a new game");
-        //}
+        } catch (RuntimeException e) {
+           throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "You need to start a new game");
+        }
     }
 
 
@@ -210,7 +210,7 @@ public class GameRestController {
         etape2.addIndice(indiceE22);
         defi.addEtape(etape2);
         tacheRepository.save(etape2);
-        //etape3
+        //etape3GetMapping
         Indication etape3 = new Indication();
         etape3.setTitre("Parler à Thomas");
         etape3.text = "Salut, j’ai perdu mon magnifique bonnet miage, aide-moi à le retrouver. La dernière fois que je l’avais, j’étais dans la salle 218.";
@@ -235,6 +235,13 @@ public class GameRestController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Visite not found");
         }
         return visiteRepository.findById(visiteId).get();
+    }
+
+    @GetMapping("/get-visite")
+    @ResponseStatus(HttpStatus.OK)
+    public VisiteDTO getVisites(@RequestParam Long visiteId) {
+        Visite visite = checkAndGetVisite(visiteId);
+        return visite.toDTO();
     }
 
 }
