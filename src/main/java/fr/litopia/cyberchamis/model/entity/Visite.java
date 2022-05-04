@@ -173,9 +173,6 @@ public class Visite {
         var isCorrect = tache.isSecret(reponse);
         r.setCorrect(isCorrect);
         r.setHasResponse(true);
-        if(this.etapeCourante == this.defi.getSortEtapes().size() - 1){
-            this.setStatut(StatutVisite.FINISHED);
-        }
         return isCorrect;
     }
 

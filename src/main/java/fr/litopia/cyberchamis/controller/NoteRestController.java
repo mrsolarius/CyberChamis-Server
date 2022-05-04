@@ -47,10 +47,15 @@ public class NoteRestController {
     @ResponseStatus(HttpStatus.CREATED)
     @Transactional
     public NoteDTO createNote(@RequestBody NoteDTO note){
-        try {
-            this.toSaveEntity(note);
-        }catch (Exception e){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "entity not found");
+        Note checkEmpty = noteRepository.findByUserAndDefis(note.idDefi,note.idUtilisateur);
+        if(checkEmpty==null) {
+            try {
+                this.toSaveEntity(note);
+            } catch (Exception e) {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "entity not found");
+            }
+        }else{
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "entity already exist");
         }
         return note;
     }
