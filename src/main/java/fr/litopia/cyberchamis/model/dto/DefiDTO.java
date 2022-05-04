@@ -21,8 +21,8 @@ public class DefiDTO {
     public List<TagDTO> tags;
     public ArretDTO arretDTO;
     public List<EtapeDTO> etapes;
-    public Timestamp dateCreation;
-    public Timestamp dateDeModification;
+    public Date dateCreation;
+    public Date dateDeModification;
     public Integer pointTotaux;
 
 
@@ -31,7 +31,6 @@ public class DefiDTO {
         entity.titre=titre;
         entity.id=id;
         entity.setDescription(description);
-        entity.version=version;
         entity.duree=duree;
         entity.pointTotaux=pointTotaux;
         entity.auteur=auteur.toEntity();

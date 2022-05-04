@@ -28,12 +28,12 @@ public class Defi {
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "dateDeCreation", nullable = false)
-    public Timestamp dateDeCreation;
+    public Date dateDeCreation;
 
     @UpdateTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "dateDeModification", nullable = false)
-    public Timestamp dateDeModification;
+    public Date dateDeModification;
 
     @Column(name = "description", nullable = false, length = 128)
     public String description;
@@ -80,7 +80,9 @@ public class Defi {
     public String getId() {
         return id;
     }
-    public void setDateDeCreation
+    public void setDateDeCreation (Date date) {
+        this.dateDeCreation = date;
+    }
     public void setArret(Arret arret) {
         this.arret = arret;
     }
@@ -112,9 +114,7 @@ public class Defi {
         }
         this.description = description;
     }
-    public void setDateModification(Timestamp dateModification) {
-        this.dateDeModification = dateModification;
-    }
+
     public String getDescription() {
         return description;
     }
