@@ -92,7 +92,7 @@ public class ChamiRestController {
         }
     }
 
-    @PutMapping("/{idGoogle}")
+    @PutMapping("/google/{idGoogle}")
     @ResponseStatus(HttpStatus.OK)
     @Transactional
     public ChamiDTO updateChami(@PathVariable("idGoogle") final String idGoogle, @RequestBody final ChamiDTO chami) {
@@ -115,7 +115,7 @@ public class ChamiRestController {
         return chamiToUpdate.toDTO();
     }
 
-    @DeleteMapping("/{idGoogle}")
+    @DeleteMapping("/google/{idGoogle}")
     @ResponseStatus(HttpStatus.OK)
     @Transactional
     public void deleteChami(@PathVariable("idGoogle") final String idGoogle) {
