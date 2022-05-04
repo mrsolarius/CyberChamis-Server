@@ -44,6 +44,15 @@ public class ChamiRestController {
         return chami.toDTO();
     }
 
+    @GetMapping("/{idGoogle}")
+    public ChamiDTO getByIdGoogle(@PathVariable("idGoogle") String idGoogle) {
+        Chami chami = chamiService.findByIdGoogle(idGoogle);
+        if (chami == null) {
+            throw new NotFoundException("Chami not found");
+        }
+        return chami.toDTO();
+    }
+
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     @Transactional

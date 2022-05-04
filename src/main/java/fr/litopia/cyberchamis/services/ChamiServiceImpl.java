@@ -23,6 +23,9 @@ public class ChamiServiceImpl implements ChamiService {
     }
 
     @Override
+    public Chami findByIdGoogle(String idGoogle) { return entityManager.find(Chami.class, idGoogle); }
+
+    @Override
     public Collection<Chami> findAll() {
         return chamiRepository.findAll();
     }

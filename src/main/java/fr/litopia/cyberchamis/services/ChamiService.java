@@ -8,6 +8,8 @@ public interface ChamiService {
 
     Chami findById(long id);
 
+    Chami findByIdGoogle(String id);
+
     Collection<Chami> findAll();
 
     void save(Chami chami);
