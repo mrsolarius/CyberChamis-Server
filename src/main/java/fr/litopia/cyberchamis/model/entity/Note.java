@@ -1,5 +1,7 @@
 package fr.litopia.cyberchamis.model.entity;
 
+import fr.litopia.cyberchamis.model.dto.NoteDTO;
+
 import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -10,7 +12,7 @@ public class Note {
     @Id
     @GeneratedValue
     @Column(name = "idNote", nullable = false)
-    public String id;
+    public Long id;
 
     @Column(name = "note", nullable = false)
     @Min(value = 1)
@@ -20,12 +22,9 @@ public class Note {
     @OneToOne
     Chami chami;
 
-    public Note() {
-        this.id = UUID.randomUUID().toString();
-    }
+    public Note() {}
 
     public Note(Integer valeur, Chami chami) {
-        this();
         this.setNote(valeur);
         this.chami = chami;
     }
@@ -41,7 +40,14 @@ public class Note {
         return this.note;
     }
 
-    public String getId() {
+    public Long getId() {
         return this.id;
+    }
+
+    public NoteDTO toDTO(){
+        NoteDTO dto = new NoteDTO();
+        dto.idUtilisateur = chami.getId();
+        dto.valeur = note;
+        return dto;
     }
 }

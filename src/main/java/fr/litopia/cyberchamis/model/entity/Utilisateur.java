@@ -17,4 +17,8 @@ public class Utilisateur {
     public void addVisite(Visite visite) {
         vistes.add(visite);
     }
+
+    public Long getId(){
+        return this.id;
+    }
 }
