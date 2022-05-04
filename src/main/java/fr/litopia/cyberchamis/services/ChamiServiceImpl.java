@@ -1,5 +1,6 @@
 package fr.litopia.cyberchamis.services;
 
+
 import fr.litopia.cyberchamis.model.entity.Chami;
 import fr.litopia.cyberchamis.repository.ChamiRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,9 +19,20 @@ public class ChamiServiceImpl implements ChamiService {
     private ChamiRepository chamiRepository;
 
     @Override
-    public Chami findById(long id) {
-        return entityManager.find(Chami.class, id);
+    @Transactional
+    public Chami findById(long id) throws Exception{
+        var c =  chamiRepository.findById(id);
+        if(c.isPresent()){
+            return c.get();
+        }
+        throw new Exception("Chami inconue");
     }
+
+    @Override
+    public Chami findByIdGoogle(String idGoogle) {
+        return chamiRepository.findByIdGoogle(idGoogle);
+    }
+
 
     @Override
     public Collection<Chami> findAll() {

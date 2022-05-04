@@ -37,7 +37,17 @@ public class ChamiRestController {
 
     @GetMapping("/{id}")
     public ChamiDTO getById(@PathVariable("id") long id) {
-        Chami chami = chamiService.findById(id);
+        try {
+            Chami chami = chamiService.findById(id);
+            return chami.toDTO();
+        } catch (Exception e) {
+            throw new NotFoundException("Chami not found");
+        }
+    }
+
+    @GetMapping("/google/{idGoogle}")
+    public ChamiDTO getByIdGoogle(@PathVariable("idGoogle") String idGoogle) {
+        Chami chami = chamiService.findByIdGoogle(idGoogle);
         if (chami == null) {
             throw new NotFoundException("Chami not found");
         }
@@ -48,7 +58,45 @@ public class ChamiRestController {
     @ResponseStatus(HttpStatus.OK)
     @Transactional
     public ChamiDTO updateChami(@PathVariable("id") final long id, @RequestBody final ChamiDTO chami) {
-        Chami chamiToUpdate = chamiService.findById(id);
+        try {
+            Chami chamiToUpdate = chamiService.findById(id);
+            try {
+                chamiToUpdate.setUsername(chami.username);
+                chamiToUpdate.setAge(chami.age);
+                chamiToUpdate.setBio(chami.bio);
+                chamiService.save(chamiToUpdate);
+            } catch (Exception e) {
+                throw new ResponseStatusException(
+                        HttpStatus.BAD_REQUEST, "entity not valid"
+                );
+            }
+            return chamiToUpdate.toDTO();
+        } catch (Exception e) {
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "entity not found"
+            );
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    @Transactional
+    public void deleteChami(@PathVariable("id") final long id) {
+        try {
+            Chami chamiToDelete = chamiService.findById(id);
+            chamiService.delete(chamiToDelete);
+        } catch (Exception e) {
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "entity not found"
+            );
+        }
+    }
+
+    @PutMapping("/{idGoogle}")
+    @ResponseStatus(HttpStatus.OK)
+    @Transactional
+    public ChamiDTO updateChami(@PathVariable("idGoogle") final String idGoogle, @RequestBody final ChamiDTO chami) {
+        Chami chamiToUpdate = chamiService.findByIdGoogle(idGoogle);
         if (chamiToUpdate == null) {
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND, "entity not found"
@@ -67,11 +115,11 @@ public class ChamiRestController {
         return chamiToUpdate.toDTO();
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{idGoogle}")
     @ResponseStatus(HttpStatus.OK)
     @Transactional
-    public void deleteChami(@PathVariable("id") final long id) {
-        Chami chamiToDelete = chamiService.findById(id);
+    public void deleteChami(@PathVariable("idGoogle") final String idGoogle) {
+        Chami chamiToDelete = chamiService.findByIdGoogle(idGoogle);
         if (chamiToDelete == null) {
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND, "entity not found"
