@@ -19,12 +19,20 @@ public class ChamiServiceImpl implements ChamiService {
     private ChamiRepository chamiRepository;
 
     @Override
-    public Chami findById(long id) {
-        return entityManager.find(Chami.class, id);
+    @Transactional
+    public Chami findById(long id) throws Exception{
+        var c =  chamiRepository.findById(id);
+        if(c.isPresent()){
+            return c.get();
+        }
+        throw new Exception("Chami inconue");
     }
 
     @Override
-    public Chami findByIdGoogle(String idGoogle) { return entityManager.find(Chami.class, idGoogle); }
+    public Chami findByIdGoogle(String idGoogle) {
+        return chamiRepository.findByIdGoogle(idGoogle);
+    }
+
 
     @Override
     public Collection<Chami> findAll() {
