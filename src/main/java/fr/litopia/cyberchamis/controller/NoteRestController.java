@@ -58,12 +58,12 @@ public class NoteRestController {
     @PutMapping("/{defiId}/{utilistateurId}")
     @ResponseStatus(HttpStatus.OK)
     @Transactional
-    public NoteDTO updateNote(@PathVariable("defiId") String idDefi, @PathVariable("utilistateurId") Long idUser, @RequestBody final Note note){
+    public NoteDTO updateNote(@PathVariable("defiId") String idDefi, @PathVariable("utilistateurId") Long idUser, @RequestBody final Integer note){
         Note noteToUpdate = noteRepository.findByUserAndDefis(idDefi,idUser);
         if(noteToUpdate == null){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "entity not found");
         }
-        noteToUpdate.setNote(note.getNote());
+        noteToUpdate.setNote(note);
         this.noteRepository.save(noteToUpdate);
         return noteToUpdate.toDTO();
     }
