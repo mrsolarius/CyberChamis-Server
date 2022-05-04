@@ -84,14 +84,42 @@ public class Tache extends Etape {
 
     public List<Indice> getSortedIndices() {
         List<Indice> sortEtapes = new ArrayList<>(indices);
-        sortEtapes.sort(Comparator.comparing(Indice::getNumIndice).reversed());
+        sortEtapes.sort(Comparator.comparing(Indice::getNumIndice));
         return sortEtapes;
     }
 
-    public void addIndice(Indice indice) {
-        if (indice == null) {
-            throw new IllegalArgumentException("Indice cannot be null");
+    public void addIndice(Indice indice){
+        if (!indices.contains(indice)) {
+            int index = indices.size()+1;
+            indice.setNumIndice(index);
+            this.indices.add(indice);
         }
-        this.indices.add(indice);
+    }
+
+    public void removeIndice(Indice indice){
+        if (indices.contains(indice)) {
+            int index = indice.getNumIndice();
+            for ( Indice i : indices) {
+                if (i.getNumIndice() > index) {
+                    i.setNumIndice(i.getNumIndice() - 1);
+                }
+            }
+            this.indices.remove(indice);
+        }
+    }
+
+    public void moveIndice(Indice indice, int index){
+        if(!indices.contains(indice)){
+            throw new IllegalArgumentException("Etape not found");
+        }
+        if (index <= 0 || index >= indices.size()+1) {
+            throw new IllegalArgumentException("Index out of bounds");
+        }
+        for (Indice i : indices) {
+            if (i.getNumIndice() == index) {
+                i.setNumIndice(indice.getNumIndice());
+                indice.setNumIndice(index);
+            }
+        }
     }
 }

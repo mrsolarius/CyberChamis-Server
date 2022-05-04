@@ -199,15 +199,15 @@ public class GameRestController {
         Indice indiceE21 = new Indice();
         indiceE21.setIndice("La salle est au premier etage");
         indiceE21.setPointsPerdus(1);
-        indiceRepository.save(indiceE21);
 
         Indice indiceE22 = new Indice();
         indiceE22.setIndice("Thomas est dans la salle 11x");
         indiceE22.setPointsPerdus(1);
-        indiceRepository.save(indiceE22);
 
         etape2.addIndice(indiceE21);
         etape2.addIndice(indiceE22);
+        indiceRepository.save(indiceE21);
+        indiceRepository.save(indiceE22);
         defi.addEtape(etape2);
         tacheRepository.save(etape2);
         //etape3GetMapping

@@ -129,8 +129,8 @@ public class Visite {
                     if (reponse != null) {
                         if (tache.isSecret(this.getReponse(etape.getNumero()).getReponseUtilisateur())) {
                             tempPoints += tache.getPoint();
-                            if (reponse.getNbIndicesUtilises() > 0) {
-                                for (int i = 0; i < reponse.getNbIndicesUtilises(); i++) {
+                            if (reponse.getNbIndicesUtilises() +1> 0) {
+                                for (int i = 0; i < reponse.getNbIndicesUtilises()+1; i++) {
                                     tempPoints -= tache.getSortedIndices().get(i).getPointsPerdus();
                                 }
                             }
