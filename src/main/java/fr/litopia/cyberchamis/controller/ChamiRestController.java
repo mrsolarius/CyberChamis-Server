@@ -108,6 +108,7 @@ public class ChamiRestController {
             chamiToUpdate.setBio(chami.bio);
             chamiService.save(chamiToUpdate);
         } catch (Exception e) {
+            e.printStackTrace();
             throw new ResponseStatusException(
                     HttpStatus.BAD_REQUEST, "entity not valid"
             );

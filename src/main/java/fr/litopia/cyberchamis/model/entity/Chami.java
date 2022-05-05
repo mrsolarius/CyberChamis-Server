@@ -40,14 +40,14 @@ public class Chami extends Utilisateur {
     }
 
     public void setAge(Integer age) {
-        if(age < 13) {
+        if(age != null && age < 13) {
             throw new IllegalArgumentException("You must be at least 13 years old");
         }
         this.age = age;
     }
 
     public void setBio(String bio) {
-        if(bio.length() > 255) {
+        if(bio != null && bio.length() > 255) {
             throw new IllegalArgumentException("Bio must be 255 characters long");
         }
         this.bio = bio;
