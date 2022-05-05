@@ -14,7 +14,7 @@ import java.util.Optional;
 public interface DefiRepository extends JpaRepository<Defi,String> {
 
     @Transactional
-    @Query("select c from Defi d join d.commentaires c where c.id=:idCom")
-    Optional<Commentaire> findComByDefi(@Param("idCom") Long idCom);
+    @Query("select d from Defi d join d.commentaires c where c.id=:idCom")
+    Optional<Defi> findDefiByCom(@Param("idCom") Long idCom);
 
 }

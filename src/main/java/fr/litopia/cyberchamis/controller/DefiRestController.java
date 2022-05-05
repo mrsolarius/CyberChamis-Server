@@ -85,13 +85,21 @@ public class DefiRestController {
     @ResponseStatus(HttpStatus.OK)
     @Transactional
     public void deleteCommentaireFromDefi(@PathVariable("id") final Long id){
-        var commentaireToDelete = defiRepository.findComByDefi(id);
-        if(commentaireToDelete.isEmpty()){
+        var comToDelete = commentaireRepository.findById(id);
+        if(comToDelete.isEmpty()){
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND, "entity not found"
             );
         }
-        commentaireRepository.delete(commentaireToDelete.get());
+        var defi = defiRepository.findDefiByCom(id);
+        if(defi.isEmpty()){
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "entity not found"
+            );
+        }
+        defi.get().supprimerUnCommentaire(comToDelete.get());
+        defiRepository.save(defi.get());
+        commentaireRepository.delete(comToDelete.get());
     }
 
 }
