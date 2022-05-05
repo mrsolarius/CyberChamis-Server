@@ -1,6 +1,8 @@
 package fr.litopia.cyberchamis.model.entity;
 
 import fr.litopia.cyberchamis.model.dto.DefiDTO;
+import fr.litopia.cyberchamis.model.dto.RatingDTO;
+import fr.litopia.cyberchamis.model.dto.RatingDefiDTO;
 import lombok.Builder;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
@@ -271,6 +273,22 @@ public class Defi {
         dto.arretDTO=arret.toDTO();
         dto.noteMoyenne=getMoyenne();
         dto.etapes=etapes.stream().map(Etape::toDTO).collect(Collectors.toList());
+        return dto;
+    }
+
+    public RatingDefiDTO getDefisRatting(){
+        RatingDefiDTO dto = new RatingDefiDTO();
+        List<RatingDTO> dtoList = new ArrayList<>();
+        dto.idDefi = id;
+        dto.nbTotalGrade = this.notes.size();
+        for(int i = 1; i<=5;i++){
+            final var icheck = i;
+            RatingDTO ratingDTO = new RatingDTO();
+            ratingDTO.note=icheck;
+            ratingDTO.number= this.notes.stream().filter(note -> note.note == icheck).toList().size();
+            dtoList.add(ratingDTO);
+        }
+        dto.gradeList=dtoList;
         return dto;
     }
 

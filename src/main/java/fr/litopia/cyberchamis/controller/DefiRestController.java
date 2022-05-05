@@ -1,7 +1,10 @@
 package fr.litopia.cyberchamis.controller;
 
 import fr.litopia.cyberchamis.model.dto.DefiDTO;
+import fr.litopia.cyberchamis.model.entity.Commentaire;
 import fr.litopia.cyberchamis.model.entity.Defi;
+import fr.litopia.cyberchamis.repository.CommentaireRepository;
+import fr.litopia.cyberchamis.repository.DefiRepository;
 import fr.litopia.cyberchamis.services.DefiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,6 +22,12 @@ import java.util.Collection;
 public class DefiRestController {
     @Autowired
     private DefiService defiService;
+
+    @Autowired
+    private CommentaireRepository commentaireRepository;
+
+    @Autowired
+    private DefiRepository defiRepository;
 
     @PostMapping(value = "/") // avant la création
     @ResponseStatus(HttpStatus.CREATED)
@@ -67,6 +76,27 @@ public class DefiRestController {
             );
         }
         defiService.delete(defiToDelete);
+    }
+
+    @DeleteMapping("/commentaire/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    @Transactional
+    public void deleteCommentaireFromDefi(@PathVariable("id") final Long id){
+        var comToDelete = commentaireRepository.findById(id);
+        if(comToDelete.isEmpty()){
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "entity not found"
+            );
+        }
+        var defi = defiRepository.findDefiByCom(id);
+        if(defi.isEmpty()){
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "entity not found"
+            );
+        }
+        defi.get().supprimerUnCommentaire(comToDelete.get());
+        defiRepository.save(defi.get());
+        commentaireRepository.delete(comToDelete.get());
     }
 
 }

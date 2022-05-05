@@ -40,6 +40,10 @@ public class Note {
         return this.note;
     }
 
+    public Boolean isEqualTo(Integer note){
+        return this.note==note;
+    }
+
     public Long getId() {
         return this.id;
     }
