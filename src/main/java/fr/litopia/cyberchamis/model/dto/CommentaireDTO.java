@@ -4,7 +4,7 @@ public class CommentaireDTO {
 
     public String idDefi;
     public Long idUtilisateur;
-    public Long idComentaire;
+    public Long idCommentaire;
     public String text;
 
 

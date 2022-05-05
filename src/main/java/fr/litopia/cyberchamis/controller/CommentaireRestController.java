@@ -48,7 +48,7 @@ public class CommentaireRestController {
         return commentairesDto;
     }
 
-    @GetMapping("/{idChami}")
+    @GetMapping("/chami/{idChami}")
     @ResponseStatus(HttpStatus.OK)
     public Set<CommentaireDTO> getCommentairesByChami(@PathVariable("idChami") Long idChami) {
         var commentaires = commentaireRepository.findByChami(idChami);
@@ -62,9 +62,9 @@ public class CommentaireRestController {
         return commentairesDto;
     }
 
-    @GetMapping("/{idCom}")
+    @GetMapping("/commentaire/{idCom}")
     @ResponseStatus(HttpStatus.OK)
-    public CommentaireDTO getCommentaire(@PathVariable("idCom") Long idCom) {
+    public CommentaireDTO getCommentaireById(@PathVariable("idCom") Long idCom) {
         var commentaire = commentaireRepository.findById(idCom);
         if (commentaire.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "entity not found");
@@ -73,8 +73,8 @@ public class CommentaireRestController {
     }
 
 
-    @PostMapping("/")
-    @ResponseStatus(HttpStatus.CREATED)
+    @PutMapping("/")
+    @ResponseStatus(HttpStatus.OK)
     @Transactional
     public CommentaireDTO createOrUpdateCom(@RequestBody CommentaireDTO commentaire) {
         try {
@@ -85,7 +85,7 @@ public class CommentaireRestController {
         return commentaire;
     }
 
-    @DeleteMapping("/{idCom}")
+   /* @DeleteMapping("/{idCom}")
     @ResponseStatus(HttpStatus.OK)
     @Transactional
     public void deleteCom(@PathVariable("idCom") Long idCom){
@@ -96,7 +96,7 @@ public class CommentaireRestController {
             );
         }
         commentaireRepository.delete(commentaireToDelete.get());
-    }
+    }*/
 
 
     private void toSaveEntity(CommentaireDTO comm) {
@@ -108,8 +108,8 @@ public class CommentaireRestController {
         if(chami.isEmpty()){
             throw new NotFoundException("Chami not found");
         }
-        if(comm.idComentaire!=null){
-            var c = this.commentaireRepository.findById(comm.idComentaire);
+        if(comm.idCommentaire!=null){
+            var c = this.commentaireRepository.findById(comm.idCommentaire);
             if(c.isPresent()){
                 c.get().setText(comm.text);
                 this.saveCommentaire(c.get(), d.get());

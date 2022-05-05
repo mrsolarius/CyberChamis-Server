@@ -11,7 +11,7 @@ public class Commentaire {
     @Column(name = "idCom", nullable = false)
     Long id;
 
-    @Column(name = "comentaire", nullable = false, length = 128)
+    @Column(name = "commentaire", nullable = false, length = 128)
     String text;
 
     @ManyToOne(optional = false)
@@ -38,6 +38,7 @@ public class Commentaire {
 
     public CommentaireDTO toDTO(){
         CommentaireDTO dto = new CommentaireDTO();
+        dto.idCommentaire = id;
         dto.idUtilisateur = auteur.getId();
         dto.text = text;
         return dto;
