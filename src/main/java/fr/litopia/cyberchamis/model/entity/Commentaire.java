@@ -1,5 +1,7 @@
 package fr.litopia.cyberchamis.model.entity;
 
+import fr.litopia.cyberchamis.model.dto.CommentaireDTO;
+
 import javax.persistence.*;
 
 @Entity
@@ -7,7 +9,7 @@ public class Commentaire {
     @Id
     @GeneratedValue
     @Column(name = "idCom", nullable = false)
-    Integer id;
+    Long id;
 
     @Column(name = "comentaire", nullable = false, length = 128)
     String text;
@@ -16,7 +18,8 @@ public class Commentaire {
     Chami auteur;
 
     public Commentaire() {}
-    Commentaire(String text, Chami auteur) {
+    public Commentaire(String text, Chami auteur) {
+        this.setText(text);
         this.auteur = auteur;
     }
     public void setText(String text) {
@@ -29,7 +32,14 @@ public class Commentaire {
         return text;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
+    }
+
+    public CommentaireDTO toDTO(){
+        CommentaireDTO dto = new CommentaireDTO();
+        dto.idUtilisateur = auteur.getId();
+        dto.text = text;
+        return dto;
     }
 }

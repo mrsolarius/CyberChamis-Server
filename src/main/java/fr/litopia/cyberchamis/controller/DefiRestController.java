@@ -62,7 +62,7 @@ public class DefiRestController {
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     @Transactional
-    public void deleteChami(@PathVariable("id") final String id){
+    public void deleteDefi(@PathVariable("id") final String id){
         Defi defiToDelete = defiService.findById(id);
         if(defiToDelete == null){
             throw new ResponseStatusException(
