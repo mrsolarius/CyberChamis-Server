@@ -8,6 +8,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
+import java.security.Timestamp;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -79,7 +80,9 @@ public class Defi {
     public String getId() {
         return id;
     }
-
+    public void setDateDeCreation (Date date) {
+        this.dateDeCreation = date;
+    }
     public void setArret(Arret arret) {
         this.arret = arret;
     }
@@ -98,9 +101,9 @@ public class Defi {
         return titre;
     }
 
-    public Date getDateDeCreation() {
-        return dateDeCreation;
-    }
+    //public Date getDateDeCreation() {
+      //  return dateDeCreation;
+    //}
 
     public void setDescription(String description) {
         if(description == null || description.isEmpty()) {

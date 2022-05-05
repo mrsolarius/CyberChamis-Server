@@ -8,6 +8,7 @@ import java.util.*;
 
 @Entity
 public class Tache extends Etape {
+
     @Column(name = "question", nullable = false, length = 360)
     public String question;
 

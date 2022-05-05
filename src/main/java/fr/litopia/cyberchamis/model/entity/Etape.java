@@ -24,6 +24,7 @@ public abstract class Etape {
     @Column(name = "description")
     private String description;
 
+
     public Integer getNumero() {
         return numero;
     }
@@ -61,6 +62,7 @@ public abstract class Etape {
         }
         this.description = description;
     }
+
 
     public EtapeDTO toDTO() {
         EtapeDTO dto = new EtapeDTO();

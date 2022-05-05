@@ -6,7 +6,6 @@ import fr.litopia.cyberchamis.services.DefiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import org.webjars.NotFoundException;
@@ -24,8 +23,8 @@ public class DefiRestController {
     @PostMapping(value = "/") // avant la création
     @ResponseStatus(HttpStatus.CREATED)
     @Transactional
-    public Defi createDefi(@RequestBody Defi defi) { //equivalent objet
-        defiService.save(defi);
+    public DefiDTO createDefi(@RequestBody DefiDTO defi) { //equivalent objet
+        defiService.save(defi.toEntity());
         return defi;
     }
 
@@ -46,23 +45,21 @@ public class DefiRestController {
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     @Transactional
-    public DefiDTO updateDefi(@PathVariable("id") final String id, @RequestBody final Defi defi){
+    public DefiDTO updateDefi(@PathVariable("id") final String id, @RequestBody final DefiDTO defi){
         Defi defiToUpdate = defiService.findById(id);
         if(defiToUpdate == null){
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND, "entity not found"
             );
         }
-        defiToUpdate.setTitre(defi.getTitre());
-        defiToUpdate.setDescription(defi.getDescription());
-        defiService.save(defiToUpdate);
-        return defiToUpdate.toDTO();
+        defiService.save(defi.toEntity());
+        return defi;
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     @Transactional
-    public void deleteChami(@PathVariable("id") final String id){
+    public void deleteDefi(@PathVariable("id") final String id){
         Defi defiToDelete = defiService.findById(id);
         if(defiToDelete == null){
             throw new ResponseStatusException(
