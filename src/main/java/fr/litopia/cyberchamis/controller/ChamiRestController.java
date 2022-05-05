@@ -25,7 +25,10 @@ public class ChamiRestController {
     @ResponseStatus(HttpStatus.CREATED)
     @Transactional
     public ChamiDTO createChami(@RequestBody ChamiDTO chami) { //equivalent objet
-        Chami c = chami.toEntity();
+        var checkChami = chamiService.findByUsername(chami.username);
+        if(checkChami.isPresent()){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Username already exists");
+        }
         chamiService.save(chami.toEntity());
         return chami;
     }

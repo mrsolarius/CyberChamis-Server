@@ -10,6 +10,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import java.util.Collection;
+import java.util.Optional;
 
 @Service
 public class ChamiServiceImpl implements ChamiService {
@@ -31,6 +32,11 @@ public class ChamiServiceImpl implements ChamiService {
     @Override
     public Chami findByIdGoogle(String idGoogle) {
         return chamiRepository.findByIdGoogle(idGoogle);
+    }
+
+    @Override
+    public Optional<Chami> findByUsername(String username) {
+        return chamiRepository.findByUsername(username);
     }
 
 
