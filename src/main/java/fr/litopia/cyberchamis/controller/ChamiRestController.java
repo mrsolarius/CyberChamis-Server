@@ -30,7 +30,8 @@ public class ChamiRestController {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Username already exists");
         }
         chamiService.save(chami.toEntity());
-        return chami;
+        var nChami = chamiService.findByIdGoogle(chami.idGoogle);
+        return nChami.toDTO();
     }
 
     @GetMapping("/")
@@ -67,6 +68,7 @@ public class ChamiRestController {
                 chamiToUpdate.setUsername(chami.username);
                 chamiToUpdate.setAge(chami.age);
                 chamiToUpdate.setBio(chami.bio);
+                chamiToUpdate.setProfileImg(chami.profileImg);
                 chamiService.save(chamiToUpdate);
             } catch (Exception e) {
                 throw new ResponseStatusException(
