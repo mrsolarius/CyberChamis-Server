@@ -9,18 +9,22 @@ public class ChamiDTO {
     public String bio;
     public String username;
 
+    public String profileImg;
+
     public Chami toEntity() {
         Chami c = new Chami();
         if (id != 0)
             c.id = this.id;
         if (idGoogle != null)
-            c.idGoogle=this.idGoogle;
+            c.setIdGoogle(this.idGoogle);
         if (age != null)
-            c.age=this.age;
+            c.setAge(this.age);
         if (bio != null)
-            c.bio=this.bio;
+            c.setBio(this.bio);
         if (username != null)
-            c.username=this.username;
+            c.setUsername(this.username);
+        if (profileImg != null)
+            c.setProfileImg(profileImg);
         return c;
     }
 }

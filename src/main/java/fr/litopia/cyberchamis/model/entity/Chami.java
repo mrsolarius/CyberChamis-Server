@@ -23,6 +23,10 @@ public class Chami extends Utilisateur {
     @Column(name = "bio", length = 255)
     public String bio;
 
+
+    @Column(name = "profileImg")
+    public String profileImg;
+
     public Chami(String username) {
         super();
         this.setUsername(username);
@@ -72,6 +76,14 @@ public class Chami extends Utilisateur {
 
     public String getBio() {
         return this.bio;
+    }
+
+    public String getProfileImg() {
+        return profileImg;
+    }
+
+    public void setProfileImg(String profileImg) {
+        this.profileImg = profileImg;
     }
 
     public ChamiDTO toDTO() {

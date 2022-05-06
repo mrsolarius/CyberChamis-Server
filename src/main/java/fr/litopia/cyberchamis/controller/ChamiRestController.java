@@ -109,6 +109,7 @@ public class ChamiRestController {
             chamiToUpdate.setUsername(chami.username);
             chamiToUpdate.setAge(chami.age);
             chamiToUpdate.setBio(chami.bio);
+            chamiToUpdate.setProfileImg(chami.profileImg);
             chamiService.save(chamiToUpdate);
         } catch (Exception e) {
             e.printStackTrace();
