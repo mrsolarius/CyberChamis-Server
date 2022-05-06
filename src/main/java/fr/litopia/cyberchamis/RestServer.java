@@ -30,6 +30,7 @@ public class RestServer {
 				"Cache-Control", "Content-Type"));
 		final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 		source.registerCorsConfiguration("/**", configuration);
+
 		return source;
 	}
 }
