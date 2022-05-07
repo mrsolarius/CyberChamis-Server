@@ -1,7 +1,8 @@
 package fr.litopia.cyberchamis.model.entity;
 
 import fr.litopia.cyberchamis.model.dto.DefiDTO;
-import fr.litopia.cyberchamis.model.dto.creationModif.DefiCreateDTO;
+import fr.litopia.cyberchamis.model.dto.RatingDTO;
+import fr.litopia.cyberchamis.model.dto.RatingDefiDTO;
 import lombok.Builder;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
@@ -9,6 +10,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
+import java.security.Timestamp;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -21,8 +23,6 @@ public class Defi {
     @GenericGenerator(name="system-uuid", strategy = "uuid")
     @Column(name = "idDefi", nullable = false)
     public String id;
-
-
 
     @Column(name = "titre", nullable = false, length = 45)
     public String titre;
@@ -79,7 +79,6 @@ public class Defi {
         this.tags = new HashSet<>();
         this.etapes = new HashSet<>();
     }
-
     public String getId() {
         return id;
     }
@@ -212,7 +211,7 @@ public class Defi {
             this.etapes.remove(etape);
         }
     }
-    // pour deplacer les etapes
+
     public void moveEtape(Etape etape, int index){
         if(!etapes.contains(etape)){
             throw new IllegalArgumentException("Etape not found");
@@ -277,12 +276,20 @@ public class Defi {
         return dto;
     }
 
-    public DefiCreateDTO toCreateDTO(){
-        return new DefiCreateDTO();
+    public RatingDefiDTO getDefisRatting(){
+        RatingDefiDTO dto = new RatingDefiDTO();
+        List<RatingDTO> dtoList = new ArrayList<>();
+        dto.idDefi = id;
+        dto.nbTotalGrade = this.notes.size();
+        for(int i = 1; i<=5;i++){
+            final var icheck = i;
+            RatingDTO ratingDTO = new RatingDTO();
+            ratingDTO.note=icheck;
+            ratingDTO.number= this.notes.stream().filter(note -> note.note == icheck).toList().size();
+            dtoList.add(ratingDTO);
+        }
+        dto.gradeList=dtoList;
+        return dto;
     }
 
-    Defi(String titre, String desc,String duree, Chami auteur, Set<String> tags, Arret arret , Set<Etape> etapes  ){
-        this.titre=titre;
-
-    }
 }

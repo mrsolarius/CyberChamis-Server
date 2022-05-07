@@ -23,6 +23,10 @@ public class Chami extends Utilisateur {
     @Column(name = "bio", length = 255)
     public String bio;
 
+
+    @Column(name = "profileImg")
+    public String profileImg;
+
     public Chami(String username) {
         super();
         this.setUsername(username);
@@ -40,14 +44,14 @@ public class Chami extends Utilisateur {
     }
 
     public void setAge(Integer age) {
-        if(age < 13) {
+        if(age != null && age < 13) {
             throw new IllegalArgumentException("You must be at least 13 years old");
         }
         this.age = age;
     }
 
     public void setBio(String bio) {
-        if(bio.length() > 255) {
+        if(bio != null && bio.length() > 255) {
             throw new IllegalArgumentException("Bio must be 255 characters long");
         }
         this.bio = bio;
@@ -74,6 +78,14 @@ public class Chami extends Utilisateur {
         return this.bio;
     }
 
+    public String getProfileImg() {
+        return profileImg;
+    }
+
+    public void setProfileImg(String profileImg) {
+        this.profileImg = profileImg;
+    }
+
     public ChamiDTO toDTO() {
         ChamiDTO dto = new ChamiDTO();
         dto.id= this.id;
@@ -81,6 +93,7 @@ public class Chami extends Utilisateur {
         dto.age=this.age;
         dto.bio=this.bio;
         dto.username=this.username;
+        dto.profileImg=this.profileImg;
         return dto;
     }
 }

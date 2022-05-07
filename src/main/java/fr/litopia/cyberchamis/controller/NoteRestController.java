@@ -2,6 +2,7 @@ package fr.litopia.cyberchamis.controller;
 
 import fr.litopia.cyberchamis.model.dto.DefiDTO;
 import fr.litopia.cyberchamis.model.dto.NoteDTO;
+import fr.litopia.cyberchamis.model.dto.RatingDefiDTO;
 import fr.litopia.cyberchamis.model.entity.Defi;
 import fr.litopia.cyberchamis.model.entity.Note;
 import fr.litopia.cyberchamis.repository.ChamiRepository;
@@ -19,7 +20,7 @@ import org.webjars.NotFoundException;
 import javax.transaction.Transactional;
 
 @RestController
-@RequestMapping(value = "/api/note", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/api/notes", produces = MediaType.APPLICATION_JSON_VALUE)
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class NoteRestController {
 
@@ -88,5 +89,15 @@ public class NoteRestController {
         this.noteRepository.save(n);
         this.defiRepository.save(defi.get());
         return n;
+    }
+
+    @GetMapping("/{defiId}")
+    @ResponseStatus(HttpStatus.OK)
+    public RatingDefiDTO getNbByValue(@PathVariable("defiId") String idDefi){
+        var defi = defiRepository.findById(idDefi);
+        if(defi.isEmpty()){
+            throw new NotFoundException("defi not found");
+        }
+        return defi.get().getDefisRatting();
     }
 }

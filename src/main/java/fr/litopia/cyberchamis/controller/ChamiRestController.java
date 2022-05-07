@@ -25,9 +25,13 @@ public class ChamiRestController {
     @ResponseStatus(HttpStatus.CREATED)
     @Transactional
     public ChamiDTO createChami(@RequestBody ChamiDTO chami) { //equivalent objet
-        Chami c = chami.toEntity();
+        var checkChami = chamiService.findByUsername(chami.username);
+        if(checkChami.isPresent()){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Username already exists");
+        }
         chamiService.save(chami.toEntity());
-        return chami;
+        var nChami = chamiService.findByIdGoogle(chami.idGoogle);
+        return nChami.toDTO();
     }
 
     @GetMapping("/")
@@ -64,6 +68,7 @@ public class ChamiRestController {
                 chamiToUpdate.setUsername(chami.username);
                 chamiToUpdate.setAge(chami.age);
                 chamiToUpdate.setBio(chami.bio);
+                chamiToUpdate.setProfileImg(chami.profileImg);
                 chamiService.save(chamiToUpdate);
             } catch (Exception e) {
                 throw new ResponseStatusException(
@@ -106,8 +111,10 @@ public class ChamiRestController {
             chamiToUpdate.setUsername(chami.username);
             chamiToUpdate.setAge(chami.age);
             chamiToUpdate.setBio(chami.bio);
+            chamiToUpdate.setProfileImg(chami.profileImg);
             chamiService.save(chamiToUpdate);
         } catch (Exception e) {
+            e.printStackTrace();
             throw new ResponseStatusException(
                     HttpStatus.BAD_REQUEST, "entity not valid"
             );

@@ -10,11 +10,16 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
+import java.util.Optional;
 
 @Repository
 public interface ChamiRepository extends JpaRepository<Chami,Long> {
     @Transactional
     @Query("select c from Chami c where c.idGoogle=:idGoogle")
     Chami findByIdGoogle(@Param("idGoogle") String idGoogle);
+
+    @Transactional
+    @Query("select c from Chami c where c.username=:username")
+    Optional<Chami> findByUsername(@Param("username") String username);
 }
 
