@@ -22,6 +22,12 @@ public class Tache extends Etape {
     @OneToMany(orphanRemoval = true)
     public Set<Indice> indices;
 
+    public Tache(String question, String secret, Integer point) {
+        this.question = question;
+        this.secret = secret;
+        this.point = point;
+    }
+
     public Tache() {
         super();
         this.indices = new HashSet<>();
@@ -68,6 +74,9 @@ public class Tache extends Etape {
         return point;
     }
 
+    public void setIndices(Set<Indice> indices) {
+        this.indices = indices;
+    }
 
     public void setPoint(Integer point) {
         if (point == null) {
@@ -96,6 +105,8 @@ public class Tache extends Etape {
             this.indices.add(indice);
         }
     }
+
+
 
     public void removeIndice(Indice indice){
         if (indices.contains(indice)) {
