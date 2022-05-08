@@ -100,4 +100,9 @@ public class GameServiceImpl implements GameService{
         }
         return v;
     }
+
+    @Override
+    public int getIndiceCost(Visite v) {
+        return v.getCostOfNextIndice();
+    }
 }

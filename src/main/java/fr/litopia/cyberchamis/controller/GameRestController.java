@@ -138,7 +138,7 @@ public class GameRestController {
         return i.toDTO();
     }
 
-    @PostMapping("edit-status")
+    @PostMapping("/edit-status")
     @ResponseStatus(HttpStatus.OK)
     public StatutVisite editStatus(@RequestParam Long visiteId, @RequestParam StatutVisite status) {
         if (visiteRepository.findById(visiteId).isEmpty()) {
@@ -153,6 +153,12 @@ public class GameRestController {
         }
     }
 
+    @GetMapping("/indice-cost")
+    @ResponseStatus(HttpStatus.OK)
+    public int getIndiceCost(@RequestParam Long visiteId) {
+        Visite v = checkAndGetVisite(visiteId);
+        return gameService.getIndiceCost(v);
+    }
 
 
 
