@@ -25,4 +25,8 @@ public class EtapeCreateDTO {
     public String secret;
     public Integer point;
     public Set<IndiceDTO> indices;
+
+    public Integer getNumero() {
+        return numero;
+    }
 }

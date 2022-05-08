@@ -17,14 +17,13 @@ public class Arret {
 
     public String ville;
 
-    public long latitude;
+    public double latitude;
 
-    public long longitude;
+    public double longitude;
 
-    Arret(String codeArret, String nomArret, String streetMap) {
+    Arret(String codeArret, String nomArret) {
         this.setCodeArret(codeArret);
         this.setNomArret(nomArret);
-        this.setStreetMap(streetMap);
     }
 
     public Arret() {

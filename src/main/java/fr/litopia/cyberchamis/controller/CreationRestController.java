@@ -1,8 +1,5 @@
 package fr.litopia.cyberchamis.controller;
-import fr.litopia.cyberchamis.model.dto.EtapeDTO;
-import fr.litopia.cyberchamis.model.dto.IndiceDTO;
-import fr.litopia.cyberchamis.model.dto.TagDTO;
-import fr.litopia.cyberchamis.model.dto.TypeEtapeDTO;
+import fr.litopia.cyberchamis.model.dto.*;
 import fr.litopia.cyberchamis.model.dto.creationModif.DefiCreateDTO;
 import fr.litopia.cyberchamis.model.dto.creationModif.EtapeCreateDTO;
 import fr.litopia.cyberchamis.model.dto.creationModif.IndicationCreateDTO;
@@ -17,7 +14,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import org.webjars.NotFoundException;
-
 import javax.transaction.Transactional;
 import java.util.stream.Collectors;
 
@@ -56,81 +52,7 @@ public class CreationRestController {
         var d = defiRepository.save(toSaveDefiEntity(defi));
         return d.toDefiCreateDTO();
     }
-    //Gneerer et sauvgarder les dto en utilisant la bdd
-    //Sera utiliser pour l'edition et creation donc l'id du defis et à verifier
-    @PostMapping("/")
-    @ResponseStatus(HttpStatus.CREATED)
-    @Transactional
-    public Defi toSaveDefiEntity(DefiCreateDTO defi){
-        var chami = chamiRepository.findById(defi.auteurId);
-        if(chami.isEmpty()) {
-            throw new NotFoundException("chami not found");
-        }
-        if (def)
-        Defi d = new Defi();
-        if (defi.titre!=null){
-            d.titre=defi.titre;
-        }
-        else if (defi.description!=null){
-            d.description=defi.description;
-        }
-        else if (defi.version!=null){
-            d.version= defi.version;
-        }
-        else if (defi.duree!=null){
-            d.duree= defi.duree;
-        }
-        else if (defi.auteurId!=null){
-            d.auteur=chami.get();
-        }
-        else if (defi.arret!=null){
-            d.arret=defi.arret.toEntity();
-        }
-        else if (! defi.etapes.isEmpty()){
-            for ( EtapeCreateDTO e : defi.etapes)
-            {
-        /*    toSaveEtapeEntity(e);
-            saveIndice((Tache) e.);
-            saveEtape(d,);
-            }*/
-        }
-        else if ( ! defi.tags.isEmpty()){
-            for ( String t : defi.tags)
-            {
-                toSaveIndiceEntity(e);
-            }
 
-        }
-
-        this.defiRepository.save(defi.get());
-        return d;
-    }
-    @Transactional
-    public Etape toSaveEtapeEntity(EtapeCreateDTO etape ){
-        Etape entity=null;
-        if (etape.typeEtapeDTO == TypeEtapeDTO.TacheDTO) {
-            var t = tacheRepository.findById(etape.idEtape);
-            if (t.isEmpty()) {
-                throw new NotFoundException("Etape:tache  not found");
-            } else {
-                t.get().setQuestion(((TacheCreateDTO)etape).question);
-                t.get().setPoint(((TacheCreateDTO)etape).point);
-                t.get().setSecret(((TacheCreateDTO)etape).secret);
-                t.get().setIndices(((TacheCreateDTO)etape).indices.
-                        stream().map(IndiceDTO::toEntity).collect(Collectors.toSet());}
-        }else if (etape.typeEtapeDTO == TypeEtapeDTO.IndicationDTO){
-            var i = indicationRepository.findById(etape.idEtape);
-            if (i.isEmpty()) {
-                throw new NotFoundException("Etape:Indication  not found");
-            } else {
-                i.get().setText(((IndicationCreateDTO)etape).toEntity().text);
-
-            }
-
-
-        }
-
-    }
     @PutMapping("/")
     @ResponseStatus(HttpStatus.OK)
     @Transactional
@@ -154,7 +76,8 @@ public class CreationRestController {
         this.indiceRepository.save(i);
     }
 
-    private void saveTags(Defi d, Tag t){ this.tagRepository.save(t);
+    private void saveTags(Defi d, Tag t){
+        this.tagRepository.save(t);
         this.defiRepository.save(d);
         d.addTag(t);
 
