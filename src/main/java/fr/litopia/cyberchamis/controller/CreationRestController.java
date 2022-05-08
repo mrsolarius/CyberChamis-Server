@@ -33,6 +33,8 @@ public class CreationRestController {
     private IndicationRepository indicationRepository;
     @Autowired
     private TacheRepository tacheRepository;
+    @Autowired
+    private ArretRepository arretRepository;
 
     @PostMapping(value = "/") // avant la création
     @ResponseStatus(HttpStatus.CREATED)
@@ -111,7 +113,7 @@ public class CreationRestController {
             d.setAuteur(chami.get());
         }
         if (defiDTO.arret != null) {
-            d.setArret(defiDTO.arret.toEntity());
+            d.setArret(toSaveArretEntity(defiDTO.arret));
         }
         if (!defiDTO.etapes.isEmpty()) {
             var listeEtape = List.copyOf(defiDTO.etapes);
@@ -167,7 +169,9 @@ public class CreationRestController {
             }
             tacheRepository.save((Tache) entity);
         }else if (etape.type == TypeEtapeDTO.IndicationDTO){
-            var i = indicationRepository.findById(etape.idEtape);
+            var id = -1L;
+            if (etape.idEtape != null)id=etape.idEtape;
+            var i = indicationRepository.findById(id);
             if (i.isEmpty()) {
                 entity= new Indication();
             } else {
@@ -199,6 +203,26 @@ public class CreationRestController {
         entity.setIndice(indiceDTO.indice);
         entity.setPointsPerdus(indiceDTO.pointsPerdus);
         return indiceRepository.save(entity);
+    }
+
+    @Transactional
+    public Arret toSaveArretEntity(ArretDTO arret) {
+        Arret entity = null;
+        var id = "";
+        if (arret.codeArret!=null)id=arret.codeArret;
+        var a = arretRepository.findById(id);
+        if (a.isEmpty()){
+            entity = new Arret();
+            entity.setCodeArret(arret.codeArret);
+            entity.setNomArret(arret.nomArret);
+            entity.setVille(arret.ville);
+            entity.setLatitude(arret.latitude);
+            entity.setLongitude(arret.longitude);
+            return arretRepository.save(entity);
+        }else{
+            entity = a.get();
+        }
+        return entity;
     }
 
     @Transactional

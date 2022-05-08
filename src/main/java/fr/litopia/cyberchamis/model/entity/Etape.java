@@ -57,9 +57,6 @@ public abstract class Etape {
     }
 
     public void setDescription(String description) {
-        if (description == null || description.isEmpty()) {
-            throw new IllegalArgumentException("Description cannot be null or empty");
-        }
         if (description.length() > 255) {
             throw new IllegalArgumentException("Description cannot be longer than 255 characters");
         }
