@@ -1,18 +1,14 @@
 package fr.litopia.cyberchamis.controller;
 
-import fr.litopia.cyberchamis.model.dto.DefiDTO;
 import fr.litopia.cyberchamis.model.dto.NoteDTO;
 import fr.litopia.cyberchamis.model.dto.RatingDefiDTO;
-import fr.litopia.cyberchamis.model.entity.Defi;
 import fr.litopia.cyberchamis.model.entity.Note;
 import fr.litopia.cyberchamis.repository.ChamiRepository;
 import fr.litopia.cyberchamis.repository.DefiRepository;
 import fr.litopia.cyberchamis.repository.NoteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import org.webjars.NotFoundException;

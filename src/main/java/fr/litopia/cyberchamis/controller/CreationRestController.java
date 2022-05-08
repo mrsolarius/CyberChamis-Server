@@ -4,11 +4,9 @@ import fr.litopia.cyberchamis.model.dto.creationModif.DefiCreateDTO;
 import fr.litopia.cyberchamis.model.dto.creationModif.EtapeCreateDTO;
 import fr.litopia.cyberchamis.model.entity.*;
 import fr.litopia.cyberchamis.repository.*;
-import fr.litopia.cyberchamis.services.DefiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import org.webjars.NotFoundException;
@@ -17,7 +15,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Controller
+@RestController
 @RequestMapping(value = "/api/defibuilder", produces = MediaType.APPLICATION_JSON_VALUE)
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class CreationRestController {
@@ -28,15 +26,11 @@ public class CreationRestController {
     @Autowired
     private EtapeRepository etapeRepository;
     @Autowired
-    private DefiService defiService;
-    @Autowired
     private TagRepository tagRepository;
-
     @Autowired
     private IndiceRepository indiceRepository;
     @Autowired
     private IndicationRepository indicationRepository;
-
     @Autowired
     private TacheRepository tacheRepository;
 
@@ -49,16 +43,16 @@ public class CreationRestController {
     }
 
     @PutMapping("/")
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.CREATED)
     @Transactional
     public DefiCreateDTO createOrUpdateDefi(@RequestBody DefiCreateDTO defi) {
         try {
-            this.toSaveDefiEntity(defi);
+            return this.toSaveDefiEntity(defi).toCreateDefiDTO();
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "entity not found");
         }
-        return defi;
     }
+
     private void saveEtape(Etape etape, Defi d){
         this.etapeRepository.save(etape);
         d.addEtape(etape);
@@ -87,7 +81,9 @@ public class CreationRestController {
         if (chami.isEmpty()) {
             throw new NotFoundException("chami not found");
         }
-        var defi = defiRepository.findById(defiDTO.id);
+        var id = "null";
+        if (defiDTO.id != null)id=defiDTO.id;
+        var defi = defiRepository.findById(id);
         Defi d = null;
         if (defi.isEmpty()) {
             //Pas de defis : Crée un tout nouveau defis à partir du dto
@@ -135,10 +131,11 @@ public class CreationRestController {
 
     @Transactional
     public Tag toSaveTagEntity(String tagDTO) {
-        var tag = tagRepository.findById(tagDTO);
+        var tagId = "";
+        if(tagDTO!=null)tagId = tagDTO;
+        var tag = tagRepository.findById(tagId);
         if(tag.isEmpty()){
-            Tag tagE = new Tag();
-            tagE.tag = tagDTO;
+            Tag tagE = new Tag(tagDTO);
             return tagRepository.save(tagE);
         }else{
             return tag.get();
@@ -149,7 +146,9 @@ public class CreationRestController {
     public Etape toSaveEtapeEntity(EtapeCreateDTO etape ){
         Etape entity=null;
         if (etape.type == TypeEtapeDTO.TacheDTO) {
-            var t = tacheRepository.findById(etape.idEtape);
+            var id = -1L;
+            if (etape.idEtape != null)id=etape.idEtape;
+            var t = tacheRepository.findById(id);
             if (t.isEmpty()) {
                 entity = new Tache();
             } else {
@@ -161,8 +160,11 @@ public class CreationRestController {
             ((Tache)entity).setQuestion(etape.question);
             ((Tache)entity).setPoint(etape.point);
             ((Tache)entity).setSecret(etape.secret);
-            ((Tache)entity).setIndices(etape.indices.
-                    stream().map(IndiceDTO::toEntity).collect(Collectors.toSet()));
+            var listeIndice = List.copyOf(etape.indices);
+            for (IndiceDTO indiceDTO : listeIndice.stream().sorted(Comparator.comparing(IndiceDTO::getNumIndice)).toList()) {
+                var i = toSaveIndiceEntity(indiceDTO);
+                ((Tache)entity).addIndice(i);
+            }
             tacheRepository.save((Tache) entity);
         }else if (etape.type == TypeEtapeDTO.IndicationDTO){
             var i = indicationRepository.findById(etape.idEtape);
@@ -180,6 +182,23 @@ public class CreationRestController {
             indicationRepository.save((Indication)entity);
         }
         return entity;
+    }
+
+    @Transactional
+    Indice toSaveIndiceEntity(IndiceDTO indiceDTO) {
+        Indice entity = null;
+        var id = -1L;
+        if (indiceDTO.id!=null)id=indiceDTO.id;
+        var  i = indiceRepository.findById(id);
+        if (i.isEmpty()){
+            entity = new Indice();
+        }else{
+            entity = i.get();
+        }
+        entity.setNumIndice(indiceDTO.numIndice);
+        entity.setIndice(indiceDTO.indice);
+        entity.setPointsPerdus(indiceDTO.pointsPerdus);
+        return indiceRepository.save(entity);
     }
 
     @Transactional

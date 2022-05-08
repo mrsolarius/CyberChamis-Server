@@ -115,7 +115,7 @@ public class Defi {
         if(description == null || description.isEmpty()) {
             throw new IllegalArgumentException("Description cannot be null or empty");
         }
-        if(description.length() > 128) {
+        if(description.length() > 1024) {
             throw new IllegalArgumentException("Description cannot be longer than 128 characters");
         }
         this.description = description;
@@ -242,6 +242,12 @@ public class Defi {
     }
 
     public void setMiniDescription(String miniDescription) {
+        if(miniDescription == null || miniDescription.isEmpty()) {
+            throw new IllegalArgumentException("Description cannot be null or empty");
+        }
+        if(miniDescription.length() > 128) {
+            throw new IllegalArgumentException("Description cannot be longer than 128 characters");
+        }
         this.miniDescription = miniDescription;
     }
 

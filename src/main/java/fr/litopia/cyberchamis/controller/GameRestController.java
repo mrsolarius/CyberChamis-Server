@@ -1,6 +1,5 @@
 package fr.litopia.cyberchamis.controller;
 
-import fr.litopia.cyberchamis.model.dto.EtapeDTO;
 import fr.litopia.cyberchamis.model.dto.IndiceDTO;
 import fr.litopia.cyberchamis.model.dto.VisiteDTO;
 import fr.litopia.cyberchamis.model.entity.*;
@@ -10,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.transaction.Transactional;
@@ -179,7 +177,8 @@ public class GameRestController {
 
         Defi defi = new Defi();
         defi.setTitre("A la découverte des miagistes");
-        defi.setDescription("Vous devez découvrir les miagistes de la ville de Grenoble");
+        defi.setMiniDescription("Vous devez découvrir les miagistes de la ville de Grenoble");
+        defi.setDescription("Grasse à se defis vous decouvririrez les magnifiquement (moche) batiment de l'im2ag et vous pourré y observer une espéce animal trés etonante l'informatisien moyen");
         defi.setAuteur(ch);
         defi.setArret(a);
         defi.setDuree("10 minutes");
