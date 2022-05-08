@@ -53,8 +53,8 @@ public class CreationRestController {
     @ResponseStatus(HttpStatus.CREATED)
     @Transactional
     public DefiCreateDTO createDefi(@RequestBody DefiCreateDTO defi) { //equivalent objet
-        defiRepository.save(defi.toSaveDefiEntity());
-        return defi;
+        var d = defiRepository.save(toSaveDefiEntity(defi));
+        return d.toDefiCreateDTO();
     }
     //Gneerer et sauvgarder les dto en utilisant la bdd
     //Sera utiliser pour l'edition et creation donc l'id du defis et à verifier

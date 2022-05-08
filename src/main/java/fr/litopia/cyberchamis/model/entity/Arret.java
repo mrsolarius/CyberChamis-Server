@@ -15,8 +15,11 @@ public class Arret {
     @Column(name = "nomArret", nullable = false, length = 50)
     public String nomArret;
 
-    @Column(name = "streetMapUrl", nullable = false)
-    public String streetMap;
+    public String ville;
+
+    public long latitude;
+
+    public long longitude;
 
     Arret(String codeArret, String nomArret, String streetMap) {
         this.setCodeArret(codeArret);
@@ -40,12 +43,6 @@ public class Arret {
         this.nomArret = nomArret;
     }
 
-    public void setStreetMap(String streetMap) {
-        if (streetMap.length() > 256) {
-            throw new IllegalArgumentException("StreetMap must be 256 characters long");
-        }
-        this.streetMap = streetMap;
-    }
 
     public String getCodeArret() {
         return codeArret;
@@ -55,15 +52,37 @@ public class Arret {
         return nomArret;
     }
 
-    public String getStreetMap() {
-        return streetMap;
+    public String getVille() {
+        return ville;
+    }
+
+    public void setVille(String ville) {
+        this.ville = ville;
+    }
+
+    public long getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(long latitude) {
+        this.latitude = latitude;
+    }
+
+    public long getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(long longitude) {
+        this.longitude = longitude;
     }
 
     public ArretDTO toDTO() {
         ArretDTO dto = new ArretDTO();
         dto.codeArret = this.codeArret;
         dto.nomArret = this.nomArret;
-        dto.streetMap = this.streetMap;
+        dto.ville = this.ville;
+        dto.latitude = this.latitude;
+        dto.longitude = this.longitude;
         return dto;
     }
 

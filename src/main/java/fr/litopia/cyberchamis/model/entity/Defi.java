@@ -3,6 +3,7 @@ package fr.litopia.cyberchamis.model.entity;
 import fr.litopia.cyberchamis.model.dto.DefiDTO;
 import fr.litopia.cyberchamis.model.dto.RatingDTO;
 import fr.litopia.cyberchamis.model.dto.RatingDefiDTO;
+import fr.litopia.cyberchamis.model.dto.creationModif.DefiCreateDTO;
 import lombok.Builder;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
@@ -39,6 +40,9 @@ public class Defi {
 
     @Column(name = "description", nullable = false, length = 128)
     public String description;
+
+    @Column(name = "miniDescription", nullable = false, length = 1024)
+    public String miniDescription;
 
     @Version
     @Column(name = "version")
@@ -292,4 +296,18 @@ public class Defi {
         return dto;
     }
 
+    public DefiCreateDTO toCreateDefiDTO() {
+        DefiCreateDTO dto = new DefiCreateDTO();
+        dto.id=id;
+        dto.titre=titre;
+        dto.description=description;
+        dto.miniDescription=miniDescription;
+        dto.duree=duree;
+        dto.version=version;
+        dto.auteurId=auteur.getId();
+        dto.tags=tags.stream().map(Tag::getTag).collect(Collectors.toSet());
+        dto.etapes=etapes.stream().map(Etape::toCreatEtapeDTO).collect(Collectors.toSet());
+        dto.arret=arret.toDTO();
+        return dto;
+    }
 }

@@ -5,6 +5,7 @@ import fr.litopia.cyberchamis.model.dto.TypeEtapeDTO;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
+import java.util.stream.Collectors;
 
 @Entity
 @Inheritance(strategy= InheritanceType.JOINED)
@@ -83,7 +84,25 @@ public abstract class Etape {
         }
         return dto;
     }
-
-
+    public EtapeCreateDTO toCreatEtapeDTO() {
+        EtapeCreateDTO dto = new EtapeCreateDTO();
+        dto.idEtape=this.id;
+        dto.numero = this.numero;
+        dto.titreEtape=this.titre;
+        dto.descriptionEtape=this.description;
+        if (this instanceof Tache){
+            dto.type = TypeEtapeDTO.TacheDTO;
+            dto.question= ((Tache)this).getQuestion();
+            dto.point = ((Tache)this).getPoint();
+            dto.indices = ((Tache)this).getIndices().stream().map(Indice::toDTO).collect(Collectors.toSet());
+            dto.secret=((Tache)this).secret;
+        } else if (this instanceof Indication){
+            dto.type = TypeEtapeDTO.IndicationDTO;
+            dto.text = ((Indication)this).getText();
+            dto.image = ((Indication)this).getImage();
+            dto.video = ((Indication)this).getVideo();
+        }
+        return dto;
+    }
 }
 
