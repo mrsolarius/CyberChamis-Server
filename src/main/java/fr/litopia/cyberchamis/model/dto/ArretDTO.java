@@ -7,16 +7,16 @@ public class ArretDTO {
     public String nomArret;
 
     public String ville;
-    public long latitude;
-    public long longitude;
+    public double latitude;
+    public double longitude;
 
     public Arret toEntity() {
         Arret entity = new Arret();
-        entity.codeArret = this.codeArret;
-        entity.nomArret = this.nomArret;
-        entity.ville = this.ville;
-        entity.latitude = this.latitude;
-        entity.longitude = this.longitude;
+        entity.setCodeArret(this.codeArret);
+        entity.setNomArret(this.nomArret);
+        entity.setVille(this.ville);
+        entity.setLatitude(this.latitude);
+        entity.setLongitude(this.longitude);
         return entity;
     }
 }

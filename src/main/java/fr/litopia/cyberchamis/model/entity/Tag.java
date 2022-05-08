@@ -10,7 +10,6 @@ import java.util.stream.Collectors;
 @Entity
 public class Tag {
     @Id
-    @GeneratedValue
     @Column(name = "tag", nullable = false)
     public String tag;
 

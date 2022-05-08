@@ -38,10 +38,10 @@ public class Defi {
     @Column(name = "dateDeModification", nullable = false)
     public Date dateDeModification;
 
-    @Column(name = "description", nullable = false, length = 128)
+    @Column(name = "description", nullable = false, length = 1024)
     public String description;
 
-    @Column(name = "miniDescription", nullable = false, length = 1024)
+    @Column(name = "miniDescription", nullable = false, length = 128)
     public String miniDescription;
 
     @Version
@@ -237,6 +237,13 @@ public class Defi {
         return sortEtapes;
     }
 
+    public String getMiniDescription() {
+        return miniDescription;
+    }
+
+    public void setMiniDescription(String miniDescription) {
+        this.miniDescription = miniDescription;
+    }
 
     @PrePersist
     protected void onCreate() {

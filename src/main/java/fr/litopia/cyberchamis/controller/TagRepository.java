@@ -1,6 +1,0 @@
-package fr.litopia.cyberchamis.controller;
-import fr.litopia.cyberchamis.model.entity.Tag;
-import org.springframework.data.jpa.repository.JpaRepository;
-
-public interface TagRepository extends JpaRepository<Tag,Long> {
-}

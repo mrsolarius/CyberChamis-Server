@@ -169,9 +169,12 @@ public class GameRestController {
         chamiRepository.save(ch);
 
         Arret a = new Arret();
-        a.setCodeArret("A001");
-        a.setNomArret("Bibiliotheque");
-        a.setStreetMap("https://www.openstreetmap.org/#map=19/45.19240/5.77088");
+        a.setCodeArret("SEM:0654");
+        a.setVille("Saint-Martin-d'Hères");
+        a.setNomArret("Bibliothèques Universitaires");
+        a.setLongitude(5.77038);
+        a.setLatitude(45.19166);
+
         arretRepository.save(a);
 
         Defi defi = new Defi();
