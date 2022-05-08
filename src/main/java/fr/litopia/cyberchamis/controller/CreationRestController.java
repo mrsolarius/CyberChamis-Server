@@ -40,11 +40,6 @@ public class CreationRestController {
     @Autowired
     private TacheRepository tacheRepository;
 
-    /**
-     * Creation defi DefiCreateDTO post
-     * AjouterDesEtape EtapeCreateDTO & idDefi post
-     * AjouterDesIndice IndiceDTO & idEtape post
-     */
     @PostMapping(value = "/") // avant la création
     @ResponseStatus(HttpStatus.CREATED)
     @Transactional
