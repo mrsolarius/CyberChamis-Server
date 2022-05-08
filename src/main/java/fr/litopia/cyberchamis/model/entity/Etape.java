@@ -2,6 +2,8 @@ package fr.litopia.cyberchamis.model.entity;
 
 import fr.litopia.cyberchamis.model.dto.EtapeDTO;
 import fr.litopia.cyberchamis.model.dto.TypeEtapeDTO;
+import fr.litopia.cyberchamis.model.dto.creationModif.DefiCreateDTO;
+import fr.litopia.cyberchamis.model.dto.creationModif.EtapeCreateDTO;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;

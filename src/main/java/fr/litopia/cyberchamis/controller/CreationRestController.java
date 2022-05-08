@@ -66,6 +66,7 @@ public class CreationRestController {
         if(chami.isEmpty()) {
             throw new NotFoundException("chami not found");
         }
+        if (def)
         Defi d = new Defi();
         if (defi.titre!=null){
             d.titre=defi.titre;
@@ -96,13 +97,11 @@ public class CreationRestController {
         else if ( ! defi.tags.isEmpty()){
             for ( String t : defi.tags)
             {
-                toSaveEtapeEntity(e);
+                toSaveIndiceEntity(e);
             }
 
         }
-        Note n = new Note(note.valeur,chami.get());
-        defi.get().ajouterOuModifierNote(n);
-        this.noteRepository.save(n);
+
         this.defiRepository.save(defi.get());
         return d;
     }
@@ -155,10 +154,11 @@ public class CreationRestController {
         this.indiceRepository.save(i);
     }
 
-    private void saveTags(Defi d, Tag t){
+    private void saveTags(Defi d, Tag t){ this.tagRepository.save(t);
         this.defiRepository.save(d);
         d.addTag(t);
-        this.tagRepository.save(t);
+
     }
 
+}
 }
