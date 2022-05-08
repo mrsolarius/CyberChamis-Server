@@ -36,6 +36,13 @@ public class Visite {
         points = 0;
         etapeCourante = 0;
         this.reponses = new HashSet<>();
+        Etape currentEtape = getEtapeCourante();
+        if(currentEtape instanceof Tache){
+            if(getReponseCourante()==null) {
+                Reponse reponse = new Reponse(etapeCourante);
+                this.reponses.add(reponse);
+            }
+        }
     }
 
     public Visite() {}
