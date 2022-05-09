@@ -55,6 +55,9 @@ public class Defi {
     @Column(name = "duree")
     public String duree;
 
+    @Column
+    public String img;
+
     @ManyToOne(optional = false,fetch = FetchType.EAGER)
     public Chami auteur;
 
@@ -322,5 +325,9 @@ public class Defi {
         dto.etapes=etapes.stream().map(Etape::toCreatEtapeDTO).collect(Collectors.toSet());
         dto.arret=arret.toDTO();
         return dto;
+    }
+
+    public void setImg(String img) {
+        this.img=img;
     }
 }

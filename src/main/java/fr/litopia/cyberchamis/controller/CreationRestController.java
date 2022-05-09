@@ -104,13 +104,15 @@ public class CreationRestController {
         }
         if (defiDTO.description != null) {
             d.setDescription(defiDTO.description);
-            ;
         }
         if (defiDTO.duree != null) {
             d.setDuree(defiDTO.duree);
         }
         if (defiDTO.auteurId != null) {
             d.setAuteur(chami.get());
+        }
+        if(defiDTO.img!=null){
+            d.setImg(defiDTO.img);
         }
         if (defiDTO.arret != null) {
             d.setArret(toSaveArretEntity(defiDTO.arret));

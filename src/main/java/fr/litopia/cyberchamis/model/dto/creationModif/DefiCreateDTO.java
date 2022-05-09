@@ -11,6 +11,7 @@ public class DefiCreateDTO {
 
     public String miniDescription;
     public String description;
+    public String img;
     public Long version; // pas de modifier mais afficher pour le client
     public String duree;
     public Long auteurId;

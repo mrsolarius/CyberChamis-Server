@@ -24,7 +24,7 @@ public class DefiDTO {
     public Date dateCreation;
     public Date dateDeModification;
     public Integer pointTotaux;
-
+    public String img;
 
     public Defi toEntity() {
         Defi entity = new Defi();
@@ -33,6 +33,7 @@ public class DefiDTO {
         entity.setDescription(description);
         entity.duree=duree;
         entity.pointTotaux=pointTotaux;
+        entity.img=img;
         entity.auteur=auteur.toEntity();
         //entity.tags= tags.stream().map(TagDTO::toEntity).collect(Collectors.toSet());
         entity.arret=arretDTO.toEntity();
