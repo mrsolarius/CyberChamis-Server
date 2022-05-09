@@ -23,5 +23,9 @@ public interface CommentaireRepository extends JpaRepository<Commentaire,Long> {
     @Query("select c from Commentaire c join c.auteur a where a.id=:idChami")
     Optional<Commentaire[]> findByChami(@Param("idChami") Long idChami);
 
+    @Transactional
+    @Query("select c from Defi d join d.commentaires c join c.auteur a where d.id=:idDefi and a.id=:idChami")
+    Optional<Commentaire[]> findByDefiAndChami(@Param("idDefi") String idDefi, @Param("idChami") Long idChami);
+
 
 }

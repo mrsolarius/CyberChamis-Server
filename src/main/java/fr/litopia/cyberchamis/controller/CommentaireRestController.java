@@ -57,7 +57,31 @@ public class CommentaireRestController {
         }
         Set<CommentaireDTO> commentairesDto = new HashSet<>();
         for(Commentaire com : commentaires.get()){
-            commentairesDto.add(com.toDTO());
+            var c = com.toDTO();
+            var d = defiRepository.findDefiByCom(com.getId());
+            if (d.isPresent()){
+                c.idDefi = d.get().getId();
+            }
+            commentairesDto.add(c);
+        }
+        return commentairesDto;
+    }
+
+    @GetMapping("/{idDefi}/{idChami}")
+    @ResponseStatus(HttpStatus.OK)
+    public Set<CommentaireDTO> getCommentairesByDefiAndChami(@PathVariable("idDefi") String idDefi, @PathVariable("idChami") Long idChami) {
+        var commentaires = commentaireRepository.findByDefiAndChami(idDefi, idChami);
+        if (commentaires.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "entity not found");
+        }
+        Set<CommentaireDTO> commentairesDto = new HashSet<>();
+        for(Commentaire com : commentaires.get()){
+            var c = com.toDTO();
+            var d = defiRepository.findDefiByCom(com.getId());
+            if (d.isPresent()){
+                c.idDefi = d.get().getId();
+            }
+            commentairesDto.add(c);
         }
         return commentairesDto;
     }

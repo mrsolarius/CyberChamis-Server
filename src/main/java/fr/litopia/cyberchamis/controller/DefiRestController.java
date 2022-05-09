@@ -1,5 +1,7 @@
 package fr.litopia.cyberchamis.controller;
+import fr.litopia.cyberchamis.model.dto.CommentaireDTO;
 import fr.litopia.cyberchamis.model.dto.DefiDTO;
+import fr.litopia.cyberchamis.model.entity.Commentaire;
 import fr.litopia.cyberchamis.model.entity.Defi;
 import fr.litopia.cyberchamis.repository.CommentaireRepository;
 import fr.litopia.cyberchamis.repository.DefiRepository;
@@ -13,6 +15,8 @@ import org.webjars.NotFoundException;
 
 import javax.transaction.Transactional;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 @RestController //indique qu'il faut injecter cette classe en tant que contrôleur REST. Dans le Framework Spring, un contrôleur permet de répondre à des requêtes HTTP avec des données quelconques (pas nécessairement du HTML).
 @RequestMapping(value = "/api/defis",produces = MediaType.APPLICATION_JSON_VALUE)
@@ -47,6 +51,20 @@ public class DefiRestController {
             throw new NotFoundException("Defi not found");
         }
         return defi.toDTO();
+    }
+
+    @GetMapping("/defi/{id}")
+    public Set<DefiDTO> getByChami(@PathVariable("id") Long id) {
+        var defis = defiRepository.findDefisByChami(id);
+        if (defis.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "entity not found");
+        }
+        Set<DefiDTO> defisDto = new HashSet<>();
+        for(Defi d : defis.get()){
+            var defi = d.toDTO();
+            defisDto.add(defi);
+        }
+        return defisDto;
     }
 
     @PutMapping("/{id}")
