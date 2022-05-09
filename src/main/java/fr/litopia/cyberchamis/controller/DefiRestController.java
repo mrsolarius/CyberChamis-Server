@@ -1,7 +1,5 @@
 package fr.litopia.cyberchamis.controller;
-
 import fr.litopia.cyberchamis.model.dto.DefiDTO;
-import fr.litopia.cyberchamis.model.entity.Commentaire;
 import fr.litopia.cyberchamis.model.entity.Defi;
 import fr.litopia.cyberchamis.repository.CommentaireRepository;
 import fr.litopia.cyberchamis.repository.DefiRepository;

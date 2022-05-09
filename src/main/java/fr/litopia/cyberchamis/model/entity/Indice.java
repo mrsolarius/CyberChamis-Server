@@ -13,7 +13,7 @@ public class Indice {
     public long id;
 
     @Column(name = "numIndice", nullable = false)
-    @Min(1)
+    @Min(0)
     public int numIndice;
 
     @Column(name = "indice", nullable = false, length = 1024)
@@ -31,7 +31,7 @@ public class Indice {
     }
 
     public void setNumIndice(int numIndice) {
-        if(numIndice < 1) {
+        if(numIndice < 0) {
             throw new IllegalArgumentException("numIndice must be greater than 0");
         }
         this.numIndice = numIndice;

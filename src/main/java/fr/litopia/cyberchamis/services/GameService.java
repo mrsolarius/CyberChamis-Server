@@ -25,4 +25,6 @@ public interface GameService {
     boolean checkResponse(String response, Visite visite) throws Exception;
 
     Visite reprendreVisite(Defi defiId, Utilisateur utilisateur);
+
+    int getIndiceCost(Visite v);
 }

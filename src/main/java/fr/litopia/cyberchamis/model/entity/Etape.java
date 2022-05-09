@@ -2,9 +2,12 @@ package fr.litopia.cyberchamis.model.entity;
 
 import fr.litopia.cyberchamis.model.dto.EtapeDTO;
 import fr.litopia.cyberchamis.model.dto.TypeEtapeDTO;
+import fr.litopia.cyberchamis.model.dto.creationModif.DefiCreateDTO;
+import fr.litopia.cyberchamis.model.dto.creationModif.EtapeCreateDTO;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
+import java.util.stream.Collectors;
 
 @Entity
 @Inheritance(strategy= InheritanceType.JOINED)
@@ -54,9 +57,6 @@ public abstract class Etape {
     }
 
     public void setDescription(String description) {
-        if (description == null || description.isEmpty()) {
-            throw new IllegalArgumentException("Description cannot be null or empty");
-        }
         if (description.length() > 255) {
             throw new IllegalArgumentException("Description cannot be longer than 255 characters");
         }
@@ -75,6 +75,26 @@ public abstract class Etape {
             dto.question = ((Tache)this).getQuestion();
             dto.point = ((Tache)this).getPoint();
             dto.nbIndices = ((Tache)this).getIndices().size();
+        } else if (this instanceof Indication){
+            dto.type = TypeEtapeDTO.IndicationDTO;
+            dto.text = ((Indication)this).getText();
+            dto.image = ((Indication)this).getImage();
+            dto.video = ((Indication)this).getVideo();
+        }
+        return dto;
+    }
+    public EtapeCreateDTO toCreatEtapeDTO() {
+        EtapeCreateDTO dto = new EtapeCreateDTO();
+        dto.idEtape=this.id;
+        dto.numero = this.numero;
+        dto.titreEtape=this.titre;
+        dto.descriptionEtape=this.description;
+        if (this instanceof Tache){
+            dto.type = TypeEtapeDTO.TacheDTO;
+            dto.question= ((Tache)this).getQuestion();
+            dto.point = ((Tache)this).getPoint();
+            dto.indices = ((Tache)this).getIndices().stream().map(Indice::toDTO).collect(Collectors.toSet());
+            dto.secret=((Tache)this).secret;
         } else if (this instanceof Indication){
             dto.type = TypeEtapeDTO.IndicationDTO;
             dto.text = ((Indication)this).getText();

@@ -93,6 +93,7 @@ public class Chami extends Utilisateur {
         dto.age=this.age;
         dto.bio=this.bio;
         dto.username=this.username;
+        dto.profileImg=this.profileImg;
         return dto;
     }
 }

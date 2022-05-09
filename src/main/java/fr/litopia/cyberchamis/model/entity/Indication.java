@@ -1,9 +1,11 @@
 package fr.litopia.cyberchamis.model.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 
 @Entity
 public class Indication extends Etape{
+    @Column(name = "indication",length = 1024)
     public String text;
     public String video;
     public String image;

@@ -36,6 +36,13 @@ public class Visite {
         points = 0;
         etapeCourante = 0;
         this.reponses = new HashSet<>();
+        Etape currentEtape = getEtapeCourante();
+        if(currentEtape instanceof Tache){
+            if(getReponseCourante()==null) {
+                Reponse reponse = new Reponse(etapeCourante);
+                this.reponses.add(reponse);
+            }
+        }
     }
 
     public Visite() {}
@@ -159,6 +166,23 @@ public class Visite {
             }
         }
         return null;
+    }
+
+    public int getCostOfNextIndice() {
+        if (this.statut != StatutVisite.ENCOURS) {
+            throw new RuntimeException("Visite not in progress");
+        }
+        int cost = 0;
+        Etape e = this.getEtapeCourante();
+        if(e instanceof Tache) {
+            Tache tache = (Tache) e;
+            Reponse response = this.getReponseCourante();
+            if (response != null) {
+                Indice indice = tache.getSortedIndices().get(response.nbIndicesUtilises + 1);
+                cost = indice.getPointsPerdus();
+            }
+        }
+        return cost;
     }
 
     public boolean verificationReponse(String reponse) throws Exception {

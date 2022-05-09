@@ -1,6 +1,5 @@
 package fr.litopia.cyberchamis.controller;
 
-import fr.litopia.cyberchamis.model.dto.EtapeDTO;
 import fr.litopia.cyberchamis.model.dto.IndiceDTO;
 import fr.litopia.cyberchamis.model.dto.VisiteDTO;
 import fr.litopia.cyberchamis.model.entity.*;
@@ -10,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.transaction.Transactional;
@@ -140,7 +138,7 @@ public class GameRestController {
         return i.toDTO();
     }
 
-    @PostMapping("edit-status")
+    @PostMapping("/edit-status")
     @ResponseStatus(HttpStatus.OK)
     public StatutVisite editStatus(@RequestParam Long visiteId, @RequestParam StatutVisite status) {
         if (visiteRepository.findById(visiteId).isEmpty()) {
@@ -155,6 +153,12 @@ public class GameRestController {
         }
     }
 
+    @GetMapping("/indice-cost")
+    @ResponseStatus(HttpStatus.OK)
+    public int getIndiceCost(@RequestParam Long visiteId) {
+        Visite v = checkAndGetVisite(visiteId);
+        return gameService.getIndiceCost(v);
+    }
 
 
 
@@ -169,14 +173,18 @@ public class GameRestController {
         chamiRepository.save(ch);
 
         Arret a = new Arret();
-        a.setCodeArret("A001");
-        a.setNomArret("Bibiliotheque");
-        a.setStreetMap("https://www.openstreetmap.org/#map=19/45.19240/5.77088");
+        a.setCodeArret("SEM:0654");
+        a.setVille("Saint-Martin-d'Hères");
+        a.setNomArret("Bibliothèques Universitaires");
+        a.setLongitude(5.77038);
+        a.setLatitude(45.19166);
+
         arretRepository.save(a);
 
         Defi defi = new Defi();
         defi.setTitre("A la découverte des miagistes");
-        defi.setDescription("Vous devez découvrir les miagistes de la ville de Grenoble");
+        defi.setMiniDescription("Vous devez découvrir les miagistes de la ville de Grenoble");
+        defi.setDescription("Grasse à se defis vous decouvririrez les magnifiquement (moche) batiment de l'im2ag et vous pourré y observer une espéce animal trés etonante l'informatisien moyen");
         defi.setAuteur(ch);
         defi.setArret(a);
         defi.setDuree("10 minutes");
