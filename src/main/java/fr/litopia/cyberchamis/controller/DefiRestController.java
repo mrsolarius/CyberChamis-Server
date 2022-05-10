@@ -1,10 +1,14 @@
 package fr.litopia.cyberchamis.controller;
 import fr.litopia.cyberchamis.model.dto.CommentaireDTO;
 import fr.litopia.cyberchamis.model.dto.DefiDTO;
+import fr.litopia.cyberchamis.model.dto.TagCount;
 import fr.litopia.cyberchamis.model.entity.Commentaire;
 import fr.litopia.cyberchamis.model.entity.Defi;
+import fr.litopia.cyberchamis.model.entity.Indice;
+import fr.litopia.cyberchamis.model.entity.Tag;
 import fr.litopia.cyberchamis.repository.CommentaireRepository;
 import fr.litopia.cyberchamis.repository.DefiRepository;
+import fr.litopia.cyberchamis.repository.TagRepository;
 import fr.litopia.cyberchamis.services.DefiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,7 +20,9 @@ import org.webjars.NotFoundException;
 import javax.transaction.Transactional;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @RestController //indique qu'il faut injecter cette classe en tant que contrôleur REST. Dans le Framework Spring, un contrôleur permet de répondre à des requêtes HTTP avec des données quelconques (pas nécessairement du HTML).
 @RequestMapping(value = "/api/defis",produces = MediaType.APPLICATION_JSON_VALUE)
@@ -30,6 +36,9 @@ public class DefiRestController {
 
     @Autowired
     private DefiRepository defiRepository;
+
+    @Autowired
+    private TagRepository tagRepository;
 
     @PostMapping(value = "/") // avant la création
     @ResponseStatus(HttpStatus.CREATED)
@@ -66,6 +75,20 @@ public class DefiRestController {
         }
         return defisDto;
     }
+
+    @GetMapping("/tag/{id}")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public List<DefiDTO> getDefisBy(@PathVariable("id") final String tag){
+        return this.defiService.findByTag(tag).stream().map(Defi::toDTO).collect(Collectors.toList());
+    }
+
+
+    @GetMapping("tags/count")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public List<TagCount> getTagCount(){
+        return tagRepository.countTags().stream().map(TagCount::toTagCount).toList();
+    }
+
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
