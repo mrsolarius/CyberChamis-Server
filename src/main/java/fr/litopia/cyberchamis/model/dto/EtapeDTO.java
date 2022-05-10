@@ -10,6 +10,7 @@ public class EtapeDTO {
     public String titre;
     public Integer numero;
     public String description;
+    public String banner;
     public TypeEtapeDTO type;
     //dans indication
     public String text;

@@ -27,6 +27,9 @@ public abstract class Etape {
     @Column(name = "description")
     private String description;
 
+    @Column(name="banner")
+    private String banner;
+
 
     public Integer getNumero() {
         return numero;
@@ -70,6 +73,7 @@ public abstract class Etape {
         dto.numero = numero;
         dto.titre = titre;
         dto.description = description;
+        dto.banner = banner;
         if (this instanceof Tache){
             dto.type = TypeEtapeDTO.TacheDTO;
             dto.question = ((Tache)this).getQuestion();
@@ -89,6 +93,7 @@ public abstract class Etape {
         dto.numero = this.numero;
         dto.titreEtape=this.titre;
         dto.descriptionEtape=this.description;
+        dto.banner=this.banner;
         if (this instanceof Tache){
             dto.type = TypeEtapeDTO.TacheDTO;
             dto.question= ((Tache)this).getQuestion();
@@ -102,6 +107,10 @@ public abstract class Etape {
             dto.video = ((Indication)this).getVideo();
         }
         return dto;
+    }
+
+    public void setBanner(String banner) {
+        this.banner=banner;
     }
 }
 

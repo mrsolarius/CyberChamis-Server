@@ -161,6 +161,7 @@ public class CreationRestController {
             entity.setTitre(etape.titreEtape);
             entity.setDescription(etape.descriptionEtape);
             entity.setNumero(etape.numero);
+            entity.setBanner(etape.banner);
             ((Tache)entity).setQuestion(etape.question);
             ((Tache)entity).setPoint(etape.point);
             ((Tache)entity).setSecret(etape.secret);
@@ -182,6 +183,7 @@ public class CreationRestController {
             entity.setTitre(etape.titreEtape);
             entity.setDescription(etape.descriptionEtape);
             entity.setNumero(etape.numero);
+            entity.setBanner(etape.banner);
             ((Indication)entity).setText(etape.text);
             ((Indication)entity).setImage(etape.image);
             ((Indication)entity).setVideo(etape.video);

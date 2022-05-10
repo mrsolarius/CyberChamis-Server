@@ -13,6 +13,7 @@ public class EtapeCreateDTO {
     public String titreEtape;
     public String descriptionEtape;
     public Integer numero;
+    public String banner;
     public TypeEtapeDTO type;
 
     //Indications
