@@ -283,6 +283,7 @@ public class Defi {
         dto.id=id;
         dto.titre=titre;
         dto.description=description;
+        dto.miniDescription=miniDescription;
         dto.dateCreation=dateDeCreation;
         dto.dateDeModification= dateDeModification;
         dto.version=version;
