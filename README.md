@@ -1,3 +1,5 @@
+# Groupe 3
+
 # Comment utiliser
 Lancez `db.sh` pour lancer le container de la BDD ou modifier les paramètres de connexion
 dans le fichier `application.properties`.
