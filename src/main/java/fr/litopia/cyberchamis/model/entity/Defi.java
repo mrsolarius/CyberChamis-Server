@@ -294,6 +294,7 @@ public class Defi {
         dto.arretDTO=arret.toDTO();
         dto.noteMoyenne=getMoyenne();
         dto.etapes=etapes.stream().map(Etape::toDTO).collect(Collectors.toList());
+        dto.img=img;
         return dto;
     }
 

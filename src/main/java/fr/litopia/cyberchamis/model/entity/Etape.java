@@ -103,7 +103,6 @@ public abstract class Etape {
         } else if (this instanceof Indication){
             dto.type = TypeEtapeDTO.IndicationDTO;
             dto.text = ((Indication)this).getText();
-            dto.image = ((Indication)this).getImage();
             dto.video = ((Indication)this).getVideo();
         }
         return dto;
