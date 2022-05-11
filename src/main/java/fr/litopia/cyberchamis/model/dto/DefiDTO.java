@@ -14,6 +14,7 @@ public class DefiDTO {
     public String id;
     public String titre;
     public String description;
+    public String miniDescription;
     public Long version;
     public String duree;
     public ChamiDTO auteur;
@@ -34,6 +35,7 @@ public class DefiDTO {
         entity.duree=duree;
         entity.pointTotaux=pointTotaux;
         entity.img=img;
+        entity.miniDescription=miniDescription;
         entity.auteur=auteur.toEntity();
         entity.arret=arretDTO.toEntity();
         entity.etapes=etapes.stream().map(EtapeDTO::toEntity).collect(Collectors.toSet());

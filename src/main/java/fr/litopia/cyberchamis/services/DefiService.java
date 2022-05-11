@@ -3,6 +3,7 @@ package fr.litopia.cyberchamis.services;
 import fr.litopia.cyberchamis.model.entity.Defi;
 
 import java.util.Collection;
+import java.util.Set;
 
 public interface DefiService {
 
@@ -15,5 +16,7 @@ public interface DefiService {
     void update(Defi defi);
 
     void delete(Defi defi);
+
+    Collection<Defi> findByTag(String tag);
 
 }
