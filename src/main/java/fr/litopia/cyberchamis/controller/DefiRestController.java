@@ -82,6 +82,36 @@ public class DefiRestController {
         return this.defiService.findByTag(tag).stream().map(Defi::toDTO).collect(Collectors.toList());
     }
 
+    @GetMapping("/created/{id}")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public Set<DefiDTO> getDefisCreatedByChami(@PathVariable("id") final Long idChami){
+        var defis = defiRepository.findDefisCreatedByChami(idChami);
+        if (defis.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "entity not found");
+        }
+        Set<DefiDTO> defisDto = new HashSet<>();
+        for(Defi d : defis.get()){
+            var defi = d.toDTO();
+            defisDto.add(defi);
+        }
+        return defisDto;
+    }
+
+    @GetMapping("/finished/{id}")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public Set<DefiDTO> getDefisFinishedByChami(@PathVariable("id") final Long idChami){
+        var defis = defiRepository.findDefisFinishedByChami(idChami);
+        if (defis.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "entity not found");
+        }
+        Set<DefiDTO> defisDto = new HashSet<>();
+        for(Defi d : defis.get()){
+            var defi = d.toDTO();
+            defisDto.add(defi);
+        }
+        return defisDto;
+    }
+
 
     @GetMapping("tags/count")
     @ResponseStatus(HttpStatus.ACCEPTED)

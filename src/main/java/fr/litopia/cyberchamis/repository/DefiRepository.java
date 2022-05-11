@@ -27,6 +27,14 @@ public interface DefiRepository extends JpaRepository<Defi,String> {
     @Query("select d from Defi d join d.tags t where t.tag=:tag")
     Collection<Defi> getDefisByTag(@Param("tag")String tag);
 
+    @Transactional
+    @Query("select d from Defi d join d.auteur a where a.id=:idChami")
+    Optional<Defi[]> findDefisCreatedByChami(@Param("idChami") Long idChami);
+
+    @Transactional
+    @Query("select distinct d from Chami c join c.vistes v join v.defi d where v.statut=2 and c.id=:idChami")
+    Optional<Defi[]> findDefisFinishedByChami(@Param("idChami") Long idChami);
+
 
 
 
