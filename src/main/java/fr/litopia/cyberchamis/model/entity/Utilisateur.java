@@ -9,10 +9,10 @@ public class Utilisateur {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idUtilisateur", nullable = false)
-    public Long id;
+    private Long id;
     @OneToMany
     @Column(name = "visites", nullable = false)
-    public Set<Visite> vistes;
+    private Set<Visite> vistes;
 
     public void addVisite(Visite visite) {
         vistes.add(visite);

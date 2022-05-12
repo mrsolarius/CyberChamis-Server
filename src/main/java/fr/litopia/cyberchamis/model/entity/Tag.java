@@ -11,11 +11,11 @@ import java.util.stream.Collectors;
 public class Tag {
     @Id
     @Column(name = "tag", nullable = false)
-    public String tag;
+    private String tag;
 
     @ManyToMany
     @Column(name = "defis", nullable = false)
-    public Set<Defi> defis;
+    private Set<Defi> defis;
 
     public Tag(String tag) {
         this();

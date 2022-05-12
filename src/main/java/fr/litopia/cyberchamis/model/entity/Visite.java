@@ -13,33 +13,33 @@ public class Visite {
     @Id
     @GeneratedValue
     @Column(name = "id", nullable = false)
-    public Long id;
+    private Long id;
 
     @Column(name = "statut", nullable = false)
-    public StatutVisite statut;
+    private StatutVisite statut;
 
     @Column(name = "points", nullable = false)
-    public Integer points;
+    private Integer points;
 
     @Column(name = "etapeCourante", nullable = false)
-    public int etapeCourante;
+    private int etapeCourante;
 
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "dateDeCreation", nullable = false)
-    public Date dateDeCreation;
+    private Date dateDeCreation;
 
     @UpdateTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "dateDeModification", nullable = false)
-    public Date dateDeModification;
+    private Date dateDeModification;
 
     @OneToOne(fetch = FetchType.EAGER)
-    public Defi defi;
+    private Defi defi;
 
     @OneToMany(fetch = FetchType.EAGER,orphanRemoval = true,cascade = CascadeType.ALL)
     @Column(nullable = false)
-    public Set<Reponse> reponses;
+    private Set<Reponse> reponses;
 
     public Visite(Defi defi, Utilisateur utilisateur){
         this.defi=defi;
@@ -62,7 +62,7 @@ public class Visite {
     // repo
     private Reponse getReponse(int numero) {
         for (Reponse reponse : reponses) {
-            if (reponse.numero == numero) {
+            if (reponse.getNumero() == numero) {
                 return reponse;
             }
         }

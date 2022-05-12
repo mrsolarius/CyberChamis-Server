@@ -15,14 +15,14 @@ public abstract class Etape {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    public Long id;
+    private Long id;
 
     @Column(name = "numero", nullable = false)
     @Min(0)
-    public Integer numero;
+    private Integer numero;
 
     @Column(name = "titre", nullable = false, length = 32)
-    public String titre;
+    private String titre;
 
     @Column(name = "description")
     private String description;

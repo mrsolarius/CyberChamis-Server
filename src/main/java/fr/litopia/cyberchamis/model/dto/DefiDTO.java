@@ -29,16 +29,16 @@ public class DefiDTO {
 
     public Defi toEntity() {
         Defi entity = new Defi();
-        entity.titre=titre;
-        entity.id=id;
+        entity.setTitre(titre);
+        entity.setId(id);
         entity.setDescription(description);
-        entity.duree=duree;
+        entity.setDuree(duree);
         entity.pointTotaux=pointTotaux;
-        entity.img=img;
-        entity.miniDescription=miniDescription;
-        entity.auteur=auteur.toEntity();
-        entity.arret=arretDTO.toEntity();
-        entity.etapes=etapes.stream().map(EtapeDTO::toEntity).collect(Collectors.toSet());
+        entity.setImg(img);
+        entity.setMiniDescription(miniDescription);
+        entity.setAuteur(auteur.toEntity());
+        entity.setArret(arretDTO.toEntity());
+        entity.setEtapes(etapes.stream().map(EtapeDTO::toEntity).collect(Collectors.toSet()));
         return entity;
     }
 

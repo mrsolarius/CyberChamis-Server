@@ -6,9 +6,9 @@ import javax.persistence.Entity;
 @Entity
 public class Indication extends Etape{
     @Column(name = "indication",length = 1024)
-    public String text;
-    public String video;
-    public String image;
+    private String text;
+    private String video;
+    private String image;
 
     public Indication(){
     }

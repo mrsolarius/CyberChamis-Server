@@ -11,18 +11,18 @@ public class Reponse {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
-    public Long id;
+    private Long id;
 
     @Min(0)
     @Column(name = "numero", nullable = false)
-    public Integer numero;
+    private Integer numero;
 
     @Min(-1)
     @Column(name = "score", nullable = false)
     public Integer nbIndicesUtilises;
 
     @Column(name = "reponseUtilisateur")
-    public String reponseUtilisateur;
+    private String reponseUtilisateur;
 
     private boolean isCorrect = false;
 

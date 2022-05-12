@@ -10,16 +10,16 @@ import javax.persistence.Id;
 public class Arret {
     @Id
     @Column(name = "codeArret", nullable = false, length = 12)
-    public String codeArret;
+    private String codeArret;
 
     @Column(name = "nomArret", nullable = false, length = 50)
-    public String nomArret;
+    private String nomArret;
 
-    public String ville;
+    private String ville;
 
-    public double latitude;
+    private double latitude;
 
-    public double longitude;
+    private double longitude;
 
     Arret(String codeArret, String nomArret) {
         this.setCodeArret(codeArret);

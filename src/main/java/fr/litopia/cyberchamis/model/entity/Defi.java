@@ -19,65 +19,75 @@ import java.util.stream.Collectors;
 @Entity
 @Builder
 public class Defi {
+
+
     @Id
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name="system-uuid", strategy = "uuid")
     @Column(name = "idDefi", nullable = false)
-    public String id;
+    private String id;
 
     @Column(name = "titre", nullable = false, length = 45)
-    public String titre;
+    private String titre;
 
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "dateDeCreation", nullable = false)
-    public Date dateDeCreation;
+    private Date dateDeCreation;
 
     @UpdateTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "dateDeModification", nullable = false)
-    public Date dateDeModification;
+    private Date dateDeModification;
 
     @Column(name = "description", nullable = false, length = 1024)
-    public String description;
+    private String description;
 
     @Column(name = "miniDescription", nullable = false, length = 128)
-    public String miniDescription;
+    private String miniDescription;
 
     @Version
     @Column(name = "version")
     @Min(value = 1)
-    public Long version;
+    private Long version;
 
     @Column(name = "pointTotaux")
     public Integer pointTotaux;
 
+    public Arret getArret() {
+        return arret;
+    }
+
+    public void setEtapes(Set<Etape> etapes) {
+        this.etapes = etapes;
+    }
+
     @Column(name = "duree")
-    public String duree;
+    private String duree;
 
     @Column
-    public String img;
+    private String img;
 
     @ManyToOne(optional = false,fetch = FetchType.EAGER)
-    public Chami auteur;
+    private Chami auteur;
 
     @OneToMany(fetch = FetchType.LAZY)
     @Column(name = "notes")
-    public Set<Note> notes;
+    private Set<Note> notes;
 
     @OneToMany(fetch = FetchType.LAZY)
     @Column(name = "commentaires")
-    public Set<Commentaire> commentaires;
+    private Set<Commentaire> commentaires;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @Column(name = "tags")
-    public Set<Tag> tags;
+    private Set<Tag> tags;
 
     @OneToOne(fetch = FetchType.EAGER)
-    public Arret arret;
+    private Arret arret;
 
     @OneToMany(orphanRemoval = true)
-    public Set<Etape> etapes;
+    private Set<Etape> etapes;
 
     public Defi(){
         this.id = UUID.randomUUID().toString();
@@ -109,10 +119,6 @@ public class Defi {
     public String getTitre() {
         return titre;
     }
-
-    //public Date getDateDeCreation() {
-      //  return dateDeCreation;
-    //}
 
     public void setDescription(String description) {
         if(description == null || description.isEmpty()) {
@@ -327,6 +333,9 @@ public class Defi {
         dto.etapes=etapes.stream().map(Etape::toCreatEtapeDTO).collect(Collectors.toSet());
         dto.arret=arret.toDTO();
         return dto;
+    }
+    public void setId(String id) {
+        this.id = id;
     }
 
     public void setImg(String img) {

@@ -12,15 +12,15 @@ public class Note {
     @Id
     @GeneratedValue
     @Column(name = "idNote", nullable = false)
-    public Long id;
+    private Long id;
 
     @Column(name = "note", nullable = false)
     @Min(value = 1)
     @Max(value = 5)
-    public Integer note;
+    private Integer note;
 
     @OneToOne
-    Chami chami;
+    private Chami chami;
 
     public Note() {}
 

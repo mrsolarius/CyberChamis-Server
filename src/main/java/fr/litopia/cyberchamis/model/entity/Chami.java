@@ -11,21 +11,21 @@ import javax.validation.constraints.Min;
 @Builder
 public class Chami extends Utilisateur {
     @Column(name = "username", nullable = false, unique = true, length = 20)
-    public String username;
+    private String username;
 
     @Column(name = "idGoogle", nullable = false, unique = true)
-    public String idGoogle;
+    private String idGoogle;
 
     @Column(name = "age")
     @Min(value = 13, message = "You must be at least 13 years old")
-    public Integer age;
+    private Integer age;
 
     @Column(name = "bio", length = 255)
-    public String bio;
+    private String bio;
 
 
     @Column(name = "profileImg")
-    public String profileImg;
+    private String profileImg;
 
     public Chami(String username) {
         super();

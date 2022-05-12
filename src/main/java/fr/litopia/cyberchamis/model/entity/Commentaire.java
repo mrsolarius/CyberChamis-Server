@@ -9,13 +9,13 @@ public class Commentaire {
     @Id
     @GeneratedValue
     @Column(name = "idCom", nullable = false)
-    Long id;
+    private Long id;
 
     @Column(name = "commentaire", nullable = false, length = 128)
-    String text;
+    private String text;
 
     @ManyToOne(optional = false)
-    Chami auteur;
+    private Chami auteur;
 
     public Commentaire() {}
     public Commentaire(String text, Chami auteur) {

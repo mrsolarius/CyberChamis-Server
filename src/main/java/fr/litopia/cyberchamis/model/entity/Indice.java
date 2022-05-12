@@ -10,18 +10,18 @@ public class Indice {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idIndice", nullable = false)
-    public long id;
+    private long id;
 
     @Column(name = "numIndice", nullable = false)
     @Min(0)
-    public int numIndice;
+    private int numIndice;
 
     @Column(name = "indice", nullable = false, length = 1024)
-    public String indice;
+    private String indice;
 
     @Column(name = "pointsPerdus", nullable = false)
     @Min(0)
-    public Integer pointsPerdus;
+    private Integer pointsPerdus;
 
     public Indice() {
     }

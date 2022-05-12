@@ -10,17 +10,17 @@ import java.util.*;
 public class Tache extends Etape {
 
     @Column(name = "question", nullable = false, length = 360)
-    public String question;
+    private String question;
 
     @Column(name = "secret", nullable = false, length = 50)
-    public String secret;
+    private String secret;
 
     @Column(name = "point", nullable = false)
     @Min(0)
-    public Integer point;
+    private Integer point;
 
     @OneToMany(orphanRemoval = true)
-    public Set<Indice> indices;
+    private Set<Indice> indices;
 
     public Tache(String question, String secret, Integer point) {
         this.question = question;
