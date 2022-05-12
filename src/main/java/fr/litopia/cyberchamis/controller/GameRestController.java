@@ -6,12 +6,14 @@ import fr.litopia.cyberchamis.model.entity.*;
 import fr.litopia.cyberchamis.repository.*;
 import fr.litopia.cyberchamis.services.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.transaction.Transactional;
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -250,6 +252,14 @@ public class GameRestController {
     public VisiteDTO getVisites(@RequestParam Long visiteId) {
         Visite visite = checkAndGetVisite(visiteId);
         return visite.toDTO();
+    }
+
+
+    @GetMapping("/visite/{id}/{status}")
+    @ResponseStatus(HttpStatus.OK)
+    public Collection<VisiteDTO> getVisiteByUserIdStatus(@PathVariable("id") Long id, @PathVariable("status") StatutVisite status){
+        var col = visiteRepository.findVisiteByUserAndStatus(status,id);
+        return col.stream().map(Visite::toDTO).toList();
     }
 
 

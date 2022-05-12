@@ -22,4 +22,7 @@ public interface VisiteRepository extends JpaRepository<Visite,Long> {
     @Query("select v from Utilisateur u join u.vistes v where v.statut in :status and u = :utilisateur and v.defi = :defi")
     Visite findUserVisiteThatHaveStatus(@Param("defi") Defi defi, @Param("status") Collection<StatutVisite> status, @Param("utilisateur") Utilisateur utilisateur);
 
+    @Transactional
+    @Query("select v from Utilisateur u join u.vistes v where v.statut = :statu and u.id=:id")
+    Collection<Visite> findVisiteByUserAndStatus(@Param("statu") StatutVisite status, @Param("id") Long id);
 }
