@@ -10,10 +10,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.Collection;
 import java.util.Optional;
-import java.util.Set;
 
 @Repository
 public interface DefiRepository extends JpaRepository<Defi,String> {
