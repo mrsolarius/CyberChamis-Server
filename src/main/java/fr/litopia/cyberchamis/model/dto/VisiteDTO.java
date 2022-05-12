@@ -2,6 +2,7 @@ package fr.litopia.cyberchamis.model.dto;
 
 import fr.litopia.cyberchamis.model.entity.StatutVisite;
 
+import java.util.Date;
 import java.util.List;
 
 public class VisiteDTO {
@@ -10,6 +11,9 @@ public class VisiteDTO {
     public EtapeDTO etapeCourante;
     public Integer points;
     public DefiDTO defi;
+
+    public Date debut;
+    public Date finVisite;
     public ReponseDTO reponseCourante;
 
     /*public Visite toEntity(){
