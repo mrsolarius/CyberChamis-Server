@@ -55,6 +55,18 @@ public class CreationRestController {
         }
     }
 
+    @GetMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    @Transactional
+    public DefiCreateDTO getFullDefi(@RequestParam String id){
+        var data = this.defiRepository.findById(id);
+        if(data.isEmpty()){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "entity not found");
+        }else{
+            return data.get().toCreateDefiDTO();
+        }
+    }
+
     private void saveEtape(Etape etape, Defi d){
         this.etapeRepository.save(etape);
         d.addEtape(etape);

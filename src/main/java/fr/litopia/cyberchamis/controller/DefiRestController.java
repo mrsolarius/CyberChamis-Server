@@ -1,11 +1,9 @@
 package fr.litopia.cyberchamis.controller;
+import fr.litopia.cyberchamis.model.dto.ChamisCount;
 import fr.litopia.cyberchamis.model.dto.CommentaireDTO;
 import fr.litopia.cyberchamis.model.dto.DefiDTO;
 import fr.litopia.cyberchamis.model.dto.TagCount;
-import fr.litopia.cyberchamis.model.entity.Commentaire;
-import fr.litopia.cyberchamis.model.entity.Defi;
-import fr.litopia.cyberchamis.model.entity.Indice;
-import fr.litopia.cyberchamis.model.entity.Tag;
+import fr.litopia.cyberchamis.model.entity.*;
 import fr.litopia.cyberchamis.repository.CommentaireRepository;
 import fr.litopia.cyberchamis.repository.DefiRepository;
 import fr.litopia.cyberchamis.repository.TagRepository;
@@ -89,6 +87,13 @@ public class DefiRestController {
         return tagRepository.countTags().stream().map(TagCount::toTagCount).toList();
     }
 
+    @GetMapping("/defi/nbChamis")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public List<ChamisCount> getDefiNbChamis() {
+        StatutVisite statutVisite = StatutVisite.FINISHED;
+        return defiRepository.countNbVisite(statutVisite).stream().map(ChamisCount::toChamisCount).toList();
+    }
+
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
@@ -137,5 +142,20 @@ public class DefiRestController {
         defiRepository.save(defi.get());
         commentaireRepository.delete(comToDelete.get());
     }
+
+    @GetMapping("/defi/{idgoogle}/{statut}")
+    public Set<DefiDTO> getDefisByUserStatut(@PathVariable("idgoogle") String idgoogle, @PathVariable("statut")StatutVisite statut) {
+        var defis = defiRepository.getDefisByUserStatut(idgoogle, statut);
+        if (defis.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "entity not found");
+        }
+        Set<DefiDTO> defisDto = new HashSet<>();
+        for(Defi d : defis.get()){
+            var defi = d.toDTO();
+            defisDto.add(defi);
+        }
+        return defisDto;
+    }
+
 
 }
