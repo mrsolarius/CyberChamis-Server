@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
+import java.util.Optional;
 
 @Repository
 public interface VisiteRepository extends JpaRepository<Visite,Long> {
@@ -21,5 +22,9 @@ public interface VisiteRepository extends JpaRepository<Visite,Long> {
     @Transactional
     @Query("select v from Utilisateur u join u.vistes v where v.statut in :status and u = :utilisateur and v.defi = :defi")
     Visite findUserVisiteThatHaveStatus(@Param("defi") Defi defi, @Param("status") Collection<StatutVisite> status, @Param("utilisateur") Utilisateur utilisateur);
+
+    @Transactional
+    @Query("select v from Chami c join c.vistes v where c.idGoogle=:idGoogle and v.statut=2 order by v.dateDeModification DESC")
+    Optional<Visite[]> getVisitesFinishedByDefiAndChami(@Param("idGoogle") String idGoogle);
 
 }

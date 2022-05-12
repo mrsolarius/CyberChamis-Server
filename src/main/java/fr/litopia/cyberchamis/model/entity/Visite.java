@@ -1,6 +1,8 @@
 package fr.litopia.cyberchamis.model.entity;
 
 import fr.litopia.cyberchamis.model.dto.VisiteDTO;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.util.*;
@@ -21,6 +23,16 @@ public class Visite {
 
     @Column(name = "etapeCourante", nullable = false)
     public int etapeCourante;
+
+    @CreationTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "dateDeCreation", nullable = false)
+    public Date dateDeCreation;
+
+    @UpdateTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "dateDeModification", nullable = false)
+    public Date dateDeModification;
 
     @OneToOne(fetch = FetchType.EAGER)
     public Defi defi;
@@ -207,6 +219,8 @@ public class Visite {
         dto.points=this.points;
         dto.statut = this.statut;
         dto.defi=this.defi.toDTO();
+        dto.debut=this.dateDeCreation;
+        dto.finVisite=this.dateDeModification;
         if(this.getReponseCourante()!=null)
             dto.reponseCourante= this.getReponseCourante().toDTO();
         return dto;

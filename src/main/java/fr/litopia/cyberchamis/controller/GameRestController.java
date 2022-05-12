@@ -1,5 +1,6 @@
 package fr.litopia.cyberchamis.controller;
 
+import fr.litopia.cyberchamis.model.dto.DefiDTO;
 import fr.litopia.cyberchamis.model.dto.IndiceDTO;
 import fr.litopia.cyberchamis.model.dto.VisiteDTO;
 import fr.litopia.cyberchamis.model.entity.*;
@@ -12,7 +13,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.transaction.Transactional;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @RestController
@@ -158,6 +161,21 @@ public class GameRestController {
     public int getIndiceCost(@RequestParam Long visiteId) {
         Visite v = checkAndGetVisite(visiteId);
         return gameService.getIndiceCost(v);
+    }
+
+    @GetMapping("/get-visites-by-defi-chami/{idGoogle}")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public Set<VisiteDTO> getVisitesFinishedByChami(@PathVariable("idGoogle") final String idGoogle){
+        var visites = visiteRepository.getVisitesFinishedByDefiAndChami(idGoogle);
+        if (visites.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "entity not found");
+        }
+        Set<VisiteDTO> visitesDto = new HashSet<>();
+        for(Visite v : visites.get()){
+            var visite = v.toDTO();
+            visitesDto.add(visite);
+        }
+        return visitesDto;
     }
 
 
