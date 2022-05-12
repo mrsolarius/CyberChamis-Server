@@ -11,7 +11,6 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
-import java.security.Timestamp;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -331,5 +330,13 @@ public class Defi {
 
     public void setImg(String img) {
         this.img=img;
+    }
+
+    public Set<Commentaire> getCommentaires() {
+        return commentaires;
+    }
+
+    public Set<Note> getNotes() {
+        return notes;
     }
 }

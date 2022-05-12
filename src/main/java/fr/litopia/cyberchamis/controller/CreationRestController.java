@@ -11,8 +11,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import org.webjars.NotFoundException;
 import javax.transaction.Transactional;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -35,6 +37,18 @@ public class CreationRestController {
     private TacheRepository tacheRepository;
     @Autowired
     private ArretRepository arretRepository;
+
+    @Autowired
+    private VisiteRepository visiteRepository;
+
+    @Autowired
+    private CommentaireRepository commentaireRepository;
+
+    @Autowired
+    private NoteRepository noteRepository;
+
+    @Autowired
+    private UtilisateurRepository utilisateurRepository;
 
     @PostMapping(value = "/") // avant la création
     @ResponseStatus(HttpStatus.CREATED)
@@ -65,6 +79,23 @@ public class CreationRestController {
         }else{
             return data.get().toCreateDefiDTO();
         }
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    @Transactional
+    public void deleteDefi(@PathVariable("id") final String id){
+        Optional<Defi> defiToDelete = defiRepository.findById(id);
+        if(defiToDelete.isEmpty()){
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "entity not found"
+            );
+        }
+        removeAllEtape(defiToDelete.get());
+        removeAllTag(defiToDelete.get());
+        removeCommentaireNotes(defiToDelete.get());
+        removeVisites(defiToDelete.get());
+        defiRepository.delete(defiToDelete.get());
     }
 
     private void saveEtape(Etape etape, Defi d){
@@ -250,6 +281,36 @@ public class CreationRestController {
             }else if (e instanceof Indication){
                 indicationRepository.delete((Indication) e);
             }
+        }
+    }
+
+    @Transactional
+    void removeAllTag(Defi defi){
+        for (Tag t: defi.getTags()) {
+            defi.removeTag(t);
+        }
+    }
+
+    @Transactional
+    void removeCommentaireNotes(Defi defi){
+        commentaireRepository.deleteAll(defi.getCommentaires());
+        noteRepository.deleteAll(defi.getNotes());
+    }
+
+    @Transactional
+    void removeVisites(Defi defi){
+        var v = visiteRepository.selectVisiteByDefi(defi.getId());
+        var u = utilisateurRepository.getUtilisateurByDefi(defi.getId());
+        if (v.isPresent()){
+            if(u.isPresent()){
+                for (Utilisateur uu : u.get()) {
+                    for (Visite vv: v.get()) {
+                        uu.removeVisite(vv);
+                    }
+                    utilisateurRepository.save(uu);
+                }
+            }
+            visiteRepository.deleteAll(Arrays.asList(v.get()));
         }
     }
 }

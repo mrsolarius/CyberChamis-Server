@@ -142,19 +142,6 @@ public class DefiRestController {
         return defi;
     }
 
-    @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.OK)
-    @Transactional
-    public void deleteDefi(@PathVariable("id") final String id){
-        Defi defiToDelete = defiService.findById(id);
-        if(defiToDelete == null){
-            throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, "entity not found"
-            );
-        }
-        defiService.delete(defiToDelete);
-    }
-
     @DeleteMapping("/commentaire/{id}")
     @ResponseStatus(HttpStatus.OK)
     @Transactional
