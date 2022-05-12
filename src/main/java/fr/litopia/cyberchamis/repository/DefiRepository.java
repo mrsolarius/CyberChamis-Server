@@ -1,6 +1,7 @@
 package fr.litopia.cyberchamis.repository;
 
 import fr.litopia.cyberchamis.model.dto.IChamisCount;
+import fr.litopia.cyberchamis.model.dto.IDefiCount;
 import fr.litopia.cyberchamis.model.entity.Commentaire;
 import fr.litopia.cyberchamis.model.entity.Defi;
 import fr.litopia.cyberchamis.model.entity.StatutVisite;
@@ -43,6 +44,11 @@ public interface DefiRepository extends JpaRepository<Defi,String> {
     Optional<Defi[]> getDefisByUserStatut(@Param("id")Long id, @Param("statut")StatutVisite statut);
 
     @Transactional
+<<<<<<< HEAD
+    @Query("select count(d) as count , a.id as auteurId from Defi d join d.auteur a group by a.id")
+    Collection<IDefiCount> countNbDefiCree();
+=======
     @Query("select count(v) as count , v.defi.id as idDefi from Visite v join v.defi d where v.statut=:status group by idDefi")
     Collection<IChamisCount> countNbVisite(@Param("status")StatutVisite statutVisite);
+>>>>>>> 477e002e336ab4b9857c9e5856845c89ee0b5be9
 }

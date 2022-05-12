@@ -37,7 +37,6 @@ public class DefiDTO {
         entity.img=img;
         entity.miniDescription=miniDescription;
         entity.auteur=auteur.toEntity();
-        //entity.tags= tags.stream().map(TagDTO::toEntity).collect(Collectors.toSet());
         entity.arret=arretDTO.toEntity();
         entity.etapes=etapes.stream().map(EtapeDTO::toEntity).collect(Collectors.toSet());
         return entity;
