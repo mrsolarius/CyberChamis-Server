@@ -26,4 +26,12 @@ public interface VisiteRepository extends JpaRepository<Visite,Long> {
     @Transactional
     @Query("select v from Utilisateur u join u.vistes v where v.statut = :statu and u.id=:id")
     Collection<Visite> findVisiteByUserAndStatus(@Param("statu") StatutVisite status, @Param("id") Long id);
+
+    @Transactional
+    @Query("select v from Chami c join c.vistes v where c.idGoogle=:idGoogle and v.statut=2 order by v.dateDeModification DESC")
+    Optional<Visite[]> getVisitesFinishedByDefiAndChami(@Param("idGoogle") String idGoogle);
+
+    @Transactional
+    @Query("select v from Chami c join c.vistes v where c.id=:id and v.statut=2 order by v.dateDeModification DESC")
+    Optional<Visite[]> getVisitesFinishedByDefiAndChamiById(@Param("id") long idGoogle);
 }

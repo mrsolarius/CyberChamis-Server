@@ -174,7 +174,7 @@ public class DefiRestController {
     }
 
     @GetMapping("/defi/{id}/{statut}")
-    public Set<DefiDTO> getDefisByUserStatut(@PathVariable("id") int id, @PathVariable("statut")StatutVisite statut) {
+    public Set<DefiDTO> getDefisByUserStatut(@PathVariable("id") long id, @PathVariable("statut")StatutVisite statut) {
         var defis = defiRepository.getDefisByUserStatut(id, statut);
         if (defis.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "entity not found");

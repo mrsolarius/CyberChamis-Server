@@ -39,8 +39,8 @@ public interface DefiRepository extends JpaRepository<Defi,String> {
 
 
     @Transactional
-    @Query("select distinct d from Chami c join c.vistes v join v.defi d where c.idGoogle=:idgoogle and v.statut=:statut")
-    Optional<Defi[]> getDefisByUserStatut(@Param("idgoogle")String idgoogle, @Param("statut")StatutVisite statut);
+    @Query("select distinct d from Chami c join c.vistes v join v.defi d where c.id=:id and v.statut=:statut")
+    Optional<Defi[]> getDefisByUserStatut(@Param("id")Long id, @Param("statut")StatutVisite statut);
 
     @Transactional
     @Query("select count(v) as count , v.defi.id as idDefi from Visite v join v.defi d where v.statut=:status group by idDefi")

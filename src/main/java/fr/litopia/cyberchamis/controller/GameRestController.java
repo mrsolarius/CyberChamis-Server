@@ -258,5 +258,26 @@ public class GameRestController {
     }
 
 
+    @GetMapping("/get-visites-by-defi-chami/{idGoogle}")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public Set<VisiteDTO> getVisitesFinishedByChami(@PathVariable("idGoogle") final String idGoogle){
+        var visites = visiteRepository.getVisitesFinishedByDefiAndChami(idGoogle);
+        if (visites.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "entity not found");
+        }
+        Set<VisiteDTO> visitesDto = new HashSet<>();
+        for(Visite v : visites.get()){
+            var visite = v.toDTO();
+            visitesDto.add(visite);
+        }
+        return visitesDto;
+    }
+
+    @GetMapping("/visite/{id}/{status}")
+    @ResponseStatus(HttpStatus.OK)
+    public Collection<VisiteDTO> getVisiteByUserIdStatus(@PathVariable("id") Long id, @PathVariable("status") StatutVisite status){
+        var col = visiteRepository.findVisiteByUserAndStatus(status,id);
+        return col.stream().map(Visite::toDTO).toList();
+    }
 
 }
