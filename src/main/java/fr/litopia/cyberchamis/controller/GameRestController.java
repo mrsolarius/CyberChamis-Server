@@ -7,6 +7,7 @@ import fr.litopia.cyberchamis.model.entity.*;
 import fr.litopia.cyberchamis.repository.*;
 import fr.litopia.cyberchamis.services.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +15,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import javax.transaction.Transactional;
 import java.util.HashSet;
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -163,21 +165,6 @@ public class GameRestController {
         return gameService.getIndiceCost(v);
     }
 
-    @GetMapping("/get-visites-by-defi-chami/{idGoogle}")
-    @ResponseStatus(HttpStatus.ACCEPTED)
-    public Set<VisiteDTO> getVisitesFinishedByChami(@PathVariable("idGoogle") final String idGoogle){
-        var visites = visiteRepository.getVisitesFinishedByDefiAndChami(idGoogle);
-        if (visites.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "entity not found");
-        }
-        Set<VisiteDTO> visitesDto = new HashSet<>();
-        for(Visite v : visites.get()){
-            var visite = v.toDTO();
-            visitesDto.add(visite);
-        }
-        return visitesDto;
-    }
-
 
 
     @PostMapping("/create-default-defi")
@@ -271,5 +258,26 @@ public class GameRestController {
     }
 
 
+    @GetMapping("/get-visites-by-defi-chami/{idGoogle}")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public Set<VisiteDTO> getVisitesFinishedByChami(@PathVariable("idGoogle") final String idGoogle){
+        var visites = visiteRepository.getVisitesFinishedByDefiAndChami(idGoogle);
+        if (visites.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "entity not found");
+        }
+        Set<VisiteDTO> visitesDto = new HashSet<>();
+        for(Visite v : visites.get()){
+            var visite = v.toDTO();
+            visitesDto.add(visite);
+        }
+        return visitesDto;
+    }
+
+    @GetMapping("/visite/{id}/{status}")
+    @ResponseStatus(HttpStatus.OK)
+    public Collection<VisiteDTO> getVisiteByUserIdStatus(@PathVariable("id") Long id, @PathVariable("status") StatutVisite status){
+        var col = visiteRepository.findVisiteByUserAndStatus(status,id);
+        return col.stream().map(Visite::toDTO).toList();
+    }
 
 }
