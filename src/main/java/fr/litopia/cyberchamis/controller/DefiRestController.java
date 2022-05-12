@@ -143,4 +143,19 @@ public class DefiRestController {
         commentaireRepository.delete(comToDelete.get());
     }
 
+    @GetMapping("/defi/{idgoogle}/{statut}")
+    public Set<DefiDTO> getDefisByUserStatut(@PathVariable("idgoogle") String idgoogle, @PathVariable("statut")StatutVisite statut) {
+        var defis = defiRepository.getDefisByUserStatut(idgoogle, statut);
+        if (defis.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "entity not found");
+        }
+        Set<DefiDTO> defisDto = new HashSet<>();
+        for(Defi d : defis.get()){
+            var defi = d.toDTO();
+            defisDto.add(defi);
+        }
+        return defisDto;
+    }
+
+
 }
