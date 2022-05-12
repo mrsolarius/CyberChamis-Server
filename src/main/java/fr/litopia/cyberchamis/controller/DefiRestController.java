@@ -1,8 +1,5 @@
 package fr.litopia.cyberchamis.controller;
-import fr.litopia.cyberchamis.model.dto.ChamisCount;
-import fr.litopia.cyberchamis.model.dto.CommentaireDTO;
-import fr.litopia.cyberchamis.model.dto.DefiDTO;
-import fr.litopia.cyberchamis.model.dto.TagCount;
+import fr.litopia.cyberchamis.model.dto.*;
 import fr.litopia.cyberchamis.model.entity.*;
 import fr.litopia.cyberchamis.repository.CommentaireRepository;
 import fr.litopia.cyberchamis.repository.DefiRepository;
@@ -92,6 +89,12 @@ public class DefiRestController {
     public List<ChamisCount> getDefiNbChamis() {
         StatutVisite statutVisite = StatutVisite.FINISHED;
         return defiRepository.countNbVisite(statutVisite).stream().map(ChamisCount::toChamisCount).toList();
+    }
+
+    @GetMapping("/defi/nbDefiByChami")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public List<DefiCount> getNbDefiByAuteur() {
+        return defiRepository.countNbDefiCree().stream().map(DefiCount::toDefiCount).toList();
     }
 
 

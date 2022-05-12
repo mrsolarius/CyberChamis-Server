@@ -1,6 +1,7 @@
 package fr.litopia.cyberchamis.repository;
 
 import fr.litopia.cyberchamis.model.dto.IChamisCount;
+import fr.litopia.cyberchamis.model.dto.IDefiCount;
 import fr.litopia.cyberchamis.model.entity.Commentaire;
 import fr.litopia.cyberchamis.model.entity.Defi;
 import fr.litopia.cyberchamis.model.entity.StatutVisite;
@@ -37,4 +38,8 @@ public interface DefiRepository extends JpaRepository<Defi,String> {
     @Transactional
     @Query("select distinct d from Chami c join c.vistes v join v.defi d where c.idGoogle=:idgoogle and v.statut=:statut")
     Optional<Defi[]> getDefisByUserStatut(@Param("idgoogle")String idgoogle, @Param("statut") StatutVisite statut);
+
+    @Transactional
+    @Query("select count(d) as count , a.id as auteurId from Defi d join d.auteur a group by a.id")
+    Collection<IDefiCount> countNbDefiCree();
 }
