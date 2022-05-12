@@ -9,7 +9,7 @@ public class TacheDTO extends EtapeDTO{
     public Tache toEntity(){
         Tache tache=new Tache();
         tache.setQuestion(question);
-        tache.point=this.point;
+        tache.setPoint(this.point);
         return tache;
     }
 }

@@ -88,7 +88,7 @@ public class Chami extends Utilisateur {
 
     public ChamiDTO toDTO() {
         ChamiDTO dto = new ChamiDTO();
-        dto.id= this.id;
+        dto.id= super.getId();
         dto.idGoogle=this.idGoogle;
         dto.age=this.age;
         dto.bio=this.bio;

@@ -198,7 +198,7 @@ public class GameRestController {
         //etape1
         Indication etape1 = new Indication();
         etape1.setTitre("A la découverte des miagistes");
-        etape1.text = "Bienvenu à l’UFR IM2AG, le bâtiment, des geeks. Pour commencer, rentrez dans le bâtiment et passez à l’étape suivant dans la flèche de droite.";
+        etape1.setText("Bienvenu à l’UFR IM2AG, le bâtiment, des geeks. Pour commencer, rentrez dans le bâtiment et passez à l’étape suivant dans la flèche de droite.");
         defi.addEtape(etape1);
         indicationRepository.save(etape1);
         //etape2
@@ -226,7 +226,7 @@ public class GameRestController {
         //etape3GetMapping
         Indication etape3 = new Indication();
         etape3.setTitre("Parler à Thomas");
-        etape3.text = "Salut, j’ai perdu mon magnifique bonnet miage, aide-moi à le retrouver. La dernière fois que je l’avais, j’étais dans la salle 218.";
+        etape3.setText("Salut, j’ai perdu mon magnifique bonnet miage, aide-moi à le retrouver. La dernière fois que je l’avais, j’étais dans la salle 218.");
 
         defi.addEtape(etape3);
         indicationRepository.save(etape3);

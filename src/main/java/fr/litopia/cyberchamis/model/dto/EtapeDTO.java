@@ -25,19 +25,19 @@ public class EtapeDTO {
         Etape entity=null;
         if (type == TypeEtapeDTO.TacheDTO) {
             entity = new Tache(question,point);
-            entity.id = id;
-            entity.numero = numero;
-            entity.titre = titre;
+            entity.setId(id);
+            entity.setNumero(numero);
+            entity.setTitre(titre);
             entity.setDescription(description);
 
-            ((Tache)entity).question= question;
+            ((Tache)entity).setQuestion(question);
             ((Tache)entity).setPoint(this.point);
         }
         else if(type == TypeEtapeDTO.IndicationDTO) {
             entity = new Tache(question,point);
-            entity.id = id;
-            entity.numero = numero;
-            entity.titre = titre;
+            entity.setId(id);
+            entity.setNumero(numero);
+            entity.setTitre(titre);
             entity.setDescription(description);
 
             ((Indication)entity).setText(this.text);

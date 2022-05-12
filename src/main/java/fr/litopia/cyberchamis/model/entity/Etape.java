@@ -99,7 +99,7 @@ public abstract class Etape {
             dto.question= ((Tache)this).getQuestion();
             dto.point = ((Tache)this).getPoint();
             dto.indices = ((Tache)this).getIndices().stream().map(Indice::toDTO).collect(Collectors.toSet());
-            dto.secret=((Tache)this).secret;
+            dto.secret=((Tache)this).getSecret();
         } else if (this instanceof Indication){
             dto.type = TypeEtapeDTO.IndicationDTO;
             dto.text = ((Indication)this).getText();
@@ -110,6 +110,10 @@ public abstract class Etape {
 
     public void setBanner(String banner) {
         this.banner=banner;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }
 

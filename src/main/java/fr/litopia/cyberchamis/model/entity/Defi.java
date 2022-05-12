@@ -180,14 +180,14 @@ public class Defi {
 
     public void addTag(Tag tag){
         this.tags.add(tag);
-        if (!tag.defis.contains(this)) {
+        if (!tag.getDefis().contains(this)) {
             tag.addDefi(this);
         }
     }
 
     public void removeTag(Tag tag) {
         this.tags.remove(tag);
-        if(tag.defis.contains(this)) {
+        if(tag.getDefis().contains(this)) {
             tag.removeDefi(this);
         }
     }
@@ -312,7 +312,7 @@ public class Defi {
             final var icheck = i;
             RatingDTO ratingDTO = new RatingDTO();
             ratingDTO.note=icheck;
-            ratingDTO.number= this.notes.stream().filter(note -> note.note == icheck).toList().size();
+            ratingDTO.number= this.notes.stream().filter(note -> note.getNote() == icheck).toList().size();
             dtoList.add(ratingDTO);
         }
         dto.gradeList=dtoList;

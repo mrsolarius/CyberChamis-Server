@@ -11,8 +11,8 @@ public class IndiceDTO {
 
     public Indice toEntity(){
         Indice indiceEn =new Indice();
-        indiceEn.indice=indice;
-        indiceEn.pointsPerdus=pointsPerdus;
+        indiceEn.setIndice(indice);
+        indiceEn.setPointsPerdus(pointsPerdus);
         return indiceEn;
     }
 

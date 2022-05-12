@@ -7,7 +7,7 @@ public class IndicationDTO  {
     String text;
     public Indication toEntity(){
         Indication indice =new Indication();
-        indice.text=text;
+        indice.setText(text);
         return indice;
     }
 }

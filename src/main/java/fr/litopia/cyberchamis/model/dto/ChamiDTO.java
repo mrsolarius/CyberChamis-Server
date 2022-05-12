@@ -14,7 +14,7 @@ public class ChamiDTO {
     public Chami toEntity() {
         Chami c = new Chami();
         if (id != 0)
-            c.id = this.id;
+            c.setId(this.id);
         if (idGoogle != null)
             c.setIdGoogle(this.idGoogle);
         if (age != null)

@@ -134,4 +134,8 @@ public class Tache extends Etape {
             }
         }
     }
+
+    public String getSecret() {
+        return secret;
+    }
 }
