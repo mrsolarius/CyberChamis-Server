@@ -1,6 +1,7 @@
 package fr.litopia.cyberchamis.model.entity;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -16,6 +17,10 @@ public class Utilisateur {
 
     public void addVisite(Visite visite) {
         vistes.add(visite);
+    }
+
+    public void removeVisite(Visite visite) {
+        vistes.remove(visite);
     }
 
     public Long getId(){
