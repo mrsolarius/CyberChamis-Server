@@ -24,7 +24,6 @@ public interface VisiteRepository extends JpaRepository<Visite,Long> {
     Visite findUserVisiteThatHaveStatus(@Param("defi") Defi defi, @Param("status") Collection<StatutVisite> status, @Param("utilisateur") Utilisateur utilisateur);
 
     @Transactional
-    @Query("select v from Chami c join c.vistes v where c.idGoogle=:idGoogle and v.statut=2 order by v.dateDeModification DESC")
-    Optional<Visite[]> getVisitesFinishedByDefiAndChami(@Param("idGoogle") String idGoogle);
-
+    @Query("select v from Utilisateur u join u.vistes v where v.statut = :statu and u.id=:id")
+    Collection<Visite> findVisiteByUserAndStatus(@Param("statu") StatutVisite status, @Param("id") Long id);
 }
