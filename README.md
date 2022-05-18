@@ -15,3 +15,7 @@ Java 17 requis
 ### API HTTP
 Notre api est une api RESTful pour tous se qui ne concerne pas directement les jeux.
 Pour les jeux l'api devient un genre d'automate à état.
+
+### Deployment
+L'application client déployer et disponible sur https://cyberchamis.tuturu.fr
+Le serveur déployer est disponible ici https://grechat.herokuapp.com/swagger-ui/
